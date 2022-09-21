@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Android Lab</string>
+
+    <!-- Bottom navigation -->
+    <string name="coffees_item_label">Coffees</string>
+    <string name="coffees_icon_content_description">Coffees icon</string>
+    <string name="weather_item_label">Weather</string>
+    <string name="weather_icon_content_description">Weather icon</string>
+    <string name="animation_item_label">Animation</string>
+    <string name="misc_item_label">Misc</string>
+    <string name="misc_icon_content_description">Misc icon</string>
+</resources>

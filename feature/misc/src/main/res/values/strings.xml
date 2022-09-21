@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="deep_link_button_title">First coffee details</string>
+    <string name="recompose_button_title">Recompose</string>
+
+    <string name="bottom_sheet_button_title">Show bottom sheet</string>
+    <string name="bottom_sheet_button_toogle_fullscreen_button_title">Fullscreen</string>
+    <string name="bottom_sheet_button_toogle_half_expanded_button_title">Half expanded</string>
+    <string name="bottom_sheet_button_hide_button_title">Hide</string>
+
+    <string name="remote_image_content_description">Remote image</string>
+
+    <string name="custom_theme">Custom theme</string>
+    <string name="dynamic_theme">Dynamic theme</string>
+</resources>

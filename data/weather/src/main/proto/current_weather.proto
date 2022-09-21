@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_package = "se.yverling.lab.android";
+option java_multiple_files = true;
+
+message CurrentWeather {
+  int32 temp = 1;
+  Wind wind = 2;
+  string locationName = 3;
+  int64 createdAt = 4;
+}
+
+message Wind {
+  int32 speed = 1;
+  int32 degree = 2;
+}

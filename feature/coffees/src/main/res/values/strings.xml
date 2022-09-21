@@ -1,0 +1,9 @@
+<resources>
+    <string name="profile_image_description">Profile image</string>
+    <string name="uppercase_button_description">Uppercase button</string>
+    <string name="coffees_title">Coffees</string>
+    <string name="easter_egg">Easter egg</string>
+    <string name="sun_icon_content_description">Sun icon</string>
+    <string name="back_arrow_content_description">Back arrow icon</string>
+    <string name="coffee_icon_description">Coffee</string>
+</resources>

@@ -1,0 +1,64 @@
+{
+  "coffees": [
+    {
+      "name": "Odo Carbonic",
+      "roaster": "Gringo Nordic",
+      "origin": "Ethiopia",
+      "region": "Guji"
+    },
+    {
+      "name": "Uraga Carbonic",
+      "roaster": "Gringo Nordic",
+      "origin": "Ethiopia",
+      "region": "Guji"
+    },
+    {
+      "name": "Udaini Mocha",
+      "roaster": "Drop Coffee",
+      "origin": "Yemen",
+      "region": "Yemen"
+    },
+    {
+      "name": "Al Zuragi Mocah",
+      "roaster": "Gringo Nordic",
+      "origin": "Yemen",
+      "region": "Haraz"
+    },
+    {
+      "name": "La Linda",
+      "roaster": "Drop Coffee",
+      "origin": "Bolivia",
+      "region": "Bolivia"
+    },
+    {
+      "name": "Las Delicias",
+      "roaster": "Drop Coffee",
+      "origin": "Nicaragua",
+      "region": "Lipululu"
+    },
+    {
+      "name": "La Rosa Hue Hue",
+      "roaster": "Drop Coffee",
+      "origin": "Guatemala",
+      "region": "Huehuetenango"
+    },
+    {
+      "name": "Adola",
+      "roaster": "Gringo Nordic",
+      "origin": "Ethiopia",
+      "region": "Guji"
+    },
+    {
+      "name": "Gahahe",
+      "roaster": "Gringo Nordic",
+      "origin": "Burundi",
+      "region": "Kayanza"
+    },
+    {
+      "name": "Suke Organic",
+      "roaster": "Drop Coffee",
+      "origin": "Ethiopia",
+      "region": "Guji"
+    }
+  ]
+}

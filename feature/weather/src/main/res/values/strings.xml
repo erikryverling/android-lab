@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="retry_button_title">Retry</string>
+    <string name="temperature_suffix">°</string>
+    <string name="wind_speed_suffix">m/s</string>
+    <string name="wind_degree_suffix">°</string>
+</resources>
