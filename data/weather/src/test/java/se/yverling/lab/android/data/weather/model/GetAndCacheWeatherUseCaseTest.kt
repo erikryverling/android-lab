@@ -5,19 +5,17 @@ import io.mockk.Called
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit4.MockKRule
+import io.mockk.junit5.MockKExtension
 import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
+@ExtendWith(MockKExtension::class)
 class GetAndCacheWeatherUseCaseTest {
-    @get:Rule
-    val mockkRule = MockKRule(this)
-
     @RelaxedMockK
     lateinit var networkRepositoryMock: WeatherNetworkRepository
 
@@ -32,13 +30,13 @@ class GetAndCacheWeatherUseCaseTest {
         locationName = "Location"
     )
 
-    @Before
+    @BeforeEach
     fun setUp() {
         getAndCacheWeatherUseCase = GetAndCacheWeatherUseCase(networkRepositoryMock, dataStoreRepositoryMock)
     }
 
     @Test
-    fun `Should fetch current weather from network successfully`() {
+    fun `getAndCacheWeatherUseCase should fetch current weather from network successfully`() {
         every { dataStoreRepositoryMock.fetchCurrentWeather() } returns flowOf(Pair(currentWeather, -1L))
         every { networkRepositoryMock.getCurrentWeather() } returns flowOf(currentWeather)
 
@@ -52,7 +50,7 @@ class GetAndCacheWeatherUseCaseTest {
     }
 
     @Test
-    fun `Should fetch current weather from local datastore successfully`() {
+    fun `getAndCacheWeatherUseCase should fetch current weather from local datastore successfully`() {
         val timestamp = Clock.System.now().toEpochMilliseconds()
 
         every { dataStoreRepositoryMock.fetchCurrentWeather() } returns flowOf(Pair(currentWeather, timestamp))

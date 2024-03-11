@@ -10,6 +10,13 @@ apply(from = "${rootProject.projectDir}/build.module.android.gradle")
 
 android {
     namespace = "se.yverling.lab.android.data.coffees"
+
+    @Suppress("UnstableApiUsage")
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -22,4 +29,5 @@ dependencies {
     implementation(libs.kotlinx.serialization)
 
     testImplementation(libs.bundles.unitTest)
+    testRuntimeOnly(libs.unitTest.jupiter.engine)
 }

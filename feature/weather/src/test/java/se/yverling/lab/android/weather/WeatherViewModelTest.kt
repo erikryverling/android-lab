@@ -5,31 +5,27 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit4.MockKRule
+import io.mockk.junit5.MockKExtension
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.Rule
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import se.yverling.lab.android.data.weather.model.CurrentWeather
 import se.yverling.lab.android.data.weather.model.GetAndCacheWeatherUseCase
 import se.yverling.lab.android.data.weather.model.Wind
-import se.yverling.lab.android.test.MainDispatcherRule
+import se.yverling.lab.android.test.MainDispatcherExtension
 
+@ExtendWith(MockKExtension::class)
+@ExtendWith(MainDispatcherExtension::class)
 class WeatherViewModelTest {
-    @get:Rule
-    val mockkRule = MockKRule(this)
-
-    @get:Rule
-    val mainRule = MainDispatcherRule()
-
     @RelaxedMockK
     lateinit var useCaseMock: GetAndCacheWeatherUseCase
 
     private lateinit var viewModel: WeatherViewModel
 
     @Test
-    fun `Should load data successfully`() {
+    fun `uiState should emit data successfully`() {
         val currentWeather = CurrentWeather(
             temperature = 10,
             wind = Wind(speed = 10, degree = 10),
@@ -54,7 +50,7 @@ class WeatherViewModelTest {
     }
 
     @Test
-    fun `Should handle error successfully`() {
+    fun `uiState emit error successfully`() {
         val errorMessage = "error"
 
         every { useCaseMock.invoke() } returns flow { throw IllegalStateException(errorMessage) }

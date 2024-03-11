@@ -7,19 +7,17 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit4.MockKRule
+import io.mockk.junit5.MockKExtension
 import io.mockk.mockkStatic
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
+@ExtendWith(MockKExtension::class)
 class WeatherDataStoreRepositoryTest {
-    @get:Rule
-    val mockkRule = MockKRule(this)
-
     @MockK
     lateinit var contextMock: Context
 
@@ -47,7 +45,7 @@ class WeatherDataStoreRepositoryTest {
         locationName = "Location"
     )
 
-    @Before
+    @BeforeEach
     fun setUp() {
         dataStoreRepository = WeatherDataStoreRepository(contextMock)
 
@@ -57,7 +55,7 @@ class WeatherDataStoreRepositoryTest {
     }
 
     @Test
-    fun `Should persist current weather successfully`() {
+    fun `persistCurrentWeather() should persist successfully`() {
         runTest {
             dataStoreRepository.persistCurrentWeather(currentWeather, createdAt)
 
@@ -68,7 +66,7 @@ class WeatherDataStoreRepositoryTest {
     }
 
     @Test
-    fun `Should fetch current weather successfully`() {
+    fun `fetchCurrentWeather() should fetch successfully`() {
         every { dataStoreMock.data } returns flowOf(currentWeatherData)
 
         runTest {

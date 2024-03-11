@@ -7,27 +7,24 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit4.MockKRule
+import io.mockk.junit5.MockKExtension
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import se.yverling.lab.android.coffees.model.Coffee
-import se.yverling.lab.android.test.MainDispatcherRule
+import se.yverling.lab.android.test.MainDispatcherExtension
 
+@ExtendWith(MockKExtension::class)
+@ExtendWith(MainDispatcherExtension::class)
 class CoffeesViewModelTest {
-    @get:Rule
-    val mockkRule = MockKRule(this)
-
-    @get:Rule
-    val mainRule = MainDispatcherRule()
 
     @RelaxedMockK
     lateinit var repositoryMock: CoffeesRepository
 
-    @Before
+    @BeforeEach
     fun setup() {
         viewModel = CoffeesViewModel(repositoryMock)
     }
@@ -35,7 +32,7 @@ class CoffeesViewModelTest {
     private lateinit var viewModel: CoffeesViewModel
 
     @Test
-    fun `Should load coffees successfully`() {
+    fun `uiState should emit coffees successfully`() {
         every { repositoryMock.getList() } returns flowOf(coffees)
 
         runTest {
@@ -50,7 +47,7 @@ class CoffeesViewModelTest {
     }
 
     @Test
-    fun `Should prepopulate coffees successfully`() {
+    fun `coffeesViewModel should prepopulate coffees successfully`() {
         var isContainingSampleData = false
 
         coEvery {

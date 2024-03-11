@@ -9,6 +9,13 @@ apply(from = "${rootProject.projectDir}/build.module.android.gradle")
 
 android {
     namespace = "se.yverling.lab.android.data.misc"
+
+    @Suppress("UnstableApiUsage")
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -18,4 +25,5 @@ dependencies {
     implementation(libs.timber)
 
     testImplementation(libs.bundles.unitTest)
+    testRuntimeOnly(libs.unitTest.jupiter.engine)
 }

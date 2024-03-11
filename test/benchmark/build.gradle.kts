@@ -25,7 +25,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.unitTest.junit)
+    implementation(libs.unitTest.junit4)
     implementation(libs.benchmark.macro.junit4)
 }
 

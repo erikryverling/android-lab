@@ -28,6 +28,13 @@ android {
             exclude("META-INF/LICENSE-notice.md")
         }
     }
+
+    @Suppress("UnstableApiUsage")
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -49,6 +56,7 @@ dependencies {
 
     testImplementation(libs.bundles.unitTest)
     testImplementation(project(":test:utils"))
+    testRuntimeOnly(libs.unitTest.jupiter.engine)
 
     kspAndroidTest(libs.androidTest.hilt.compiler)
     androidTestImplementation(libs.bundles.androidTest)

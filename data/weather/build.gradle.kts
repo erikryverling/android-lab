@@ -26,6 +26,13 @@ android {
     buildFeatures {
         buildConfig = true
     }
+
+    @Suppress("UnstableApiUsage")
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
+    }
 }
 
 protobuf {
@@ -61,4 +68,5 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
 
     testImplementation(libs.bundles.unitTest)
+    testRuntimeOnly(libs.unitTest.jupiter.engine)
 }

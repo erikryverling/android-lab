@@ -5,19 +5,17 @@ import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit4.MockKRule
+import io.mockk.junit5.MockKExtension
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import se.yverling.lab.android.coffees.db.AppDatabase
 import se.yverling.lab.android.coffees.db.Coffee
 
+@ExtendWith(MockKExtension::class)
 class CoffeeRepositoryTest {
-    @get:Rule
-    val mockkRule = MockKRule(this)
-
     @RelaxedMockK
     lateinit var appDatabaseMock: AppDatabase
 
@@ -26,7 +24,7 @@ class CoffeeRepositoryTest {
 
     private lateinit var coffeesRepository: CoffeesRepository
 
-    @Before
+    @BeforeEach
     fun setUp() {
         coffeesRepository = CoffeesRepository(
             context = contextMock,
@@ -35,7 +33,7 @@ class CoffeeRepositoryTest {
     }
 
     @Test
-    fun `Should get list successfully`() {
+    fun `getCoffees() should get list successfully`() {
         val dbCoffee = Coffee(
             uid = 0,
             name = "Odo Carbonic",

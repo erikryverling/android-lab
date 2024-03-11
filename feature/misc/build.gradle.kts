@@ -17,6 +17,13 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.kotlinCompiler.get()
     }
+
+    @Suppress("UnstableApiUsage")
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -37,5 +44,7 @@ dependencies {
     implementation(libs.timber)
 
     testImplementation(libs.bundles.unitTest)
+    testRuntimeOnly(libs.unitTest.jupiter.engine)
+
     testImplementation(project(":test:utils"))
 }

@@ -3,27 +3,28 @@ package se.yverling.lab.android.feature.misc
 import io.kotest.matchers.types.shouldBeTypeOf
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit4.MockKRule
+import io.mockk.junit5.MockKExtension
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.junit.Rule
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.api.extension.RegisterExtension
 import se.yverling.lab.android.misc.MiscRepository
-import se.yverling.lab.android.test.MainDispatcherRule
+import se.yverling.lab.android.test.MainDispatcherExtension
 
+@ExtendWith(MockKExtension::class)
+@ExtendWith(MainDispatcherExtension::class)
 @OptIn(ExperimentalCoroutinesApi::class)
 class MiscViewModelTest {
-    @get:Rule
-    val mockkRule = MockKRule(this)
-
     /**
      * We use UnconfinedTestDispatcher to avoid having to use advanceUntilIdle() See CoroutinesTest for more info.
      */
-    @get:Rule
-    val mainRule = MainDispatcherRule(UnconfinedTestDispatcher())
+    @JvmField
+    @RegisterExtension
+    val mainDispatcherExtension = MainDispatcherExtension(UnconfinedTestDispatcher())
 
     @RelaxedMockK
     lateinit var repositoryMock: MiscRepository
@@ -35,7 +36,7 @@ class MiscViewModelTest {
      * the purpose of this test is to get a deeper understanding on how to test StateFlow.
      */
     @Test
-    fun `Should set UI state successfully`() = runTest {
+    fun `uiState should be set successfully`() = runTest {
         val fakeRepository = FakeRepository()
 
         every { repositoryMock.longRunningFlow() } returns fakeRepository.flow
