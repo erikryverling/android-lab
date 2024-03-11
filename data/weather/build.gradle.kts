@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
 
-        val apiKey: String = gradleLocalProperties(rootDir).getProperty("openWeatherMapApiKey")
+        val apiKey: String = gradleLocalProperties(rootDir, providers).getProperty("openWeatherMapApiKey")
         buildConfigField("String", "API_KEY", apiKey)
 
         // Set to either Ktor or Retrofit

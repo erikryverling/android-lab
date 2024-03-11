@@ -5,7 +5,9 @@ android-minSdk = "33"
 
 kotlinOptionsJvmTarget = "17"
 
-android = "8.2.2"
+android = "8.3.0"
+
+compose-kotlinCompiler = "1.5.10"
 
 # This needs to be synced with compose-kotlinCompiler
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
@@ -13,14 +15,13 @@ kotlin = "1.9.22"
 
 appCompat = "1.6.1"
 
-hilt = "2.50"
+hilt = "2.51"
 hilt-navigation-compose = "1.2.0"
 
-compose-kotlinCompiler = "1.5.9"
-compose-bom = "2024.02.01"
+compose-bom = "2024.02.02"
 compose-lifecycle = "2.7.0"
 compose-constraintLayout = "1.0.1"
-compose-material3 = "1.2.0"
+compose-material3 = "1.2.1"
 
 navigation = "2.7.7"
 
@@ -31,30 +32,31 @@ room = "2.6.1"
 datastore = "1.0.0"
 
 protobuf-plugin = "0.9.4"
-protobufCompilerArtifact = "com.google.protobuf:protoc:3.24.4:osx-x86_64"
-protobuf = "3.25.2"
+
+protobuf = "3.25.3"
+# This needs to be synced with protobuf
+protobufCompilerArtifact = "com.google.protobuf:protoc:3.25.3:osx-x86_64"
+
+ksp = "1.9.23-1.0.19"
 
 kotlinx-datetime = "0.5.0"
 kotlinx-serialization = "1.6.3"
-kotlinx-immutableCollections = "0.3.7"
 
 timber = "5.0.1"
 
-coil = "2.5.0"
+coil = "2.6.0"
 
 work = "2.9.0"
 
-ktor = "2.3.8"
+ktor = "2.3.9"
 
 versions = "0.51.0"
 
-ksp = "1.9.22-1.0.17"
-
 junit = "5.10.2"
 coroutinesTest = "1.8.0"
-mockk = "1.13.9"
-kotest-assertions = "5.8.0"
-turbine = "1.0.0"
+mockk = "1.13.10"
+kotest-assertions = "5.8.1"
+turbine = "1.1.0"
 
 androidTestRunner = "1.5.2"
 
@@ -105,7 +107,6 @@ protobuf = { module = "com.google.protobuf:protobuf-javalite", version.ref = "pr
 
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
-kotlinx-immutableCollections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-immutableCollections" }
 
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
@@ -137,11 +138,34 @@ profileinstaller = { module = "androidx.profileinstaller:profileinstaller", vers
 
 
 [bundles]
-compose = ["compose-activity", "compose-material", "compose-material2", "compose-tooling", "compose-lifecycle", "compose-viewmodel", "compose-icons"]
-navigation = ["navigation-fragment-ktx", "navigation-ui-ktx", "navigation-compose"]
-retrofit = ["retrofit", "retrofit-moshi"]
-room = ["room-ktx"]
-
-unitTest = ["unitTest-junit", "unitTest-mockk", "unitTest-kotest-assertions", "unitTest-coroutines", "unitTest-turbine"]
-
-androidTest = ["unitTest-kotest-assertions", "androidTest-runner", "androidTest-hilt", "androidTest-compose"]
+compose = [
+    "compose-activity",
+    "compose-material",
+    "compose-material2",
+    "compose-tooling",
+    "compose-lifecycle",
+    "compose-viewmodel",
+    "compose-icons"
+]
+navigation = [
+    "navigation-fragment-ktx",
+    "navigation-ui-ktx",
+    "navigation-compose"
+]
+retrofit = [
+    "retrofit",
+    "retrofit-moshi"
+]
+unitTest = [
+    "unitTest-junit",
+    "unitTest-mockk",
+    "unitTest-kotest-assertions",
+    "unitTest-coroutines",
+    "unitTest-turbine"
+]
+androidTest = [
+    "unitTest-kotest-assertions",
+    "androidTest-runner",
+    "androidTest-hilt",
+    "androidTest-compose"
+]

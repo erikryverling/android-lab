@@ -115,7 +115,7 @@ fun CoffeeList(
     isUppercase: Boolean,
     onNavigateToDetails: (Int) -> Unit
 ) {
-    LazyColumn(modifier) {
+    LazyColumn(modifier = Modifier.padding(DefaultSpace)) {
         item {
             Column(
                 modifier = Modifier
