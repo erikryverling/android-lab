@@ -26,6 +26,7 @@ compose-material3 = "1.2.1"
 navigation = "2.7.7"
 
 retrofit = "2.9.0"
+retrofit-kotlinx-serialization-converter = "1.0.0"
 
 room = "2.6.1"
 
@@ -97,7 +98,7 @@ navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
+retrofit-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit-kotlinx-serialization-converter" }
 
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
@@ -154,7 +155,7 @@ navigation = [
 ]
 retrofit = [
     "retrofit",
-    "retrofit-moshi"
+    "retrofit-kotlinx-serialization-converter"
 ]
 unitTest = [
     "unitTest-junit",
