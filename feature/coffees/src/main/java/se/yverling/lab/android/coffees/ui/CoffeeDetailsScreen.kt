@@ -32,7 +32,6 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -44,6 +43,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import se.yverling.lab.android.coffees.CoffeesUiState
 import se.yverling.lab.android.coffees.CoffeesViewModel
 import se.yverling.lab.android.coffees.model.Coffee
+import se.yverling.lab.android.coffees.theme.CoffeeCardElevation
 import se.yverling.lab.android.design.theme.AndroidLabTheme
 import se.yverling.lab.android.design.theme.DefaultSpace
 import se.yverling.lab.android.feature.coffees.R
@@ -113,7 +113,7 @@ fun CoffeeCard(coffee: Coffee) {
 
     Surface(
         shape = MaterialTheme.shapes.small,
-        shadowElevation = dimensionResource(id = R.dimen.coffee_card_elevation)
+        shadowElevation = CoffeeCardElevation
     ) {
         Column(
             Modifier

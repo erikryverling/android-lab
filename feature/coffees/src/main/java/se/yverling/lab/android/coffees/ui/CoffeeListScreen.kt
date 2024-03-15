@@ -44,7 +44,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -53,6 +52,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import se.yverling.lab.android.coffees.CoffeesUiState
 import se.yverling.lab.android.coffees.CoffeesViewModel
 import se.yverling.lab.android.coffees.model.Coffee
+import se.yverling.lab.android.coffees.theme.CoffeeCardElevation
 import se.yverling.lab.android.design.theme.AndroidLabTheme
 import se.yverling.lab.android.design.theme.DefaultSpace
 import se.yverling.lab.android.design.theme.LargeSpace
@@ -206,7 +206,7 @@ fun CoffeeItem(
 
     Surface(
         shape = MaterialTheme.shapes.small,
-        shadowElevation = dimensionResource(id = R.dimen.coffee_card_elevation),
+        shadowElevation = CoffeeCardElevation,
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
