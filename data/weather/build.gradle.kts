@@ -1,23 +1,30 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.util.*
 
 plugins {
-    id("com.android.library")
-    kotlin("android")
-    id("com.google.devtools.ksp")
-    id("dagger.hilt.android.plugin")
-    id("com.google.protobuf")
-    kotlin("plugin.serialization")
-    id ("org.jetbrains.kotlinx.kover")
+    id("androidlab.hilt-library-conventions")
+    alias(libs.plugins.protobuf)
+    alias(libs.plugins.serialization)
 }
 
-apply(from = "${rootProject.projectDir}/build.module.android.gradle")
+dependencies {
+    implementation(libs.bundles.retrofit)
+    implementation(libs.bundles.ktor)
+
+    implementation(libs.datastore)
+    implementation(libs.protobuf)
+
+    implementation(libs.kotlinx.datetime)
+}
+
 
 android {
     namespace = "se.yverling.lab.android.data.weather"
 
     defaultConfig {
+        val properties = Properties()
+        properties.load(rootProject.file("local.properties").inputStream())
+        val apiKey = properties.getProperty("openWeatherMapApiKey")
 
-        val apiKey: String = gradleLocalProperties(rootDir, providers).getProperty("openWeatherMapApiKey")
         buildConfigField("String", "API_KEY", apiKey)
 
         // Set to either Ktor or Retrofit
@@ -26,13 +33,6 @@ android {
 
     buildFeatures {
         buildConfig = true
-    }
-
-    @Suppress("UnstableApiUsage")
-    testOptions {
-        unitTests.all {
-            it.useJUnitPlatform()
-        }
     }
 }
 
@@ -50,24 +50,4 @@ protobuf {
             }
         }
     }
-}
-
-dependencies {
-    ksp(libs.hilt.android.compiler)
-    implementation(libs.hilt.android)
-
-    implementation(libs.bundles.retrofit)
-
-    implementation(libs.datastore)
-    implementation(libs.protobuf)
-
-    implementation(libs.kotlinx.datetime)
-
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.cio)
-    implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.serialization.kotlinx.json)
-
-    testImplementation(libs.bundles.unitTest)
-    testRuntimeOnly(libs.unitTest.jupiter.engine)
 }

@@ -1,48 +1,15 @@
 plugins {
     id("com.android.application")
-    kotlin("android")
+    id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
-    id("app.cash.paparazzi")
+    alias(libs.plugins.paparazzi)
     id("org.jetbrains.kotlinx.kover")
 }
 
-apply(from = "${rootProject.projectDir}/build.module.android.gradle")
-
-android {
-    namespace = "se.yverling.lab.android"
-
-    defaultConfig {
-        applicationId = "se.yverling.lab.android"
-        versionCode = 10000 // Version & release number
-        versionName = "1.0.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildFeatures {
-        compose = true
-        buildConfig = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.kotlinCompiler.get()
-    }
-
-    buildTypes {
-        create("benchmark") {
-            signingConfig = signingConfigs.getByName("debug")
-            matchingFallbacks += listOf("release")
-            isDebuggable = false
-        }
-    }
-
-    lint {
-        // This will generate a single report for all modules
-        checkDependencies = true
-        xmlReport = false
-        htmlReport = true
-        htmlOutput = file("${project.rootDir}/build/reports/android-lint.html")
-    }
+repositories {
+    google()
+    mavenCentral()
 }
 
 dependencies {
@@ -76,6 +43,76 @@ dependencies {
     androidTestImplementation(libs.androidTest.work)
     androidTestImplementation(libs.unitTest.coroutines)
     androidTestImplementation(libs.unitTest.kotest.assertions)
+}
+
+android {
+    compileSdk = Versions.compileSdk
+
+    defaultConfig {
+        minSdk = Versions.minSdk
+    }
+
+    compileOptions {
+        // KSP only supports Java 17
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = Versions.jvmTarget
+    }
+
+    namespace = "se.yverling.lab.android"
+
+    defaultConfig {
+        applicationId = "se.yverling.lab.android"
+        versionCode = 10000 // Version & release number
+        versionName = "1.0.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.kotlinCompilerExtensionVersion
+    }
+
+    buildTypes {
+        create("benchmark") {
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+            isDebuggable = false
+        }
+    }
+
+    lint {
+        // This will generate a single report for all modules
+        checkDependencies = true
+        xmlReport = false
+        htmlReport = true
+        htmlOutput = file("${project.rootDir}/build/reports/android-lint.html")
+    }
+}
+
+plugins.withId("app.cash.paparazzi") {
+    // Defer until afterEvaluate so that testImplementation is created by Android plugin.
+    afterEvaluate {
+        dependencies.constraints {
+            add("testImplementation", "com.google.guava:guava") {
+                attributes {
+                    attribute(
+                        TargetJvmEnvironment.TARGET_JVM_ENVIRONMENT_ATTRIBUTE,
+                        objects.named(TargetJvmEnvironment::class.java, TargetJvmEnvironment.STANDARD_JVM)
+                    )
+                }
+                because("LayoutLib and sdk-common depend on Guava's -jre published variant." +
+                        "See https://github.com/cashapp/paparazzi/issues/906.")
+            }
+        }
+    }
 }
 
 // Use for creating an aggregated Kover report

@@ -10,7 +10,7 @@ class BaselineProfileGenerator {
 
     @Test
     fun startup() = baselineProfileRule.collect(
-        packageName = "se.yverling.androidlab",
+        packageName = "se.yverling.lab.android",
         profileBlock = {
             startActivityAndWait()
         }

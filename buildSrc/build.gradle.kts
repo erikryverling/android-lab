@@ -1,9 +1,19 @@
+plugins {
+    alias(libs.plugins.kotlin.dsl)
+}
+
 repositories {
     google()
     mavenCentral()
     gradlePluginPortal()
 }
 
-plugins {
-    `kotlin-dsl`
+dependencies {
+    // NOTE! This will put the Gradle plugins on the class path of the project
+    implementation(libs.android.gradlePlugin)
+    implementation(libs.javapoet)
+    implementation(libs.kotlin.gradlePlugin)
+    implementation(libs.ksp.gradlePlugin)
+    implementation(libs.hilt.gradlePlugin)
+    implementation(libs.kover.gradlePlugin)
 }

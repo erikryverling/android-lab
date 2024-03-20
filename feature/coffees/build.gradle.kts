@@ -1,41 +1,6 @@
 plugins {
-    id("com.android.library")
-    kotlin("android")
-    id("com.google.devtools.ksp")
-    id("dagger.hilt.android.plugin")
-    id ("org.jetbrains.kotlinx.kover")
-}
-
-apply(from = "${rootProject.projectDir}/build.module.android.gradle")
-
-android {
-    namespace = "se.yverling.lab.android.feature.coffees"
-
-    defaultConfig {
-        testInstrumentationRunner = "se.yverling.lab.android.test.AndroidLabTestRunner"
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.kotlinCompiler.get()
-    }
-
-    android {
-        packagingOptions {
-            exclude("META-INF/LICENSE.md")
-            exclude("META-INF/LICENSE-notice.md")
-        }
-    }
-
-    @Suppress("UnstableApiUsage")
-    testOptions {
-        unitTests.all {
-            it.useJUnitPlatform()
-        }
-    }
+    id("androidlab.compose-library-conventions")
+    id("androidlab.hilt-library-conventions")
 }
 
 dependencies {
@@ -43,25 +8,23 @@ dependencies {
     implementation(project(":common:ui"))
     implementation(project(":data:coffees"))
 
-    ksp(libs.hilt.android.compiler)
-    implementation(libs.hilt.android)
     implementation(libs.hilt.navigation)
 
-    implementation(platform(libs.compose.bom))
-    implementation(libs.bundles.compose)
     implementation(libs.compose.constraintlayout)
 
     implementation(libs.bundles.navigation)
-
-    implementation(libs.timber)
-
-    testImplementation(libs.bundles.unitTest)
-    testImplementation(project(":test:utils"))
-    testRuntimeOnly(libs.unitTest.jupiter.engine)
 
     kspAndroidTest(libs.androidTest.hilt.compiler)
     androidTestImplementation(libs.bundles.androidTest)
     androidTestImplementation(project(":test:utils"))
 
     debugImplementation(libs.androidTest.compose.manifest)
+}
+
+android {
+    namespace = "se.yverling.lab.android.feature.coffees"
+
+    defaultConfig {
+        testInstrumentationRunner = "se.yverling.lab.android.test.AndroidLabTestRunner"
+    }
 }
