@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("app.cash.paparazzi")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 apply(from = "${rootProject.projectDir}/build.module.android.gradle")
@@ -75,4 +76,26 @@ dependencies {
     androidTestImplementation(libs.androidTest.work)
     androidTestImplementation(libs.unitTest.coroutines)
     androidTestImplementation(libs.unitTest.kotest.assertions)
+}
+
+// Use for creating an aggregated Kover report
+dependencies {
+    kover(project(":feature:coffees"))
+    kover(project(":feature:weather"))
+    kover(project(":feature:misc"))
+    kover(project(":data:coffees"))
+    kover(project(":data:weather"))
+    kover(project(":data:misc"))
+}
+
+koverReport {
+    filters {
+        includes {
+            classes("*ViewModel*", "*UseCase*", "*Repository*")
+        }
+
+        excludes {
+            classes("hilt_*", "*_Factory*", "*_Hilt*")
+        }
+    }
 }

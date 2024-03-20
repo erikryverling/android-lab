@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     kotlin("plugin.serialization")
+    id ("org.jetbrains.kotlinx.kover")
 }
 
 apply(from = "${rootProject.projectDir}/build.module.android.gradle")

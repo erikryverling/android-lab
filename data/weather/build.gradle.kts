@@ -7,6 +7,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("com.google.protobuf")
     kotlin("plugin.serialization")
+    id ("org.jetbrains.kotlinx.kover")
 }
 
 apply(from = "${rootProject.projectDir}/build.module.android.gradle")

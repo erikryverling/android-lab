@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
+    id ("org.jetbrains.kotlinx.kover")
 }
 
 apply(from = "${rootProject.projectDir}/build.module.android.gradle")

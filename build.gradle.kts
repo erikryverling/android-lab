@@ -18,9 +18,9 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.serialization) apply false
     alias(libs.plugins.paparazzi) apply false
+    alias(libs.plugins.kover) apply false
 }
 
-// Run with ./gradlew dependencyUpdates
 tasks.withType<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask> {
     rejectVersionIf {
         isNonStable(candidate.version)
