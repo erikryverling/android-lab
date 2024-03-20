@@ -6,7 +6,7 @@ import androidx.work.WorkerParameters
 import timber.log.Timber
 import java.util.*
 
-class TimeWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
+internal class TimeWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
         Timber.tag("WorkerManager").d("Time is now ${Calendar.getInstance().time}")
         return Result.success()
