@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
+    id("app.cash.paparazzi")
 }
 
 apply(from = "${rootProject.projectDir}/build.module.android.gradle")
@@ -65,6 +66,9 @@ dependencies {
     implementation(libs.profileinstaller)
 
     implementation(libs.work)
+
+    testImplementation(libs.unitTest.junit4)
+    testImplementation(project(":data:coffees"))
 
     androidTestImplementation(libs.androidTest.runner)
     androidTestImplementation(libs.androidTest.hilt)
