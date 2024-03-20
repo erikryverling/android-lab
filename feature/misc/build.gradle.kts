@@ -3,7 +3,7 @@ plugins {
     kotlin("android")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
-    id ("org.jetbrains.kotlinx.kover")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 apply(from = "${rootProject.projectDir}/build.module.android.gradle")
@@ -49,3 +49,5 @@ dependencies {
 
     testImplementation(project(":test:utils"))
 }
+
+tasks.register<GreetTask>("greet")
