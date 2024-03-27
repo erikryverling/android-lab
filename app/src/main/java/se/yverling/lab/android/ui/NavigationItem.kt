@@ -17,23 +17,22 @@ import se.yverling.lab.android.feature.animation.AnimationScreenDestination
 import se.yverling.lab.android.feature.misc.MiscScreenDestination
 import se.yverling.lab.android.weather.ui.WeatherScreenDestination
 
-sealed class BottomNavigationItems(
+sealed class NavigationItem(
     val route: String,
     @StringRes val label: Int,
     val icon: ImageVector,
     val selectedIcon: ImageVector,
     @StringRes val iconContentDescription: Int
 ) {
-    data object Coffees :
-        BottomNavigationItems(
-            route = CoffeesRoute,
-            label = R.string.coffees_item_label,
-            icon = Icons.Outlined.Coffee,
-            selectedIcon = Icons.Filled.Coffee,
-            iconContentDescription = R.string.coffees_icon_content_description
-        )
+    data object Coffees : NavigationItem(
+        route = CoffeesRoute,
+        label = R.string.coffees_item_label,
+        icon = Icons.Outlined.Coffee,
+        selectedIcon = Icons.Filled.Coffee,
+        iconContentDescription = R.string.coffees_icon_content_description
+    )
 
-    data object Weather : BottomNavigationItems(
+    data object Weather : NavigationItem(
         route = WeatherScreenDestination,
         label = R.string.weather_item_label,
         icon = Icons.Outlined.WbCloudy,
@@ -41,7 +40,7 @@ sealed class BottomNavigationItems(
         iconContentDescription = R.string.weather_icon_content_description
     )
 
-    data object Animation : BottomNavigationItems(
+    data object Animation : NavigationItem(
         route = AnimationScreenDestination,
         label = R.string.animation_item_label,
         icon = Icons.Outlined.LocalMovies,
@@ -49,7 +48,7 @@ sealed class BottomNavigationItems(
         iconContentDescription = R.string.weather_icon_content_description
     )
 
-    data object Misc : BottomNavigationItems(
+    data object Misc : NavigationItem(
         route = MiscScreenDestination,
         label = R.string.misc_item_label,
         icon = Icons.Outlined.HomeRepairService,

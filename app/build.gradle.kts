@@ -35,6 +35,8 @@ dependencies {
 
     implementation(libs.work)
 
+    implementation(libs.material3.windowSizeClassAndroid)
+
     testImplementation(libs.unitTest.junit4)
     testImplementation(project(":data:coffees"))
 

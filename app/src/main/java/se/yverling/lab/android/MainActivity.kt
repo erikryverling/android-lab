@@ -6,8 +6,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -32,11 +36,13 @@ import se.yverling.lab.android.design.theme.AndroidLabTheme
 import se.yverling.lab.android.feature.animation.AnimationScreen
 import se.yverling.lab.android.feature.misc.MiscScreen
 import se.yverling.lab.android.ui.BottomNavigation
-import se.yverling.lab.android.ui.BottomNavigationItems
+import se.yverling.lab.android.ui.NavigationItem
+import se.yverling.lab.android.ui.SideNavigation
 import se.yverling.lab.android.weather.ui.WeatherScreen
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,68 +66,79 @@ class MainActivity : ComponentActivity() {
             AndroidLabTheme {
                 val navController = rememberNavController()
 
+                val items = listOf(
+                    NavigationItem.Coffees,
+                    NavigationItem.Weather,
+                    NavigationItem.Animation,
+                    NavigationItem.Misc
+                )
+
+                val windowSizeClass = calculateWindowSizeClass(this)
+                val windowWithSizeClassIsExpanded = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded
+
                 Scaffold(
                     bottomBar = {
-                        val items = listOf(
-                            BottomNavigationItems.Coffees,
-                            BottomNavigationItems.Weather,
-                            BottomNavigationItems.Animation,
-                            BottomNavigationItems.Misc
-                        )
-
-                        BottomNavigation(navController = navController, items = items)
+                        if (!windowWithSizeClassIsExpanded) {
+                            BottomNavigation(navController = navController, items = items)
+                        }
                     },
                 ) { innerPadding ->
-                    NavHost(
-                        navController,
-                        startDestination = CoffeesRoute,
-                        Modifier.padding(innerPadding)
-                    ) {
-                        coffeesGraph(navController)
-
-                        composable(BottomNavigationItems.Weather.route) {
-                            WeatherScreen()
+                    Row {
+                        if (windowWithSizeClassIsExpanded) {
+                            SideNavigation(navController = navController, items = items)
                         }
 
-                        composable(BottomNavigationItems.Animation.route) {
-                            AnimationScreen()
-                        }
-
-                        val miscScreenAnimationDuration = 700
-
-                        composable(
-                            BottomNavigationItems.Misc.route,
-
-                            // This is an example on how you could animate the navigation between Composables
-                            enterTransition = {
-                                slideIntoContainer(
-                                    AnimatedContentTransitionScope.SlideDirection.Left,
-                                    animationSpec = tween(miscScreenAnimationDuration)
-                                )
-                            },
-                            exitTransition = {
-                                slideOutOfContainer(
-                                    AnimatedContentTransitionScope.SlideDirection.Right,
-                                    animationSpec = tween(miscScreenAnimationDuration)
-                                )
-                            },
-                            popEnterTransition = {
-                                slideIntoContainer(
-                                    AnimatedContentTransitionScope.SlideDirection.Up,
-                                    animationSpec = tween(miscScreenAnimationDuration)
-                                )
-                            },
-                            popExitTransition = {
-                                slideOutOfContainer(
-                                    AnimatedContentTransitionScope.SlideDirection.Down,
-                                    animationSpec = tween(miscScreenAnimationDuration)
-                                )
-                            },
+                        NavHost(
+                            navController,
+                            startDestination = CoffeesRoute,
+                            Modifier.padding(innerPadding)
                         ) {
-                            MiscScreen(onDeepLinkButtonClick = {
-                                val firstCoffeeIndex = 0
-                                navController.navigate(Uri.parse("$CoffeeDetailsScreenDeepLinkUri/$firstCoffeeIndex"))
-                            })
+                            coffeesGraph(navController)
+
+                            composable(NavigationItem.Weather.route) {
+                                WeatherScreen()
+                            }
+
+                            composable(NavigationItem.Animation.route) {
+                                AnimationScreen()
+                            }
+
+                            val miscScreenAnimationDuration = 700
+
+                            composable(
+                                NavigationItem.Misc.route,
+
+                                // This is an example on how you could animate the navigation between Composables
+                                enterTransition = {
+                                    slideIntoContainer(
+                                        AnimatedContentTransitionScope.SlideDirection.Left,
+                                        animationSpec = tween(miscScreenAnimationDuration)
+                                    )
+                                },
+                                exitTransition = {
+                                    slideOutOfContainer(
+                                        AnimatedContentTransitionScope.SlideDirection.Right,
+                                        animationSpec = tween(miscScreenAnimationDuration)
+                                    )
+                                },
+                                popEnterTransition = {
+                                    slideIntoContainer(
+                                        AnimatedContentTransitionScope.SlideDirection.Up,
+                                        animationSpec = tween(miscScreenAnimationDuration)
+                                    )
+                                },
+                                popExitTransition = {
+                                    slideOutOfContainer(
+                                        AnimatedContentTransitionScope.SlideDirection.Down,
+                                        animationSpec = tween(miscScreenAnimationDuration)
+                                    )
+                                },
+                            ) {
+                                MiscScreen(onDeepLinkButtonClick = {
+                                    val firstCoffeeIndex = 0
+                                    navController.navigate(Uri.parse("$CoffeeDetailsScreenDeepLinkUri/$firstCoffeeIndex"))
+                                })
+                            }
                         }
                     }
                 }
