@@ -12,7 +12,7 @@ import se.yverling.lab.android.coffees.model.Coffee
 import javax.inject.Inject
 
 @HiltViewModel
-internal class CoffeesViewModel @Inject constructor(
+class CoffeesViewModel @Inject constructor(
     private val repository: CoffeesRepository
 ) : ViewModel() {
     private val mutableUiState: MutableStateFlow<CoffeesUiState> =

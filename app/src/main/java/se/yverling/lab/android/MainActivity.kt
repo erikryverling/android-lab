@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import se.yverling.lab.android.coffees.navigation.AdaptiveCoffeesScreen
 import se.yverling.lab.android.coffees.navigation.CoffeesRoute
 import se.yverling.lab.android.coffees.navigation.coffeesGraph
 import se.yverling.lab.android.coffees.ui.CoffeeDetailsScreenDeepLinkUri
@@ -93,7 +94,17 @@ class MainActivity : ComponentActivity() {
                             startDestination = CoffeesRoute,
                             Modifier.padding(innerPadding)
                         ) {
-                            coffeesGraph(navController)
+
+                            // Preferably we should only use the AdaptiveCoffeesScreen(),
+                            // but since coffeesGraph() contains good examples of navigation
+                            // logic we'll keep both
+                            if (windowWithSizeClassIsExpanded) {
+                                composable(NavigationItem.Coffees.route) {
+                                    AdaptiveCoffeesScreen()
+                                }
+                            } else {
+                                coffeesGraph(navController)
+                            }
 
                             composable(NavigationItem.Weather.route) {
                                 WeatherScreen()

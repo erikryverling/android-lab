@@ -24,7 +24,7 @@ class CoffeeListSnapshotTest {
                     region = "region"
                 )),
                 isUppercase = false,
-                onNavigateToDetails = {}
+                onCoffeeClicked = {}
             )
         }
     }
