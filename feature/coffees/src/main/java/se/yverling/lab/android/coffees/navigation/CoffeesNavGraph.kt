@@ -11,8 +11,8 @@ import se.yverling.lab.android.coffees.ui.CoffeeDetailsScreen
 import se.yverling.lab.android.coffees.ui.CoffeeDetailsScreenDeepLinkUri
 import se.yverling.lab.android.coffees.ui.CoffeeDetailsScreenDestination
 import se.yverling.lab.android.coffees.ui.CoffeeDetailsScreenNavArgument
-import se.yverling.lab.android.coffees.ui.CoffeeListScreenDestination
 import se.yverling.lab.android.coffees.ui.CoffeeListScreen
+import se.yverling.lab.android.coffees.ui.CoffeeListScreenDestination
 import timber.log.Timber
 
 const val CoffeesRoute = "coffees"
@@ -21,7 +21,7 @@ fun NavGraphBuilder.coffeesGraph(navController: NavController) {
     navigation(startDestination = CoffeeListScreenDestination, route = CoffeesRoute) {
         composable(CoffeeListScreenDestination) {
             CoffeeListScreen(
-                onNavigateToDetails = { coffeeIndex ->
+                onCoffeeClicked = { coffeeIndex ->
                     // We could also call it with ?firstOptional=test or ?firstOptional=test&secondOptional=test
                     navController.navigate("$CoffeeDetailsScreenDestination/$coffeeIndex?sectionOptional=test")
                 },

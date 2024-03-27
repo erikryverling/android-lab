@@ -6,4 +6,9 @@
     <string name="sun_icon_content_description">Sun icon</string>
     <string name="back_arrow_content_description">Back arrow icon</string>
     <string name="coffee_icon_description">Coffee</string>
+    <string name="no_coffee_selected">Please select a coffee from the list</string>
+    <string name="coffee_name">Name</string>
+    <string name="coffee_origin">Origin</string>
+    <string name="coffee_roaster">Roaster</string>
+    <string name="coffee_region">Region</string>
 </resources>

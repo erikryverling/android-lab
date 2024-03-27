@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
@@ -29,7 +30,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import se.yverling.lab.android.coffees.navigation.CoffeesRoute
+import se.yverling.lab.android.coffees.navigation.AdaptiveCoffeesScreen
 import se.yverling.lab.android.coffees.navigation.coffeesGraph
 import se.yverling.lab.android.coffees.ui.CoffeeDetailsScreenDeepLinkUri
 import se.yverling.lab.android.design.theme.AndroidLabTheme
@@ -74,26 +75,38 @@ class MainActivity : ComponentActivity() {
                 )
 
                 val windowSizeClass = calculateWindowSizeClass(this)
-                val windowWithSizeClassIsExpanded = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded
+                val isTabletLandscape = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded
+                        && windowSizeClass.heightSizeClass == WindowHeightSizeClass.Medium
+
 
                 Scaffold(
                     bottomBar = {
-                        if (!windowWithSizeClassIsExpanded) {
+                        if (!isTabletLandscape) {
                             BottomNavigation(navController = navController, items = items)
                         }
                     },
                 ) { innerPadding ->
                     Row {
-                        if (windowWithSizeClassIsExpanded) {
+                        if (isTabletLandscape) {
                             SideNavigation(navController = navController, items = items)
                         }
 
                         NavHost(
                             navController,
-                            startDestination = CoffeesRoute,
+                            startDestination = NavigationItem.Coffees.route,
                             Modifier.padding(innerPadding)
                         ) {
-                            coffeesGraph(navController)
+
+                            // Preferably we should only use the AdaptiveCoffeesScreen(),
+                            // but since coffeesGraph() contains good examples of navigation
+                            // logic we'll keep both
+                            if (isTabletLandscape) {
+                                composable(NavigationItem.Coffees.route) {
+                                    AdaptiveCoffeesScreen()
+                                }
+                            } else {
+                                coffeesGraph(navController)
+                            }
 
                             composable(NavigationItem.Weather.route) {
                                 WeatherScreen()
