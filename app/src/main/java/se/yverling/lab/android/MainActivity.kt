@@ -147,10 +147,17 @@ class MainActivity : ComponentActivity() {
                                     )
                                 },
                             ) {
-                                MiscScreen(onDeepLinkButtonClick = {
-                                    val firstCoffeeIndex = 0
-                                    navController.navigate(Uri.parse("$CoffeeDetailsScreenDeepLinkUri/$firstCoffeeIndex"))
-                                })
+                                MiscScreen(
+                                    onDeepLinkButtonClick =
+                                    if (isTabletLandscape) {
+                                        null
+                                    } else {
+                                        {
+                                            val firstCoffeeIndex = 0
+                                            navController.navigate(Uri.parse("$CoffeeDetailsScreenDeepLinkUri/$firstCoffeeIndex"))
+                                        }
+                                    }
+                                )
                             }
                         }
                     }

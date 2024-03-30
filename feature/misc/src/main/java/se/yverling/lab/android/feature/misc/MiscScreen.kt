@@ -100,15 +100,11 @@ data class Employer(var name: String)
 const val MiscScreenDestination = "miscScreen"
 
 @SuppressLint("AutoboxingStateCreation")
-@OptIn(
-    ExperimentalMaterialApi::class,
-    ExperimentalFoundationApi::class
-)
 @Composable
 fun MiscScreen(
+    onDeepLinkButtonClick: (() -> Unit)?,
     modifier: Modifier = Modifier,
-    onDeepLinkButtonClick: () -> Unit,
-    viewModel: MiscViewModel = hiltViewModel()
+    viewModel: MiscViewModel = hiltViewModel(),
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -237,10 +233,12 @@ fun MiscScreen(
                         dynamicTheme = !dynamicTheme
                     }
 
-                    MiscButton(
-                        text = R.string.deep_link_button_title,
-                        modifier = Modifier.padding(bottom = LargeSpace)
-                    ) { onDeepLinkButtonClick.invoke() }
+                    onDeepLinkButtonClick?.let {
+                        MiscButton(
+                            text = R.string.deep_link_button_title,
+                            modifier = Modifier.padding(bottom = LargeSpace)
+                        ) { onDeepLinkButtonClick.invoke() }
+                    }
 
                     MiscButton(
                         text = R.string.recompose_button_title,
