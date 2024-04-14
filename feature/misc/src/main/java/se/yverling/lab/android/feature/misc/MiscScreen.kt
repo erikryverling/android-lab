@@ -99,6 +99,7 @@ data class Employer(var name: String)
 
 const val MiscScreenDestination = "miscScreen"
 
+@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @SuppressLint("AutoboxingStateCreation")
 @Composable
 fun MiscScreen(
