@@ -61,6 +61,6 @@ class GetAndCacheWeatherUseCaseTest {
             }
         }
 
-        verify { networkRepositoryMock.getCurrentWeather() wasNot Called }
+        verify(atMost = 0, atLeast = 0) { networkRepositoryMock.getCurrentWeather() }
     }
 }
