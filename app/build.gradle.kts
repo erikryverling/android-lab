@@ -5,6 +5,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     alias(libs.plugins.paparazzi)
     id("org.jetbrains.kotlinx.kover")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 repositories {
@@ -76,10 +77,6 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.kotlinCompilerExtensionVersion
     }
 
     buildTypes {

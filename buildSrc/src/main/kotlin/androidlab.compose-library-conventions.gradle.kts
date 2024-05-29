@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("androidlab.android-library-conventions")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 dependencies {
@@ -12,10 +13,6 @@ dependencies {
 android {
     buildFeatures {
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.kotlinCompilerExtensionVersion
     }
 }
 

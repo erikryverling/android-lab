@@ -1,6 +1,7 @@
 import java.util.*
 
 plugins {
+    // NOTE! There are more plugins defined in buildSrc/build.gradle.kts
     alias(libs.plugins.versions)
     alias(libs.plugins.protobuf) apply false
     alias(libs.plugins.paparazzi) apply false

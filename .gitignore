@@ -33,3 +33,6 @@ captures/
 # Android studio project files
 *.iml
 *idea
+
+# Kotlin files
+.kotlin/
