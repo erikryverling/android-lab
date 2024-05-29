@@ -282,7 +282,7 @@ fun MiscScreen(
 
                     AutoFillTextField(
                         modifier = Modifier.padding(bottom = SmallSpace),
-                        InputType.EMAIl
+                        InputType.EMAIL
                     )
 
                     AutoFillTextField(
@@ -389,7 +389,7 @@ fun AutoFillTextField(modifier: Modifier = Modifier, inputType: InputType) {
 
     val autofillNode = AutofillNode(
         autofillTypes =
-        if (inputType == InputType.EMAIl) {
+        if (inputType == InputType.EMAIL) {
             listOf(AutofillType.EmailAddress)
         } else {
             listOf(AutofillType.Password)
@@ -415,15 +415,15 @@ fun AutoFillTextField(modifier: Modifier = Modifier, inputType: InputType) {
                 }
             },
         value = value,
-        label = { Text(text = if (inputType == InputType.EMAIl) "Email" else "Password") },
+        label = { Text(text = if (inputType == InputType.EMAIL) "Email" else "Password") },
         keyboardOptions =
-        if (inputType == InputType.EMAIl) {
+        if (inputType == InputType.EMAIL) {
             KeyboardOptions(keyboardType = KeyboardType.Email)
         } else {
             KeyboardOptions(keyboardType = KeyboardType.Password)
         },
         visualTransformation =
-        if (inputType == InputType.EMAIl) VisualTransformation.None else PasswordVisualTransformation(),
+        if (inputType == InputType.EMAIL) VisualTransformation.None else PasswordVisualTransformation(),
         onValueChange = { value = it },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             // TODO This should be set by default. Hmm...
@@ -434,7 +434,7 @@ fun AutoFillTextField(modifier: Modifier = Modifier, inputType: InputType) {
 }
 
 enum class InputType {
-    EMAIl,
+    EMAIL,
     PASSWORD
 }
 
@@ -520,7 +520,7 @@ fun SkippableComposablePreview() {
 @Composable
 fun AutoFillTextFieldPreview() {
     AndroidLabTheme {
-        AutoFillTextField(inputType = InputType.EMAIl)
+        AutoFillTextField(inputType = InputType.EMAIL)
     }
 }
 
