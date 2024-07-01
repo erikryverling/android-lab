@@ -23,15 +23,24 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.TrendingUp
+import androidx.compose.material.icons.filled.BookmarkBorder
+import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -42,6 +51,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -99,6 +109,7 @@ data class Employer(var name: String)
 
 const val MiscScreenDestination = "miscScreen"
 
+@ExperimentalMaterial3Api
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @SuppressLint("AutoboxingStateCreation")
 @Composable
@@ -178,6 +189,7 @@ fun MiscScreen(
                 Column(
                     modifier
                         .fillMaxSize()
+                        .padding(DefaultSpace)
                         .verticalScroll(rememberScrollState()),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
@@ -309,6 +321,31 @@ fun MiscScreen(
                         pagerState = pagerState,
                         modifier = Modifier.padding(bottom = LargeSpace)
                     )
+
+                    val segmentedButtonsCheckedList = remember { mutableStateListOf<Int>() }
+                    val segmentedButtonsEntries = listOf(
+                        R.string.segmented_button_1_title,
+                        R.string.segmented_button_2_title,
+                        R.string.segmented_button_3_title
+                    )
+
+                    MultiChoiceSegmentedButtonRow {
+                        segmentedButtonsEntries.forEachIndexed { index, label ->
+                            SegmentedButton(
+                                shape = SegmentedButtonDefaults.itemShape(index = index, count = segmentedButtonsEntries.size),
+                                onCheckedChange = {
+                                    if (index in segmentedButtonsCheckedList) {
+                                        segmentedButtonsCheckedList.remove(index)
+                                    } else {
+                                        segmentedButtonsCheckedList.add(index)
+                                    }
+                                },
+                                checked = index in segmentedButtonsCheckedList
+                            ) {
+                                Text(stringResource(label))
+                            }
+                        }
+                    }
 
                     // This would run on each recomposition.
                     // val list = createHugeList()
