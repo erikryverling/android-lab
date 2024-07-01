@@ -19,7 +19,7 @@ internal const val CoffeeListScreenDestination = "coffeeListScreen"
 @Composable
 internal fun CoffeeListScreen(
     viewModel: CoffeesViewModel = hiltViewModel(),
-    onCoffeeClicked: (Int) -> Unit
+    onCoffeeClicked: (Int) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState(CoffeesUiState.Loading)
 
@@ -41,7 +41,7 @@ internal fun CoffeeListScreen(
                     coffees = coffees,
                     isUppercase = isUppercase,
                     showHeading = true,
-                    onCoffeeClicked = onCoffeeClicked
+                    onCoffeeClicked = onCoffeeClicked,
                 )
             }
         }

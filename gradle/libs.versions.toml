@@ -1,4 +1,5 @@
 [versions]
+
 # Global
 kotlin = "2.0.0"
 hilt = "2.51.1"
@@ -57,7 +58,6 @@ protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi-plugin" }
 kotlin-dsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlin-dsl-plugin" }
-
 
 [libraries]
 # --- NOTE! These Gradle plugins are used in :buildSrc and thus defined here instead of in [plugins] ---

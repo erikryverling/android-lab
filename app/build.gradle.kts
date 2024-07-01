@@ -51,10 +51,6 @@ dependencies {
 android {
     compileSdk = Versions.compileSdk
 
-    defaultConfig {
-        minSdk = Versions.minSdk
-    }
-
     compileOptions {
         // KSP only supports Java 17
         sourceCompatibility = JavaVersion.VERSION_17
@@ -68,6 +64,8 @@ android {
     namespace = "se.yverling.lab.android"
 
     defaultConfig {
+        minSdk = Versions.minSdk
+
         applicationId = "se.yverling.lab.android"
         versionCode = 10000 // Version & release number
         versionName = "1.0.0"

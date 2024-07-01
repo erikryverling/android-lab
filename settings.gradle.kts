@@ -6,12 +6,12 @@ include(
     ":common:design-system",
     ":common:ui",
     ":data:coffees",
-    ":data:weather",
     ":data:misc",
-    ":feature:coffees",
-    ":feature:weather",
+    ":data:weather",
     ":feature:animation",
+    ":feature:coffees",
     ":feature:misc",
+    ":feature:weather",
     ":test:benchmark",
     ":test:utils"
 )

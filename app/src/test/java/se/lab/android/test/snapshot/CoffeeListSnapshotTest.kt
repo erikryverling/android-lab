@@ -25,7 +25,7 @@ class CoffeeListSnapshotTest {
                 )),
                 showHeading = true,
                 isUppercase = false,
-                onCoffeeClicked = {}
+                onCoffeeClicked = {},
             )
         }
     }

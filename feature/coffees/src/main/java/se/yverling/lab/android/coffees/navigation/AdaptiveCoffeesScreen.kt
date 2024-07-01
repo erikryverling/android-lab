@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3AdaptiveApi::class)
-
 package se.yverling.lab.android.coffees.navigation
 
 import androidx.activity.compose.BackHandler
@@ -28,7 +26,8 @@ import se.yverling.lab.android.coffees.ui.CoffeeList
 import se.yverling.lab.android.coffees.ui.UppercaseFab
 import se.yverling.lab.android.ui.LoadingScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
+@ExperimentalMaterial3AdaptiveApi
+@ExperimentalMaterial3Api
 @Composable
 fun AdaptiveCoffeesScreen(
     viewModel: CoffeesViewModel = hiltViewModel(),
@@ -73,7 +72,7 @@ fun AdaptiveCoffeesScreen(
                                 showHeading = false,
                                 onCoffeeClicked = { index ->
                                     selectedCoffee = coffees[index]
-                                }
+                                },
                             )
                         }
                     },

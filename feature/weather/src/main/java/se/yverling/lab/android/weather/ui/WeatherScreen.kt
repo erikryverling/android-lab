@@ -2,18 +2,28 @@ package se.yverling.lab.android.weather.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -21,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.launch
 import se.yverling.lab.android.data.weather.model.CurrentWeather
 import se.yverling.lab.android.data.weather.model.Wind
 import se.yverling.lab.android.design.theme.AndroidLabTheme
@@ -33,6 +44,7 @@ import se.yverling.lab.android.weather.WeatherViewModel
 
 const val WeatherScreenDestination = "weatherScreen"
 
+@ExperimentalMaterialApi
 @Composable
 fun WeatherScreen(
     modifier: Modifier = Modifier,
@@ -42,36 +54,68 @@ fun WeatherScreen(
 
     when (uiState) {
         WeatherUiState.Loading -> LoadingScreen()
-        is WeatherUiState.Error -> DataScreen(modifier, uiState, onRetryButtonClicked = {
-            viewModel.reload()
-        })
+        is WeatherUiState.Error -> DataScreen(
+            modifier = modifier,
+            uiState = uiState,
+            onRefresh = {
+                viewModel.reload()
+            },
+            onRetryButtonClicked = {
+                viewModel.reload()
+            }
+        )
 
-        is WeatherUiState.Success -> DataScreen(modifier, uiState)
+        is WeatherUiState.Success -> DataScreen(
+            modifier = modifier,
+            uiState = uiState,
+            onRefresh = {
+                viewModel.reload()
+            }
+        )
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 private fun DataScreen(
     modifier: Modifier = Modifier,
     uiState: WeatherUiState,
+    onRefresh: () -> Unit,
     onRetryButtonClicked: (() -> Unit)? = null
 ) {
-    Column(
-        modifier
-            .fillMaxSize()
-            .padding(DefaultSpace),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (uiState !is WeatherUiState.Success) {
-            val errorMessage: String = uiState.data as String
-            ErrorContent(errorMessage)
-        } else {
-            val currentWeather: CurrentWeather = uiState.data as CurrentWeather
-            WeatherContent(currentWeather)
+    val refreshScope = rememberCoroutineScope()
+    var refreshing by remember { mutableStateOf(false) }
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = refreshing,
+        onRefresh = {
+            refreshScope.launch {
+                refreshing = true
+                onRefresh()
+                refreshing = false
+            }
+        }
+    )
+
+    Box(modifier = modifier.pullRefresh(pullRefreshState)) {
+        LazyColumn(
+            modifier
+                .fillMaxSize()
+                .padding(DefaultSpace),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            if (uiState !is WeatherUiState.Success) {
+                val errorMessage: String = uiState.data as String
+                item { ErrorContent(errorMessage) }
+            } else {
+                val currentWeather: CurrentWeather = uiState.data as CurrentWeather
+                item { WeatherContent(currentWeather) }
+            }
+
+            onRetryButtonClicked?.let { item { RetryButton(it) } }
         }
 
-        onRetryButtonClicked?.let { RetryButton(it) }
+        PullRefreshIndicator(refreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
     }
 }
 
@@ -155,6 +199,7 @@ fun RetryButtonPreview() {
     }
 }
 
+@ExperimentalMaterialApi
 @Preview(name = "Light Mode")
 @Preview(
     name = "Dark Mode",
@@ -174,7 +219,8 @@ fun WeatherContentPreview() {
                     ),
                     locationName = "Location"
                 )
-            )
+            ),
+            onRefresh = {}
         )
     }
 }
