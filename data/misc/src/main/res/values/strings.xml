@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="carousel_image_1_description">Carousel image 1</string>
+    <string name="carousel_image_2_description">Carousel image 2</string>
+    <string name="carousel_image_3_description">Carousel image 3</string>
+    <string name="carousel_image_4_description">Carousel image 4</string>
+    <string name="carousel_image_5_description">Carousel image 5</string>
+    <string name="carousel_image_6_description">Carousel image 6</string>
+    <string name="carousel_image_7_description">Carousel image 7</string>
+    <string name="carousel_image_8_description">Carousel image 8</string>
+</resources>

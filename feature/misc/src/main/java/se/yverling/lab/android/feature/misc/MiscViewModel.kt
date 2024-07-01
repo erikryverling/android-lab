@@ -14,6 +14,8 @@ import javax.inject.Inject
 class MiscViewModel @Inject constructor(repository: MiscRepository) : ViewModel() {
     var uiState: StateFlow<MiscUiState>
 
+    val carouselItems = repository.carouselItems
+
     init {
         uiState = repository.longRunningFlow().map {
             println("In map got: $it")

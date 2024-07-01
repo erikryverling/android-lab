@@ -5,13 +5,16 @@ import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
@@ -45,6 +48,8 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.carousel.HorizontalUncontainedCarousel
+import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -87,6 +92,7 @@ import se.yverling.lab.android.design.theme.DefaultSpace
 import se.yverling.lab.android.design.theme.LargeSpace
 import se.yverling.lab.android.design.theme.MediumSpace
 import se.yverling.lab.android.design.theme.SmallSpace
+import se.yverling.lab.android.feature.misc.theme.CarouselItemSize
 import timber.log.Timber
 
 internal const val REMOTE_IMAGE_URL = "https://erik.r.yverling.com/twinkle-logo.png"
@@ -329,7 +335,9 @@ fun MiscScreen(
                         R.string.segmented_button_3_title
                     )
 
-                    MultiChoiceSegmentedButtonRow {
+                    MultiChoiceSegmentedButtonRow(
+                        modifier = Modifier.padding(bottom = LargeSpace)
+                    ) {
                         segmentedButtonsEntries.forEachIndexed { index, label ->
                             SegmentedButton(
                                 shape = SegmentedButtonDefaults.itemShape(index = index, count = segmentedButtonsEntries.size),
@@ -345,6 +353,24 @@ fun MiscScreen(
                                 Text(stringResource(label))
                             }
                         }
+                    }
+
+                    val carouselItems = viewModel.carouselItems
+
+                    HorizontalUncontainedCarousel(
+                        modifier = Modifier.height(CarouselItemSize),
+                        state = rememberCarouselState { carouselItems.count() },
+                        itemWidth = CarouselItemSize,
+                        itemSpacing = SmallSpace,
+                        contentPadding = PaddingValues(horizontal = DefaultSpace)
+                    ) { i ->
+                        val item = carouselItems[i]
+                        Image(
+                            modifier = Modifier.maskClip(MaterialTheme.shapes.extraLarge),
+                            painter = painterResource(id = item.imageResId),
+                            contentDescription = stringResource(item.contentDescriptionResId),
+                            contentScale = ContentScale.Crop
+                        )
                     }
 
                     // This would run on each recomposition.
