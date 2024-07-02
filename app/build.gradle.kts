@@ -105,8 +105,10 @@ plugins.withId("app.cash.paparazzi") {
                         objects.named(TargetJvmEnvironment::class.java, TargetJvmEnvironment.STANDARD_JVM)
                     )
                 }
-                because("LayoutLib and sdk-common depend on Guava's -jre published variant." +
-                        "See https://github.com/cashapp/paparazzi/issues/906.")
+                because(
+                    "LayoutLib and sdk-common depend on Guava's -jre published variant." +
+                            "See https://github.com/cashapp/paparazzi/issues/906."
+                )
             }
         }
     }
@@ -122,14 +124,16 @@ dependencies {
     kover(project(":data:misc"))
 }
 
-koverReport {
-    filters {
-        includes {
-            classes("*ViewModel*", "*UseCase*", "*Repository*")
-        }
+kover {
+    reports {
+        filters {
+            includes {
+                classes("*ViewModel*", "*UseCase*", "*Repository*")
+            }
 
-        excludes {
-            classes("hilt_*", "*_Factory*", "*_Hilt*")
+            excludes {
+                classes("hilt_*", "*_Factory*", "*_Hilt*")
+            }
         }
     }
 }
