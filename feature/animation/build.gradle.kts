@@ -14,3 +14,9 @@ dependencies {
 android {
     namespace = "se.yverling.lab.android.feature.animation"
 }
+
+// https://developer.android.com/develop/ui/compose/performance/stability/strongskipping
+// TODO If we have problem disable this
+composeCompiler {
+    enableStrongSkippingMode = true
+}
