@@ -2,7 +2,6 @@ package se.yverling.lab.android.feature.misc
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
-import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -22,34 +21,25 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetState
-import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.TrendingUp
-import androidx.compose.material.icons.filled.BookmarkBorder
-import androidx.compose.material.icons.filled.StarBorder
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.MultiChoiceSegmentedButtonRow
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.carousel.HorizontalUncontainedCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -81,11 +71,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import se.yverling.lab.android.design.theme.AndroidLabTheme
 import se.yverling.lab.android.design.theme.DefaultSpace
@@ -116,7 +104,6 @@ data class Employer(var name: String)
 const val MiscScreenDestination = "miscScreen"
 
 @ExperimentalMaterial3Api
-@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @SuppressLint("AutoboxingStateCreation")
 @Composable
 fun MiscScreen(
@@ -134,278 +121,254 @@ fun MiscScreen(
     AndroidLabTheme(dynamicColor = dynamicTheme) {
         val coroutineScope = rememberCoroutineScope()
 
-        val modalSheetState = rememberModalBottomSheetState(
-            initialValue = ModalBottomSheetValue.Hidden,
-            confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded },
-            skipHalfExpanded = false
-        )
+        Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) }) { padding ->
+            val modalSheetState = rememberModalBottomSheetState()
+            var showBottomSheet by remember { mutableStateOf(false) }
 
-        var isBottomSheetFullScreen by remember { mutableStateOf(false) }
-
-        val roundedCornerRadius = if (isBottomSheetFullScreen) 0.dp else DefaultSpace
-
-        val bottomSheetModifier = if (isBottomSheetFullScreen) {
-            Modifier.fillMaxSize()
-        } else {
-            Modifier.fillMaxWidth()
-        }
-
-        BackHandler(modalSheetState.isVisible) {
-            coroutineScope.launch { modalSheetState.hide() }
-        }
-
-        ModalBottomSheetLayout(
-            sheetState = modalSheetState,
-            sheetShape = RoundedCornerShape(
-                topStart = roundedCornerRadius,
-                topEnd = roundedCornerRadius
-            ),
-            sheetContent = {
-                Row(
-                    modifier = bottomSheetModifier.padding(MediumSpace),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+            if (showBottomSheet) {
+                ModalBottomSheet(
+                    modifier = Modifier.fillMaxSize(),
+                    sheetState = modalSheetState,
+                    onDismissRequest = { showBottomSheet = false }
                 ) {
-                    Button(
-                        modifier = Modifier.padding(end = MediumSpace),
-                        onClick = { isBottomSheetFullScreen = !isBottomSheetFullScreen }
+                    Row(
+                        modifier = modifier
+                            .padding(MediumSpace)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
                     ) {
-                        val text =
-                            if (isBottomSheetFullScreen) {
-                                stringResource(
-                                    R.string.bottom_sheet_button_toogle_half_expanded_button_title
-                                )
-                            } else {
-                                stringResource(
-                                    R.string.bottom_sheet_button_toogle_fullscreen_button_title
-                                )
+                        Button(
+                            modifier = Modifier.padding(end = MediumSpace),
+                            onClick = {
+                                if (modalSheetState.currentValue == SheetValue.PartiallyExpanded) {
+                                    coroutineScope.launch {
+                                        modalSheetState.expand()
+                                    }
+                                } else if (modalSheetState.currentValue == SheetValue.Expanded) {
+                                    coroutineScope.launch {
+                                        modalSheetState.partialExpand()
+                                    }
+                                }
                             }
-                        Text(text)
-                    }
+                        ) {
+                            val text =
+                                if (modalSheetState.currentValue == SheetValue.PartiallyExpanded) {
+                                    stringResource(
+                                        R.string.bottom_sheet_button_toogle_fullscreen_button_title
+                                    )
+                                } else {
+                                    stringResource(
+                                        R.string.bottom_sheet_button_toogle_half_expanded_button_title
+                                    )
+                                }
+                            Text(text)
+                        }
 
-                    Button(
-                        onClick = { coroutineScope.launch { modalSheetState.hide() } }
-                    ) {
-                        Text(stringResource(R.string.bottom_sheet_button_hide_button_title))
+                        Button(
+                            onClick = {
+                                coroutineScope.launch {
+                                    modalSheetState.hide()
+                                    showBottomSheet = false
+                                }
+                            }
+                        ) {
+                            Text(stringResource(R.string.bottom_sheet_button_hide_button_title))
+                        }
                     }
                 }
             }
-        ) {
-            Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) }) { padding ->
-                Column(
-                    modifier
-                        .fillMaxSize()
-                        .padding(DefaultSpace)
-                        .verticalScroll(rememberScrollState()),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
+
+            Column(
+                modifier
+                    .fillMaxSize()
+                    .padding(DefaultSpace)
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                /*
+                    mutableState() will make sure that the composable is recomposed whenever the counter value is changed.
+                    remember() will make sure that it's also saved during recomposition and not reset.
+                    So in theory we could use only mutableState() if we move the counter outside of the composable
+                 */
+                var manualRecomposeCount by remember { mutableStateOf(0) }
+
+                /*
+                    This will crate a state value that only updates when the counter changes from being larger than 0
+                    and will be more efficient than checking counter > 0 directly
+                 */
+                val showSnackbar by remember {
+                    derivedStateOf {
+                        manualRecomposeCount > 0
+                    }
+                }
+
+                /*
+                    To call a suspended function from within a Composable we need to use a LaunchedEffect.
+                    To control when the launched effect is called we provide a key. The launched effect will
+                    then be run each time the containing composable is recomposed and the key has changed
+                    value
+                 */
+                if (showSnackbar) {
                     /*
-                        mutableState() will make sure that the composable is recomposed whenever the counter value is changed.
-                        remember() will make sure that it's also saved during recomposition and not reset.
-                        So in theory we could use only mutableState() if we move the counter outside of the composable
+                        This will guarantee to refer to the latest logNumberOfManualRecompositions() function that the closest
+                        composable (Column) was recomposed with
                      */
-                    var counter by remember { mutableStateOf(0) }
-
-                    /*
-                        This will crate a state value that only updates when the counter changes from being larger than 0
-                        and will be more efficient than checking counter > 0 directly
-                     */
-                    val showSnackbar by remember {
-                        derivedStateOf {
-                            counter > 0
-                        }
-                    }
-
-                    /*
-                        To call a suspended function from within a Composable we need to use a LaunchedEffect.
-                        To control when the launched effect is called we provide a key. The launched effect will
-                        then be run each time the containing composable is recomposed and the key has changed
-                        value
-                     */
-                    if (showSnackbar) {
-                        /*
-                            This will guarantee to refer to the latest logNumberOfManualRecompositions() function that the closest
-                            composable (Column) was recomposed with
-                         */
-                        val currentNumberOfManualRecompositions by rememberUpdatedState(
-                            ::logNumberOfManualRecompositions
-                        )
-
-                        LaunchedEffect(counter) {
-                            scope.launch {
-                                currentNumberOfManualRecompositions(counter)
-                                snackbarHostState.currentSnackbarData?.dismiss()
-
-                                snackbarHostState.showSnackbar(
-                                    message = "Number of manual recompositions: $counter",
-                                    duration = SnackbarDuration.Short
-                                )
-                            }
-                        }
-                    }
-
-                    MiscButton(
-                        text = if (dynamicTheme) R.string.custom_theme else R.string.dynamic_theme,
-                        modifier = Modifier.padding(bottom = LargeSpace, top = LargeSpace)
-                    ) {
-                        dynamicTheme = !dynamicTheme
-                    }
-
-                    onDeepLinkButtonClick?.let {
-                        MiscButton(
-                            text = R.string.deep_link_button_title,
-                            modifier = Modifier.padding(bottom = LargeSpace)
-                        ) { onDeepLinkButtonClick.invoke() }
-                    }
-
-                    MiscButton(
-                        text = R.string.recompose_button_title,
-                        modifier = Modifier.padding(bottom = LargeSpace)
-                    ) {
-                        counter++
-                        if (counter % 2 == 0) evenCounter++
-                    }
-
-                    OpenBottomSheetButton(
-                        Modifier.padding(bottom = LargeSpace),
-                        coroutineScope,
-                        modalSheetState
+                    val currentNumberOfManualRecompositions by rememberUpdatedState(
+                        ::logNumberOfManualRecompositions
                     )
 
-                    val state by viewModel.uiState.collectAsStateWithLifecycle()
+                    LaunchedEffect(manualRecomposeCount) {
+                        scope.launch {
+                            currentNumberOfManualRecompositions(manualRecomposeCount)
+                            snackbarHostState.currentSnackbarData?.dismiss()
+
+                            snackbarHostState.showSnackbar(
+                                message = "Number of manual recompositions: $manualRecomposeCount",
+                                duration = SnackbarDuration.Short
+                            )
+                        }
+                    }
+                }
+
+                MiscButton(
+                    text = if (dynamicTheme) R.string.custom_theme else R.string.dynamic_theme,
+                    modifier = Modifier.padding(bottom = LargeSpace, top = LargeSpace)
+                ) {
+                    dynamicTheme = !dynamicTheme
+                }
+
+                onDeepLinkButtonClick?.let {
+                    MiscButton(
+                        text = R.string.deep_link_button_title,
+                        modifier = Modifier.padding(bottom = LargeSpace)
+                    ) { onDeepLinkButtonClick.invoke() }
+                }
+
+                MiscButton(
+                    text = R.string.recompose_button_title,
+                    modifier = Modifier.padding(bottom = LargeSpace)
+                ) {
+                    manualRecomposeCount++
+                    if (manualRecomposeCount % 2 == 0) evenCounter++
+                }
+
+                MiscButton(
+                    text = R.string.bottom_sheet_button_title,
+                    modifier = Modifier.padding(bottom = LargeSpace),
+                ) {
+                    showBottomSheet = true
+                }
+
+                val state by viewModel.uiState.collectAsStateWithLifecycle()
+                Text(
+                    modifier = Modifier.padding(bottom = LargeSpace),
+                    text = "Collecting: ${state.name}",
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center
+                )
+
+                SkippableComposable(
+                    modifier = Modifier.padding(bottom = LargeSpace),
+                    person = Person(mutableListOf("Immut", "Able")),
+                    employer = Employer("Stable Inc.")
+                )
+
+                AsyncImage(
+                    modifier = Modifier.padding(bottom = LargeSpace),
+                    model = REMOTE_IMAGE_URL,
+                    placeholder = painterResource(R.drawable.baseline_image_24),
+                    error = painterResource(R.drawable.baseline_broken_image_24),
+                    contentDescription = stringResource(
+                        R.string.remote_image_content_description
+                    ),
+                    contentScale = ContentScale.Fit
+                )
+
+                AutoFillTextField(
+                    modifier = Modifier.padding(bottom = SmallSpace),
+                    InputType.EMAIL
+                )
+
+                AutoFillTextField(
+                    modifier = Modifier.padding(bottom = LargeSpace),
+                    InputType.PASSWORD
+                )
+
+                val pagerState = rememberPagerState(pageCount = { PAGE_COUNT })
+
+                HorizontalPager(
+                    state = pagerState
+                ) { page ->
                     Text(
-                        modifier = Modifier.padding(bottom = LargeSpace),
-                        text = "Collecting: ${state.name}",
-                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = LargeSpace),
+                        text = "Page ${page + 1}",
+                        style = MaterialTheme.typography.displaySmall,
                         textAlign = TextAlign.Center
                     )
+                }
 
-                    SkippableComposable(
-                        modifier = Modifier.padding(bottom = LargeSpace),
-                        person = Person(mutableListOf("Cloud", "Strife")),
-                        employer = Employer("Shinra")
-                    )
+                PageIndicator(
+                    pagerState = pagerState,
+                    modifier = Modifier.padding(bottom = LargeSpace)
+                )
 
-                    AsyncImage(
-                        modifier = Modifier.padding(bottom = LargeSpace),
-                        model = REMOTE_IMAGE_URL,
-                        placeholder = painterResource(R.drawable.baseline_image_24),
-                        error = painterResource(R.drawable.baseline_broken_image_24),
-                        contentDescription = stringResource(
-                            R.string.remote_image_content_description
-                        ),
-                        contentScale = ContentScale.Fit
-                    )
+                val segmentedButtonsCheckedList = remember { mutableStateListOf<Int>() }
+                val segmentedButtonsEntries = listOf(
+                    R.string.segmented_button_1_title,
+                    R.string.segmented_button_2_title,
+                    R.string.segmented_button_3_title
+                )
 
-                    AutoFillTextField(
-                        modifier = Modifier.padding(bottom = SmallSpace),
-                        InputType.EMAIL
-                    )
-
-                    AutoFillTextField(
-                        modifier = Modifier.padding(bottom = LargeSpace),
-                        InputType.PASSWORD
-                    )
-
-                    val pagerState = rememberPagerState(pageCount = { PAGE_COUNT })
-
-                    HorizontalPager(
-                        state = pagerState
-                    ) { page ->
-                        Text(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = LargeSpace),
-                            text = "Page ${page + 1}",
-                            style = MaterialTheme.typography.displaySmall,
-                            textAlign = TextAlign.Center
-                        )
-                    }
-
-                    PageIndicator(
-                        pagerState = pagerState,
-                        modifier = Modifier.padding(bottom = LargeSpace)
-                    )
-
-                    val segmentedButtonsCheckedList = remember { mutableStateListOf<Int>() }
-                    val segmentedButtonsEntries = listOf(
-                        R.string.segmented_button_1_title,
-                        R.string.segmented_button_2_title,
-                        R.string.segmented_button_3_title
-                    )
-
-                    MultiChoiceSegmentedButtonRow(
-                        modifier = Modifier.padding(bottom = LargeSpace)
-                    ) {
-                        segmentedButtonsEntries.forEachIndexed { index, label ->
-                            SegmentedButton(
-                                shape = SegmentedButtonDefaults.itemShape(index = index, count = segmentedButtonsEntries.size),
-                                onCheckedChange = {
-                                    if (index in segmentedButtonsCheckedList) {
-                                        segmentedButtonsCheckedList.remove(index)
-                                    } else {
-                                        segmentedButtonsCheckedList.add(index)
-                                    }
-                                },
-                                checked = index in segmentedButtonsCheckedList
-                            ) {
-                                Text(stringResource(label))
-                            }
+                MultiChoiceSegmentedButtonRow(
+                    modifier = Modifier.padding(bottom = LargeSpace)
+                ) {
+                    segmentedButtonsEntries.forEachIndexed { index, label ->
+                        SegmentedButton(
+                            shape = SegmentedButtonDefaults.itemShape(index = index, count = segmentedButtonsEntries.size),
+                            onCheckedChange = {
+                                if (index in segmentedButtonsCheckedList) {
+                                    segmentedButtonsCheckedList.remove(index)
+                                } else {
+                                    segmentedButtonsCheckedList.add(index)
+                                }
+                            },
+                            checked = index in segmentedButtonsCheckedList
+                        ) {
+                            Text(stringResource(label))
                         }
                     }
-
-                    val carouselItems = viewModel.carouselItems
-
-                    HorizontalUncontainedCarousel(
-                        modifier = Modifier.height(CarouselItemSize),
-                        state = rememberCarouselState { carouselItems.count() },
-                        itemWidth = CarouselItemSize,
-                        itemSpacing = SmallSpace,
-                        contentPadding = PaddingValues(horizontal = DefaultSpace)
-                    ) { i ->
-                        val item = carouselItems[i]
-                        Image(
-                            modifier = Modifier.maskClip(MaterialTheme.shapes.extraLarge),
-                            painter = painterResource(id = item.imageResId),
-                            contentDescription = stringResource(item.contentDescriptionResId),
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-
-                    // This would run on each recomposition.
-                    // val list = createHugeList()
-
-                    /* It's better to wrap it in a remember() and only update it when it makes sense.
-                 In this case whenever evenCounter is changed.
-                 Also note that the key to remember() could be of any type. */
-                    val list by remember(evenCounter) { mutableStateOf(createHugeList()) }
                 }
+
+                val carouselItems = viewModel.carouselItems
+
+                HorizontalUncontainedCarousel(
+                    modifier = Modifier.height(CarouselItemSize),
+                    state = rememberCarouselState { carouselItems.count() },
+                    itemWidth = CarouselItemSize,
+                    itemSpacing = SmallSpace,
+                    contentPadding = PaddingValues(horizontal = DefaultSpace)
+                ) { i ->
+                    val item = carouselItems[i]
+                    Image(
+                        modifier = Modifier.maskClip(MaterialTheme.shapes.extraLarge),
+                        painter = painterResource(id = item.imageResId),
+                        contentDescription = stringResource(item.contentDescriptionResId),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+
+                // This would run on each recomposition.
+                // val list = createHugeList()
+
+                /* It's better to wrap it in a remember() and only update it when it makes sense.
+             In this case whenever evenCounter is changed.
+             Also note that the key to remember() could be of any type. */
+                val list by remember(evenCounter) { mutableStateOf(createHugeList()) }
             }
         }
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun OpenBottomSheetButton(
-    modifier: Modifier = Modifier,
-    coroutineScope: CoroutineScope,
-    modalSheetState: ModalBottomSheetState
-) {
-    Button(
-        modifier = modifier,
-        onClick = {
-            coroutineScope.launch {
-                if (modalSheetState.isVisible) {
-                    modalSheetState.hide()
-                } else {
-                    modalSheetState.show()
-                }
-            }
-        }
-    ) {
-        Text(stringResource(R.string.bottom_sheet_button_title))
     }
 }
 
@@ -434,7 +397,7 @@ fun RecomposeButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
 fun SkippableComposable(modifier: Modifier = Modifier, person: Person, employer: Employer) {
     Text(
         modifier = modifier,
-        text = "Name: ${person.names[0]} ${person.names[1]}, employer: ${employer.name}",
+        text = "Name: ${person.names[0]} ${person.names[1]}, Employer: ${employer.name}",
         style = MaterialTheme.typography.titleMedium,
         textAlign = TextAlign.Center
     )
@@ -488,11 +451,6 @@ fun AutoFillTextField(modifier: Modifier = Modifier, inputType: InputType) {
         visualTransformation =
         if (inputType == InputType.EMAIL) VisualTransformation.None else PasswordVisualTransformation(),
         onValueChange = { value = it },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            // TODO This should be set by default. Hmm...
-            focusedBorderColor = MaterialTheme.colorScheme.primary,
-            cursorColor = MaterialTheme.colorScheme.primary
-        )
     )
 }
 
@@ -501,7 +459,6 @@ enum class InputType {
     PASSWORD
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PageIndicator(modifier: Modifier = Modifier, pagerState: PagerState) {
     Row(modifier = modifier, horizontalArrangement = Arrangement.Center) {
