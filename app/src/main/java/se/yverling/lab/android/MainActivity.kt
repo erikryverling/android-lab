@@ -20,9 +20,15 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
+import androidx.navigation.navigation
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
@@ -33,9 +39,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import se.yverling.lab.android.coffees.navigation.AdaptiveCoffeesScreen
-import se.yverling.lab.android.coffees.navigation.coffeesGraph
-import se.yverling.lab.android.coffees.ui.CoffeeDetailsScreenDeepLinkUri
+import se.yverling.lab.android.coffees.ui.AdaptiveCoffeesScreen
 import se.yverling.lab.android.design.theme.AndroidLabTheme
 import se.yverling.lab.android.feature.animation.AnimationScreen
 import se.yverling.lab.android.feature.misc.MiscScreen
@@ -43,6 +47,8 @@ import se.yverling.lab.android.ui.BottomNavigation
 import se.yverling.lab.android.ui.NavigationItem
 import se.yverling.lab.android.ui.SideNavigation
 import se.yverling.lab.android.weather.ui.WeatherScreen
+import se.yverling.lab.android.weather.ui.WeatherScreenDeepLinkUri
+import se.yverling.lab.android.weather.ui.WeatherScreenDestination
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -84,7 +90,6 @@ class MainActivity : ComponentActivity() {
                 val isTabletLandscape = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded
                         && windowSizeClass.heightSizeClass == WindowHeightSizeClass.Medium
 
-
                 Scaffold(
                     bottomBar = {
                         if (!isTabletLandscape) {
@@ -102,21 +107,11 @@ class MainActivity : ComponentActivity() {
                             startDestination = NavigationItem.Coffees.route,
                             Modifier.padding(innerPadding)
                         ) {
-
-                            // Preferably we should only use the AdaptiveCoffeesScreen(),
-                            // but since coffeesGraph() contains good examples of navigation
-                            // logic we'll keep both
-                            if (isTabletLandscape) {
-                                composable(NavigationItem.Coffees.route) {
-                                    AdaptiveCoffeesScreen()
-                                }
-                            } else {
-                                coffeesGraph(navController)
+                            composable(NavigationItem.Coffees.route) {
+                                AdaptiveCoffeesScreen()
                             }
 
-                            composable(NavigationItem.Weather.route) {
-                                WeatherScreen()
-                            }
+                            weatherGraph()
 
                             composable(NavigationItem.Animation.route) {
                                 AnimationScreen()
@@ -154,14 +149,8 @@ class MainActivity : ComponentActivity() {
                                 },
                             ) {
                                 MiscScreen(
-                                    onDeepLinkButtonClick =
-                                    if (isTabletLandscape) {
-                                        null
-                                    } else {
-                                        {
-                                            val firstCoffeeIndex = 0
-                                            navController.navigate(Uri.parse("$CoffeeDetailsScreenDeepLinkUri/$firstCoffeeIndex"))
-                                        }
+                                    onDeepLinkButtonClick = {
+                                        navController.navigate(Uri.parse("$WeatherScreenDeepLinkUri?sectionOptional=test"))
                                     }
                                 )
                             }
@@ -182,5 +171,37 @@ class MainActivity : ComponentActivity() {
                 emit(true)
             }
         }.flowOn(Dispatchers.Default)
+    }
+}
+
+// This is not really needed since a graph should contain more than one destination, but is here for demo purposes
+@ExperimentalMaterialApi
+fun NavGraphBuilder.weatherGraph() {
+    navigation(startDestination = WeatherScreenDestination, route = NavigationItem.Weather.route) {
+        composable(
+            route = WeatherScreenDestination,
+            arguments = listOf(
+                navArgument("firstOptional") {
+                    type = NavType.StringType
+                    nullable = true
+                },
+                /*  Note that we're not declaring sectionOptional here, since it's not required but used to do
+                    TYPE SAFE navigation. It is however RECOMMENDED to declare all arguments here.
+                */
+            ),
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern =
+                        "$WeatherScreenDeepLinkUri?firstOptional={firstOptional}&sectionOptional={sectionOptional}"
+                },
+            ),
+        ) { backStackEntry ->
+            WeatherScreen()
+
+            val firstOptional = backStackEntry.arguments?.getString("firstOptional")
+            val secondOptional = backStackEntry.arguments?.getString("sectionOptional")
+            Timber.d("First optional nav arg: $firstOptional, second optional nav arg: $secondOptional")
+        }
+
     }
 }

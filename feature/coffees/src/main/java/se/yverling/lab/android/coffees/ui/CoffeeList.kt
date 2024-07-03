@@ -77,7 +77,7 @@ fun CoffeeList(
     isUppercase: Boolean,
     showHeading: Boolean,
     modifier: Modifier = Modifier,
-    onCoffeeClicked: (Int) -> Unit,
+    onCoffeeClicked: (Coffee) -> Unit,
 ) {
     var selectedCoffeeIndex by remember { mutableIntStateOf(-1) }
 
@@ -121,7 +121,7 @@ fun CoffeeList(
                 isSelected = index == selectedCoffeeIndex
             ) { coffeeIndex ->
                 selectedCoffeeIndex = coffeeIndex
-                onCoffeeClicked(coffeeIndex)
+                onCoffeeClicked(coffee)
             }
 
             Spacer(modifier = Modifier.padding(SmallSpace))

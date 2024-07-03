@@ -1,6 +1,7 @@
 plugins {
     id("androidlab.hilt-library-conventions")
     alias(libs.plugins.serialization)
+    id("org.jetbrains.kotlin.plugin.parcelize")
 }
 
 dependencies {

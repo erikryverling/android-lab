@@ -42,7 +42,9 @@ import se.yverling.lab.android.ui.LoadingScreen
 import se.yverling.lab.android.weather.WeatherUiState
 import se.yverling.lab.android.weather.WeatherViewModel
 
-const val WeatherScreenDestination = "weatherScreen"
+const val WeatherScreenRoute = "weatherScreenRoute"
+const val WeatherScreenDestination = "weatherScreenDestination"
+const val WeatherScreenDeepLinkUri = "yverling://lab/weather"
 
 @ExperimentalMaterialApi
 @Composable

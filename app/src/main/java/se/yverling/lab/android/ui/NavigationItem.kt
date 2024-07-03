@@ -12,10 +12,10 @@ import androidx.compose.material.icons.outlined.LocalMovies
 import androidx.compose.material.icons.outlined.WbCloudy
 import androidx.compose.ui.graphics.vector.ImageVector
 import se.yverling.lab.android.R
-import se.yverling.lab.android.coffees.navigation.CoffeesRoute
+import se.yverling.lab.android.coffees.ui.CoffeesRoute
 import se.yverling.lab.android.feature.animation.AnimationScreenDestination
 import se.yverling.lab.android.feature.misc.MiscScreenDestination
-import se.yverling.lab.android.weather.ui.WeatherScreenDestination
+import se.yverling.lab.android.weather.ui.WeatherScreenRoute
 
 sealed class NavigationItem(
     val route: String,
@@ -33,7 +33,7 @@ sealed class NavigationItem(
     )
 
     data object Weather : NavigationItem(
-        route = WeatherScreenDestination,
+        route = WeatherScreenRoute,
         label = R.string.weather_item_label,
         icon = Icons.Outlined.WbCloudy,
         selectedIcon = Icons.Filled.WbCloudy,

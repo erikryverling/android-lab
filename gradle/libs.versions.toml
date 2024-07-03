@@ -65,6 +65,7 @@ android-gradlePlugin = { module = "com.android.application:com.android.applicati
 # Currently needed by the android-gradlePlugin
 javapoet = { module = "com.squareup:javapoet", version.ref = "javapoet" }
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-parcelize-gradlePlugin = { module = "org.jetbrains.kotlin.plugin.parcelize:org.jetbrains.kotlin.plugin.parcelize.gradle.plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp-plugin" }
 hilt-gradlePlugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 kover-gradlePlugin = { module = "org.jetbrains.kotlinx.kover:org.jetbrains.kotlinx.kover.gradle.plugin", version.ref = "kover-plugin" }

@@ -13,6 +13,7 @@ dependencies {
     implementation(libs.android.gradlePlugin)
     implementation(libs.javapoet)
     implementation(libs.kotlin.gradlePlugin)
+    implementation(libs.kotlin.parcelize.gradlePlugin)
     implementation(libs.ksp.gradlePlugin)
     implementation(libs.hilt.gradlePlugin)
     implementation(libs.kover.gradlePlugin)
