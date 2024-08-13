@@ -7,8 +7,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onEach
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.daysUntil
 import javax.inject.Inject
 
 /*
@@ -26,7 +24,7 @@ class GetAndCacheWeatherUseCase @Inject constructor(
     operator fun invoke(): Flow<CurrentWeather> {
         return dataStoreRepository.fetchCurrentWeather()
             .flatMapMerge { currentWeatherCreatedAt ->
-                if (today(currentWeatherCreatedAt.second)) {
+                if (lessThanOneMinuteAgo(currentWeatherCreatedAt.second)) {
                     flowOf(currentWeatherCreatedAt.first)
                 } else {
                     networkRepository.getCurrentWeather()
@@ -40,10 +38,9 @@ class GetAndCacheWeatherUseCase @Inject constructor(
             }
     }
 
-    private fun today(timeStamp: Long): Boolean {
+    private fun lessThanOneMinuteAgo(timeStamp: Long): Boolean {
         return timeStamp != -1L && (
-                Instant.fromEpochMilliseconds(timeStamp)
-                    .daysUntil(Clock.System.now(), TimeZone.currentSystemDefault()) == 0
+                (Instant.fromEpochMilliseconds(timeStamp) - Clock.System.now()).inWholeSeconds > -60
                 )
     }
 }

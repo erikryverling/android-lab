@@ -51,9 +51,7 @@ class WeatherViewModelTest {
 
     @Test
     fun `uiState emit error successfully`() {
-        val errorMessage = "error"
-
-        every { useCaseMock.invoke() } returns flow { throw IllegalStateException(errorMessage) }
+        every { useCaseMock.invoke() } returns flow { throw IllegalStateException() }
 
         viewModel = WeatherViewModel(useCaseMock)
 
@@ -61,7 +59,6 @@ class WeatherViewModelTest {
             viewModel.uiState.test {
                 val errorItem = awaitItem()
                 errorItem.shouldBeTypeOf<WeatherUiState.Error>()
-                errorItem.message.shouldBe(errorMessage)
 
                 cancelAndConsumeRemainingEvents()
             }

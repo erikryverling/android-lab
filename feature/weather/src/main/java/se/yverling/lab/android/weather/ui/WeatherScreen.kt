@@ -107,8 +107,10 @@ private fun DataScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (uiState !is WeatherUiState.Success) {
-                val errorMessage: String = uiState.data as String
-                item { ErrorContent(errorMessage) }
+                item {
+                    val errorMessage: String = stringResource(uiState.data as Int)
+                    ErrorContent(errorMessage)
+                }
             } else {
                 val currentWeather: CurrentWeather = uiState.data as CurrentWeather
                 item { WeatherContent(currentWeather) }
@@ -161,7 +163,7 @@ fun ErrorContent(errorMessage: String) {
     Text(
         errorMessage,
         Modifier.padding(bottom = DefaultSpace),
-        style = MaterialTheme.typography.headlineMedium,
+        style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.Bold,
         color = MaterialTheme.colorScheme.error,
         textAlign = TextAlign.Center
