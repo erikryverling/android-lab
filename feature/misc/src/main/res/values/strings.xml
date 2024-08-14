@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Misc screen -->
+    <string name="misc_tab_title">Misc</string>
+    <string name="animation_tab_title">Animation</string>
+
+    <!-- Misc content -->
     <string name="deep_link_button_title">Weather screen</string>
     <string name="recompose_button_title">Recompose</string>
 
@@ -15,4 +20,8 @@
     <string name="segmented_button_1_title">Button 1</string>
     <string name="segmented_button_2_title">Button 2</string>
     <string name="segmented_button_3_title">Button 3</string>
+
+    <!-- Animation content -->
+    <string name="image_content_description">Light bulb image</string>
+    <string name="android_lab">Android Lab</string>
 </resources>

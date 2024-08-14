@@ -3,8 +3,8 @@ package se.lab.android.test.snapshot
 import app.cash.paparazzi.Paparazzi
 import org.junit.Rule
 import org.junit.Test
-import se.yverling.lab.android.coffees.model.Coffee
 import se.yverling.lab.android.coffees.ui.CoffeeList
+import se.yverling.lab.android.common.model.Coffee
 
 class CoffeeListSnapshotTest {
     @get:Rule
@@ -16,13 +16,15 @@ class CoffeeListSnapshotTest {
     fun launchComposable() {
         paparazzi.snapshot {
             CoffeeList(
-                coffees = listOf(Coffee(
-                    id = 0,
-                    name = "name",
-                    roaster = "roaster",
-                    origin = "origin",
-                    region = "region"
-                )),
+                coffees = listOf(
+                    Coffee(
+                        id = 0,
+                        name = "name",
+                        roaster = "roaster",
+                        origin = "origin",
+                        region = "region"
+                    )
+                ),
                 showHeading = true,
                 isUppercase = false,
                 onCoffeeClicked = {},

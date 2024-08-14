@@ -3,7 +3,6 @@ package se.yverling.lab.android.weather.ui
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +13,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +25,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -38,7 +35,9 @@ import se.yverling.lab.android.design.theme.AndroidLabTheme
 import se.yverling.lab.android.design.theme.DefaultSpace
 import se.yverling.lab.android.design.theme.LargeSpace
 import se.yverling.lab.android.feature.weather.R
+import se.yverling.lab.android.ui.ErrorContent
 import se.yverling.lab.android.ui.LoadingScreen
+import se.yverling.lab.android.ui.RetryButton
 import se.yverling.lab.android.weather.WeatherUiState
 import se.yverling.lab.android.weather.WeatherViewModel
 
@@ -155,51 +154,6 @@ fun WeatherContent(currentWeather: CurrentWeather) {
             style = MaterialTheme.typography.headlineSmall,
             textAlign = TextAlign.Center
         )
-    }
-}
-
-@Composable
-fun ErrorContent(errorMessage: String) {
-    Text(
-        errorMessage,
-        Modifier.padding(bottom = DefaultSpace),
-        style = MaterialTheme.typography.titleMedium,
-        fontWeight = FontWeight.Bold,
-        color = MaterialTheme.colorScheme.error,
-        textAlign = TextAlign.Center
-    )
-}
-
-@Composable
-fun RetryButton(onRetryButtonClicked: () -> Unit) {
-    Button(onClick = onRetryButtonClicked) {
-        Text(stringResource(R.string.retry_button_title))
-    }
-}
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mode",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun ErrorContentPreview() {
-    AndroidLabTheme {
-        ErrorContent("Something went wrong")
-    }
-}
-
-@Preview(name = "Light Mode")
-@Preview(
-    name = "Dark Mode",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true
-)
-@Composable
-fun RetryButtonPreview() {
-    AndroidLabTheme {
-        RetryButton {}
     }
 }
 

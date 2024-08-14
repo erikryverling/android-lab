@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="coffee_icon_description">Coffee</string>
+    <string name="coffee_name">Name</string>
+    <string name="coffee_origin">Origin</string>
+    <string name="coffee_roaster">Roaster</string>
+    <string name="coffee_region">Region</string>
+
+    <string name="retry_button_title">Try again</string>
+</resources>

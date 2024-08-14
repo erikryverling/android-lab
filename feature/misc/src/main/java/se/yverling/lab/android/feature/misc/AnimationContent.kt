@@ -1,4 +1,4 @@
-package se.yverling.lab.android.feature.animation
+package se.yverling.lab.android.feature.misc
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateDpAsState
@@ -31,13 +31,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-const val AnimationScreenDestination = "animationScreen"
-
 private const val DEFAULT_DURATION_IN_MILLIS = 400
 private const val DEFAULT_DELAY_IN_MILLIS = 300
 
 @Composable
-fun AnimationScreen(modifier: Modifier = Modifier) {
+fun AnimationContent(modifier: Modifier = Modifier) {
     var started by remember { mutableStateOf(false) }
     var logoShown by remember { mutableStateOf(false) }
 

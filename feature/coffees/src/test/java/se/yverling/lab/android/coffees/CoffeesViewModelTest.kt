@@ -14,7 +14,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import se.yverling.lab.android.coffees.model.Coffee
+import se.yverling.lab.android.common.model.Coffee
 import se.yverling.lab.android.test.MainDispatcherExtension
 
 @ExtendWith(MockKExtension::class)

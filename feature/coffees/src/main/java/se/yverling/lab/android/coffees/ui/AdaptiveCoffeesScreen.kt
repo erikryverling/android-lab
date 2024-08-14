@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import se.yverling.lab.android.coffees.CoffeesUiState
 import se.yverling.lab.android.coffees.CoffeesViewModel
-import se.yverling.lab.android.coffees.model.Coffee
+import se.yverling.lab.android.common.model.Coffee
 import se.yverling.lab.android.feature.coffees.R
 import se.yverling.lab.android.ui.LoadingScreen
 

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.retry
 import kotlinx.coroutines.launch
-import se.yverling.lab.android.coffees.model.Coffee
+import se.yverling.lab.android.common.model.Coffee
 import javax.inject.Inject
 
 @HiltViewModel

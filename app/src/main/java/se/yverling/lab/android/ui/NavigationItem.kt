@@ -3,17 +3,17 @@ package se.yverling.lab.android.ui
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Coffee
+import androidx.compose.material.icons.filled.Diamond
 import androidx.compose.material.icons.filled.HomeRepairService
-import androidx.compose.material.icons.filled.LocalMovies
 import androidx.compose.material.icons.filled.WbCloudy
 import androidx.compose.material.icons.outlined.Coffee
+import androidx.compose.material.icons.outlined.Diamond
 import androidx.compose.material.icons.outlined.HomeRepairService
-import androidx.compose.material.icons.outlined.LocalMovies
 import androidx.compose.material.icons.outlined.WbCloudy
 import androidx.compose.ui.graphics.vector.ImageVector
+import se.yverling.lab.android.AiScreenDestination
 import se.yverling.lab.android.R
 import se.yverling.lab.android.coffees.ui.CoffeesRoute
-import se.yverling.lab.android.feature.animation.AnimationScreenDestination
 import se.yverling.lab.android.feature.misc.MiscScreenDestination
 import se.yverling.lab.android.weather.ui.WeatherScreenRoute
 
@@ -40,12 +40,12 @@ sealed class NavigationItem(
         iconContentDescription = R.string.weather_icon_content_description
     )
 
-    data object Animation : NavigationItem(
-        route = AnimationScreenDestination,
-        label = R.string.animation_item_label,
-        icon = Icons.Outlined.LocalMovies,
-        selectedIcon = Icons.Filled.LocalMovies,
-        iconContentDescription = R.string.weather_icon_content_description
+    data object Ai : NavigationItem(
+        route = AiScreenDestination,
+        label = R.string.ai_item_label,
+        icon = Icons.Outlined.Diamond,
+        selectedIcon = Icons.Filled.Diamond,
+        iconContentDescription = R.string.ai_icon_content_description
     )
 
     data object Misc : NavigationItem(

@@ -42,7 +42,7 @@ class CoffeeRepositoryTest {
             region = "Guji",
         )
 
-        val coffee = se.yverling.lab.android.coffees.model.Coffee(
+        val coffee = se.yverling.lab.android.common.model.Coffee(
             id = 0,
             name = "Odo Carbonic",
             roaster = "Gringo Nordic",

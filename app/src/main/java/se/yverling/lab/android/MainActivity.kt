@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -41,7 +40,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import se.yverling.lab.android.coffees.ui.AdaptiveCoffeesScreen
 import se.yverling.lab.android.design.theme.AndroidLabTheme
-import se.yverling.lab.android.feature.animation.AnimationScreen
 import se.yverling.lab.android.feature.misc.MiscScreen
 import se.yverling.lab.android.ui.BottomNavigation
 import se.yverling.lab.android.ui.NavigationItem
@@ -82,7 +80,7 @@ class MainActivity : ComponentActivity() {
                 val items = listOf(
                     NavigationItem.Coffees,
                     NavigationItem.Weather,
-                    NavigationItem.Animation,
+                    NavigationItem.Ai,
                     NavigationItem.Misc
                 )
 
@@ -113,8 +111,8 @@ class MainActivity : ComponentActivity() {
 
                             weatherGraph()
 
-                            composable(NavigationItem.Animation.route) {
-                                AnimationScreen()
+                            composable(NavigationItem.Ai.route) {
+                                AiScreen()
                             }
 
                             val miscScreenAnimationDuration = 700

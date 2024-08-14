@@ -6,6 +6,7 @@ plugins {
 dependencies {
     implementation(project(":common:design-system"))
     implementation(project(":common:ui"))
+    implementation(project(":common:model"))
     implementation(project(":data:coffees"))
 
     implementation(libs.hilt.navigation)

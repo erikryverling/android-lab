@@ -5,6 +5,8 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":common:model"))
+
     ksp(libs.room.compiler)
     implementation(libs.room.ktx)
 

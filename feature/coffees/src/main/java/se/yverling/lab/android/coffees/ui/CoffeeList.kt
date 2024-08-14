@@ -47,8 +47,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import se.yverling.lab.android.coffees.model.Coffee
-import se.yverling.lab.android.coffees.theme.CoffeeCardElevation
+import se.yverling.lab.android.coffees.theme.CoffeeItemElevation
+import se.yverling.lab.android.common.model.Coffee
 import se.yverling.lab.android.design.theme.AndroidLabTheme
 import se.yverling.lab.android.design.theme.DefaultSpace
 import se.yverling.lab.android.design.theme.LargeSpace
@@ -185,7 +185,7 @@ fun CoffeeItem(
     Surface(
         shape = MaterialTheme.shapes.small,
         color = if (isSelected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surface,
-        shadowElevation = CoffeeCardElevation,
+        shadowElevation = CoffeeItemElevation,
         modifier = Modifier
             .fillMaxWidth()
             .clickable {

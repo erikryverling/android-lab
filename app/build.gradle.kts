@@ -15,9 +15,10 @@ repositories {
 
 dependencies {
     implementation(project(":common:design-system"))
+    implementation(project(":common:model"))
     implementation(project(":feature:coffees"))
     implementation(project(":feature:weather"))
-    implementation(project(":feature:animation"))
+    implementation(project(":feature:ai"))
     implementation(project(":feature:misc"))
 
     implementation(libs.appCompat)

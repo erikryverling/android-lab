@@ -4,7 +4,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import org.junit.Rule
 import org.junit.Test
-import se.yverling.lab.android.coffees.model.Coffee
+import se.yverling.lab.android.common.model.Coffee
 import se.yverling.lab.android.coffees.ui.CoffeeList
 import se.yverling.lab.android.design.theme.AndroidLabTheme
 

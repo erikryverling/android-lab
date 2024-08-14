@@ -12,8 +12,8 @@ data class Coffee(
     val region: String,
 )
 
-internal fun Coffee.toCoffeeModel(): se.yverling.lab.android.coffees.model.Coffee {
-    return se.yverling.lab.android.coffees.model.Coffee(
+internal fun Coffee.toCoffeeModel(): se.yverling.lab.android.common.model.Coffee {
+    return se.yverling.lab.android.common.model.Coffee(
         id = uid!!,
         name = name,
         roaster = roaster,
