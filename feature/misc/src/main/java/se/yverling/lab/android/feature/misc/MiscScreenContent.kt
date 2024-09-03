@@ -28,6 +28,7 @@ import androidx.compose.material3.SheetValue
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.carousel.HorizontalUncontainedCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
@@ -498,6 +499,8 @@ fun SkippableComposablePreview() {
 @Composable
 fun AutoFillTextFieldPreview() {
     AndroidLabTheme {
-        AutoFillTextField(inputType = InputType.EMAIL)
+        Surface {
+            AutoFillTextField(inputType = InputType.EMAIL)
+        }
     }
 }

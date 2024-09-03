@@ -14,6 +14,7 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -167,18 +168,20 @@ fun WeatherContent(currentWeather: CurrentWeather) {
 @Composable
 fun WeatherContentPreview() {
     AndroidLabTheme {
-        DataScreen(
-            uiState = WeatherUiState.Success(
-                CurrentWeather(
-                    temperature = 20,
-                    wind = Wind(
-                        speed = 10,
-                        degree = 180
-                    ),
-                    locationName = "Location"
-                )
-            ),
-            onRefresh = {}
-        )
+        Surface {
+            DataScreen(
+                uiState = WeatherUiState.Success(
+                    CurrentWeather(
+                        temperature = 20,
+                        wind = Wind(
+                            speed = 10,
+                            degree = 180
+                        ),
+                        locationName = "Location"
+                    )
+                ),
+                onRefresh = {}
+            )
+        }
     }
 }

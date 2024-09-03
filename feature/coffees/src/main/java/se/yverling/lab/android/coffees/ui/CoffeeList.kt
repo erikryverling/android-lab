@@ -13,6 +13,7 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -250,18 +251,20 @@ fun UppercaseFabPreview() {
 @Composable
 fun CoffeeItemPreview() {
     AndroidLabTheme {
-        CoffeeItem(
-            1,
-            coffee = Coffee(
-                id = 1,
-                name = "Odo Carbonic",
-                roaster = "Gringo Nordic",
-                origin = "Ethiopia",
-                region = "Guji",
-            ),
-            isUppercase = false,
-            isSelected = false
-        ) {}
+        Surface {
+            CoffeeItem(
+                1,
+                coffee = Coffee(
+                    id = 1,
+                    name = "Odo Carbonic",
+                    roaster = "Gringo Nordic",
+                    origin = "Ethiopia",
+                    region = "Guji",
+                ),
+                isUppercase = false,
+                isSelected = false
+            ) {}
+        }
     }
 }
 
@@ -274,7 +277,9 @@ fun CoffeeItemPreview() {
 @Composable
 fun EasterEggPreview() {
     AndroidLabTheme {
-        EasterEgg(isVisible = true)
+        Surface {
+            EasterEgg(isVisible = true)
+        }
     }
 }
 
@@ -287,26 +292,28 @@ fun EasterEggPreview() {
 @Composable
 fun CoffeeListPreview() {
     AndroidLabTheme {
-        CoffeeList(
-            coffees = listOf(
-                Coffee(
-                    id = 1,
-                    name = "Odo Carbonic",
-                    roaster = "Gringo Nordic",
-                    origin = "Ethiopia",
-                    region = "Guji",
+        Surface {
+            CoffeeList(
+                coffees = listOf(
+                    Coffee(
+                        id = 1,
+                        name = "Odo Carbonic",
+                        roaster = "Gringo Nordic",
+                        origin = "Ethiopia",
+                        region = "Guji",
+                    ),
+                    Coffee(
+                        id = 1,
+                        name = "Uraga Carbonic",
+                        roaster = "Gringo Nordic",
+                        origin = "Ethiopia",
+                        region = "Guji",
+                    )
                 ),
-                Coffee(
-                    id = 1,
-                    name = "Uraga Carbonic",
-                    roaster = "Gringo Nordic",
-                    origin = "Ethiopia",
-                    region = "Guji",
-                )
-            ),
-            isUppercase = false,
-            showHeading = true,
-            onCoffeeClicked = {}
-        )
+                isUppercase = false,
+                showHeading = true,
+                onCoffeeClicked = {}
+            )
+        }
     }
 }
