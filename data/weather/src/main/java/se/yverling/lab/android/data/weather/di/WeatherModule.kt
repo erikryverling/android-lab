@@ -1,6 +1,5 @@
 package se.yverling.lab.android.data.weather.di
 
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,6 +13,7 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import retrofit2.Converter
 import retrofit2.Retrofit
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import se.yverling.lab.android.data.weather.network.WeatherService
 import javax.inject.Named
 import javax.inject.Singleton
