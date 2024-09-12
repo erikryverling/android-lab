@@ -79,7 +79,7 @@ fun WeatherScreen(
 
 @ExperimentalMaterialApi
 @Composable
-private fun DataScreen(
+internal fun DataScreen(
     modifier: Modifier = Modifier,
     uiState: WeatherUiState,
     onRefresh: () -> Unit,

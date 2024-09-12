@@ -5,14 +5,15 @@ kotlin = "2.0.20"
 hilt = "2.52"
 
 # Plugins
-kotlin-dsl-plugin = "5.1.0"
-ksp-plugin = "2.0.20-1.0.24"
-android-plugin = "8.3.2"
+kotlin-dsl-plugin = "5.1.1"
+ksp-plugin = "2.0.20-1.0.25"
+android-plugin = "8.6.0"
 javapoet = "1.13.0"
 kover-plugin = "0.8.3"
 protobuf-plugin = "0.9.4"
 versions-plugin = "0.51.0"
 paparazzi-plugin = "1.3.4"
+screenshot = "0.0.1-alpha06"
 
 # Libraries
 kotlinx-datetime = "0.6.1"
@@ -58,6 +59,7 @@ protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi-plugin" }
 kotlin-dsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlin-dsl-plugin" }
+screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot"}
 
 [libraries]
 # --- NOTE! These Gradle plugins are used in :buildSrc and thus defined here instead of in [plugins] ---
