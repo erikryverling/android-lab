@@ -1,4 +1,4 @@
-Built application files
+# Built application files
 *.apk
 *.ap_
 
@@ -8,7 +8,7 @@ Built application files
 # Java class files
 *.class
 
- # Generated files
+# Generated files
 gen/
 
 # Gradle files

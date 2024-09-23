@@ -15,7 +15,7 @@ include(
     ":feature:weather",
     ":feature:ai",
     ":test:benchmark",
-    ":test:utils"
+    ":test:utils",
 )
 
 pluginManagement {
