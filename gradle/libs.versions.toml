@@ -19,10 +19,10 @@ screenshot = "0.0.1-alpha07"
 kotlinx-datetime = "0.6.1"
 kotlinx-serialization = "1.7.3"
 
-compose-bom = "2024.09.02"
+compose-bom = "2024.09.03"
+compose-activity = "1.9.2"
 compose-lifecycle = "2.8.6"
 compose-constraintLayout = "1.0.1"
-compose-material3 = "1.3.0"
 compose-adaptive = "1.0.0"
 
 protobuf = "4.27.3"
@@ -59,7 +59,7 @@ protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi-plugin" }
 kotlin-dsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlin-dsl-plugin" }
-screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot"}
+screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot" }
 
 [libraries]
 # --- NOTE! These Gradle plugins are used in :buildSrc and thus defined here instead of in [plugins] ---
@@ -81,12 +81,14 @@ hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", ve
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
 
-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+# https://developer.android.com/develop/ui/compose/bom/bom-mapping
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
 compose-tooling = { module = "androidx.compose.ui:ui-tooling" }
-compose-activity = { module = "androidx.activity:activity-compose" }
 compose-icons = { module = "androidx.compose.material:material-icons-extended" }
 compose-material2 = { module = "androidx.compose.material:material" }
-compose-material = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
+compose-material = { module = "androidx.compose.material3:material3" }
+
+compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity" }
 compose-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "compose-lifecycle" }
 compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose-lifecycle" }
 compose-constraintlayout = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "compose-constraintLayout" }
