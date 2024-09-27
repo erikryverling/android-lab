@@ -50,6 +50,8 @@ dependencies {
 }
 
 android {
+    namespace = "se.yverling.lab.android"
+
     compileSdk = Versions.compileSdk
 
     compileOptions {
@@ -62,14 +64,14 @@ android {
         jvmTarget = Versions.jvmTarget
     }
 
-    namespace = "se.yverling.lab.android"
-
     defaultConfig {
         minSdk = Versions.minSdk
 
         applicationId = "se.yverling.lab.android"
+
         versionCode = 10000 // Version & release number
         versionName = "1.0.0"
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
