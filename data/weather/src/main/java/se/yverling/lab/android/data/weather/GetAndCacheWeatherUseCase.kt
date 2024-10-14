@@ -1,4 +1,4 @@
-package se.yverling.lab.android.data.weather.model
+package se.yverling.lab.android.data.weather
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onEach
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import se.yverling.lab.android.data.weather.model.CurrentWeather
 import javax.inject.Inject
 
 /*

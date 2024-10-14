@@ -13,6 +13,12 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import retrofit2.Response
 import se.yverling.lab.android.data.weather.BuildConfig
+import se.yverling.lab.android.data.weather.KTOR
+import se.yverling.lab.android.data.weather.LATITUDE
+import se.yverling.lab.android.data.weather.LONGITUDE
+import se.yverling.lab.android.data.weather.RETROFIT
+import se.yverling.lab.android.data.weather.UNITS
+import se.yverling.lab.android.data.weather.WeatherNetworkRepository
 import se.yverling.lab.android.data.weather.network.CurrentWeatherDto
 import se.yverling.lab.android.data.weather.network.KtorWeather
 import se.yverling.lab.android.data.weather.network.Main

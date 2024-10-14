@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AiViewModel @Inject constructor(private val repository: AiRepository) : ViewModel() {
     private val mutableUiState: MutableStateFlow<AiUiState> = MutableStateFlow(AiUiState.Loading)
-    var uiState: StateFlow<AiUiState> = mutableUiState
+    internal var uiState: StateFlow<AiUiState> = mutableUiState
 
     init {
         load()
@@ -36,7 +36,7 @@ class AiViewModel @Inject constructor(private val repository: AiRepository) : Vi
         }
     }
 
-    sealed class AiUiState {
+    internal sealed class AiUiState {
         data object Loading : AiUiState()
         data object Error : AiUiState()
         data class Success(val coffee: Coffee) : AiUiState()

@@ -1,4 +1,4 @@
-package se.yverling.lab.android.data.weather.model
+package se.yverling.lab.android.data.weather
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import se.yverling.lab.android.data.weather.datastore.CurrentWeatherSerializer
 import se.yverling.lab.android.data.weather.datastore.DATASTORE_FILE_NAME
+import se.yverling.lab.android.data.weather.model.CurrentWeather
+import se.yverling.lab.android.data.weather.model.Wind
 import javax.inject.Inject
 
 class WeatherDataStoreRepository @Inject constructor(@ApplicationContext private val context: Context) {

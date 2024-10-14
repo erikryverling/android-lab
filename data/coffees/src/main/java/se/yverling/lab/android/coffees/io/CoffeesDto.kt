@@ -3,8 +3,8 @@ package se.yverling.lab.android.coffees.io
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Coffees(
-    val coffees: List<Coffee>
+internal data class Coffees(
+    val coffees: List<Coffee>,
 )
 
 @Serializable
@@ -15,7 +15,7 @@ data class Coffee(
     val region: String,
 )
 
-fun Coffees.toCoffeeEntityList(): List<se.yverling.lab.android.coffees.db.Coffee> {
+internal fun Coffees.toCoffeeEntityList(): List<se.yverling.lab.android.coffees.db.Coffee> {
     return coffees.map {
         se.yverling.lab.android.coffees.db.Coffee(
             name = it.name,

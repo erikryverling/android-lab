@@ -1,9 +1,9 @@
-package se.yverling.lab.android.data.weather.model
+package se.yverling.lab.android.data.weather
 
 import io.ktor.client.call.body
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import se.yverling.lab.android.data.weather.BuildConfig
+import se.yverling.lab.android.data.weather.model.CurrentWeather
 import se.yverling.lab.android.data.weather.network.CurrentWeatherDto
 import se.yverling.lab.android.data.weather.network.KtorWeather
 import se.yverling.lab.android.data.weather.network.WeatherService

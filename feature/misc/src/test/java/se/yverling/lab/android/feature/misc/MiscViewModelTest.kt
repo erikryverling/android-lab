@@ -12,7 +12,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.extension.RegisterExtension
-import se.yverling.lab.android.misc.MiscRepository
+import se.yverling.lab.android.misc.MiscRepositoryImpl
 import se.yverling.lab.android.test.MainDispatcherExtension
 
 @ExtendWith(MockKExtension::class)
@@ -27,7 +27,7 @@ class MiscViewModelTest {
     val mainDispatcherExtension = MainDispatcherExtension(UnconfinedTestDispatcher())
 
     @RelaxedMockK
-    lateinit var repositoryMock: MiscRepository
+    lateinit var repositoryMock: MiscRepositoryImpl
 
     private lateinit var viewModel: MiscViewModel
 

@@ -76,14 +76,14 @@ import se.yverling.lab.android.design.theme.SmallSpace
 import se.yverling.lab.android.feature.misc.theme.CarouselItemSize
 import timber.log.Timber
 
-internal const val REMOTE_IMAGE_URL = "https://erik.r.yverling.com/twinkle-logo.png"
+private const val REMOTE_IMAGE_URL = "https://erik.r.yverling.com/twinkle-logo.png"
 
 /*
     Annotating a class as @Immutable means that you vouch that is will never change,
     and Compose will then mark it as 'stable' instead of 'unstable'
  */
 @Immutable
-data class Person(val names: MutableList<String>)
+private data class Person(val names: MutableList<String>)
 
 /*
     Annotating a class as @Stable means that you vouch that Compose will be notified,
@@ -91,16 +91,16 @@ data class Person(val names: MutableList<String>)
     As with @Immutable this will make Compose mark it as 'stable' instead of 'unstable'.
  */
 @Stable
-data class Employer(var name: String)
+private data class Employer(var name: String)
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MiscScreenContent(
+internal fun MiscScreenContent(
     modifier: Modifier = Modifier,
     scope: CoroutineScope,
     onDeepLinkButtonClick: (() -> Unit)?,
-    viewModel: MiscViewModel
+    viewModel: MiscViewModel,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val modalSheetState = rememberModalBottomSheetState()
@@ -379,7 +379,7 @@ fun RecomposeButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
 
 // This Composable should be skipped during recomposition
 @Composable
-fun SkippableComposable(modifier: Modifier = Modifier, person: Person, employer: Employer) {
+private fun SkippableComposable(modifier: Modifier = Modifier, person: Person, employer: Employer) {
     Text(
         modifier = modifier,
         text = "Name: ${person.names[0]} ${person.names[1]}, Employer: ${employer.name}",
@@ -455,7 +455,7 @@ fun logNumberOfManualRecompositions(counter: Int) {
     showBackground = true
 )
 @Composable
-fun MiscButtonPreview() {
+private fun MiscButtonPreview() {
     AndroidLabTheme {
         MiscButton(text = R.string.deep_link_button_title) {}
     }
@@ -468,7 +468,7 @@ fun MiscButtonPreview() {
     showBackground = true
 )
 @Composable
-fun RecomposeButtonPreview() {
+private fun RecomposeButtonPreview() {
     AndroidLabTheme {
         RecomposeButton {}
     }
@@ -481,7 +481,7 @@ fun RecomposeButtonPreview() {
     showBackground = true
 )
 @Composable
-fun SkippableComposablePreview() {
+private fun SkippableComposablePreview() {
     AndroidLabTheme {
         SkippableComposable(
             person = Person(mutableListOf("Cloud", "Strife")),
@@ -497,7 +497,7 @@ fun SkippableComposablePreview() {
     showBackground = true
 )
 @Composable
-fun AutoFillTextFieldPreview() {
+private fun AutoFillTextFieldPreview() {
     AndroidLabTheme {
         Surface {
             AutoFillTextField(inputType = InputType.EMAIL)

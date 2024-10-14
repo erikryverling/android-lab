@@ -12,7 +12,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import se.yverling.lab.android.data.weather.model.CurrentWeather
-import se.yverling.lab.android.data.weather.model.GetAndCacheWeatherUseCase
+import se.yverling.lab.android.data.weather.GetAndCacheWeatherUseCase
 import se.yverling.lab.android.data.weather.model.Wind
 import se.yverling.lab.android.test.MainDispatcherExtension
 

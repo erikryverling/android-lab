@@ -19,7 +19,7 @@ class ScreenshotTest {
         showBackground = true
     )
     @Composable
-    fun WeatherContentPreview() {
+    private fun WeatherContentPreview() {
         AndroidLabTheme {
             Surface {
                 DataScreen(

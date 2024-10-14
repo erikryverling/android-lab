@@ -35,7 +35,7 @@ private const val DEFAULT_DURATION_IN_MILLIS = 400
 private const val DEFAULT_DELAY_IN_MILLIS = 300
 
 @Composable
-fun AnimationContent(modifier: Modifier = Modifier) {
+internal fun AnimationContent(modifier: Modifier = Modifier) {
     var started by remember { mutableStateOf(false) }
     var logoShown by remember { mutableStateOf(false) }
 

@@ -42,7 +42,7 @@ fun RetryButton(onRetryButtonClicked: () -> Unit) {
     showBackground = true
 )
 @Composable
-fun ErrorContentPreview() {
+private fun ErrorContentPreview() {
     AndroidLabTheme {
         Surface {
             ErrorContent("Something went wrong")
@@ -57,7 +57,7 @@ fun ErrorContentPreview() {
     showBackground = true
 )
 @Composable
-fun RetryButtonPreview() {
+private fun RetryButtonPreview() {
     AndroidLabTheme {
         RetryButton {}
     }

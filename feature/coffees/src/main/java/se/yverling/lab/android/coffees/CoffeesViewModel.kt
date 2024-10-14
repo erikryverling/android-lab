@@ -18,7 +18,7 @@ class CoffeesViewModel @Inject constructor(
     private val mutableUiState: MutableStateFlow<CoffeesUiState> =
         MutableStateFlow(CoffeesUiState.Loading)
 
-    var uiState: StateFlow<CoffeesUiState> = mutableUiState
+    internal var uiState: StateFlow<CoffeesUiState> = mutableUiState
 
     init {
         mutableUiState.value = CoffeesUiState.Loading
@@ -41,7 +41,7 @@ class CoffeesViewModel @Inject constructor(
     }
 }
 
-sealed class CoffeesUiState {
+internal sealed class CoffeesUiState {
     data object Loading : CoffeesUiState()
     data class Success(val coffees: List<Coffee>, val isUpperCase: Boolean) : CoffeesUiState()
 }

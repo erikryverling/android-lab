@@ -1,7 +1,6 @@
 package se.yverling.lab.android.data.weather.model
 
 import io.kotest.matchers.shouldBe
-import io.mockk.Called
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
@@ -13,6 +12,9 @@ import kotlinx.datetime.Clock
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import se.yverling.lab.android.data.weather.GetAndCacheWeatherUseCase
+import se.yverling.lab.android.data.weather.WeatherDataStoreRepository
+import se.yverling.lab.android.data.weather.WeatherNetworkRepository
 
 @ExtendWith(MockKExtension::class)
 class GetAndCacheWeatherUseCaseTest {

@@ -86,7 +86,7 @@ private fun InlineTitleText(title: String, body: String) {
     showBackground = true
 )
 @Composable
-fun CoffeeCardPreview() {
+private fun CoffeeCardPreview() {
     AndroidLabTheme {
         CoffeeCard(
             Coffee(

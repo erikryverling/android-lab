@@ -15,6 +15,8 @@ import kotlinx.datetime.Clock
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import se.yverling.lab.android.data.weather.WeatherDataStoreRepository
+import se.yverling.lab.android.data.weather.currentWeatherDataStore
 
 @ExtendWith(MockKExtension::class)
 class WeatherDataStoreRepositoryTest {

@@ -58,7 +58,7 @@ import se.yverling.lab.android.feature.coffees.R
 
 
 @Composable
-fun UppercaseFab(isUppercase: Boolean, onClicked: () -> Unit) {
+internal fun UppercaseFab(isUppercase: Boolean, onClicked: () -> Unit) {
     return FloatingActionButton(
         modifier = Modifier
             .testTag("FAB"),
@@ -236,7 +236,7 @@ fun CoffeeItem(
     showBackground = true
 )
 @Composable
-fun UppercaseFabPreview() {
+private fun UppercaseFabPreview() {
     AndroidLabTheme {
         UppercaseFab(false) {}
     }
@@ -249,7 +249,7 @@ fun UppercaseFabPreview() {
     showBackground = true
 )
 @Composable
-fun CoffeeItemPreview() {
+private fun CoffeeItemPreview() {
     AndroidLabTheme {
         Surface {
             CoffeeItem(
@@ -275,7 +275,7 @@ fun CoffeeItemPreview() {
     showBackground = true
 )
 @Composable
-fun EasterEggPreview() {
+private fun EasterEggPreview() {
     AndroidLabTheme {
         Surface {
             EasterEgg(isVisible = true)
@@ -290,7 +290,7 @@ fun EasterEggPreview() {
     showBackground = true
 )
 @Composable
-fun CoffeeListPreview() {
+private fun CoffeeListPreview() {
     AndroidLabTheme {
         Surface {
             CoffeeList(

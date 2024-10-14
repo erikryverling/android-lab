@@ -16,7 +16,7 @@ import se.yverling.lab.android.feature.coffees.R
 import se.yverling.lab.android.ui.CoffeeCard
 
 @Composable
-fun CoffeeDetails(
+internal fun CoffeeDetails(
     coffee: Coffee?,
     isExpanded: Boolean = false,
     modifier: Modifier = Modifier
@@ -48,7 +48,7 @@ fun CoffeeDetails(
     showBackground = true
 )
 @Composable
-fun CoffeeDetailsPreview() {
+private fun CoffeeDetailsPreview() {
     AndroidLabTheme {
         CoffeeDetails(
             Coffee(

@@ -15,7 +15,7 @@ import se.yverling.lab.android.coffees.db.AppDatabase
 import se.yverling.lab.android.coffees.db.Coffee
 
 @ExtendWith(MockKExtension::class)
-class CoffeeRepositoryTest {
+class CoffeeRepositoryImplTest {
     @RelaxedMockK
     lateinit var appDatabaseMock: AppDatabase
 
@@ -26,7 +26,7 @@ class CoffeeRepositoryTest {
 
     @BeforeEach
     fun setUp() {
-        coffeesRepository = CoffeesRepository(
+        coffeesRepository = CoffeesRepositoryImpl(
             context = contextMock,
             db = appDatabaseMock,
         )

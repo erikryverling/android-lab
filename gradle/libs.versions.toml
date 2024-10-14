@@ -31,7 +31,7 @@ protobufCompilerArtifact = "com.google.protobuf:protoc:4.27.3:osx-x86_64"
 
 retrofit = "2.11.0"
 
-junit = "5.11.0"
+junit = "5.11.2"
 junit4 = "4.13.2"
 
 appCompat = "1.7.0"

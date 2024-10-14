@@ -11,14 +11,14 @@ import se.yverling.lab.android.misc.model.CarouselItem
 import timber.log.Timber
 import javax.inject.Inject
 
-class MiscRepository(private val dispatcher: CoroutineDispatcher) {
+class MiscRepositoryImpl(private val dispatcher: CoroutineDispatcher): MiscRepository {
     @Inject
     constructor() : this(dispatcher = Dispatchers.Default)
 
     /**
      * This is a just mock of a long running (backend) flow
      */
-    fun longRunningFlow(): Flow<Int> = flow {
+    override fun longRunningFlow(): Flow<Int> = flow {
         val tag = "LongRunningFlowInMiscRepository"
         Timber.tag(tag).d("New instance created")
         var counter = 0

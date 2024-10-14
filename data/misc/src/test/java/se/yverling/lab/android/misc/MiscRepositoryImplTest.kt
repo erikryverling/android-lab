@@ -7,13 +7,13 @@ import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-class MiscRepositoryTest {
+class MiscRepositoryImplTest {
     private val testDispatcher = StandardTestDispatcher()
     private val testScope = TestScope(testDispatcher)
 
     @Test
     fun `longRunningFlow() should run successfully`() = testScope.runTest {
-        val repository = MiscRepository(testDispatcher)
+        val repository = MiscRepositoryImpl(testDispatcher)
 
         repository.longRunningFlow()
             .take(10)
