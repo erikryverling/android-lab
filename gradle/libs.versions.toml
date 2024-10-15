@@ -129,7 +129,6 @@ generativeai = { module = " com.google.ai.client.generativeai:generativeai", ver
 
 unitTest-junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 unitTest-junit4 = { module = "junit:junit", version.ref = "junit4" }
-unitTest-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 unitTest-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 unitTest-coroutines = { module = " org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutinesTest" }
 unitTest-kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest-assertions" }

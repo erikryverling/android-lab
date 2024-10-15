@@ -19,9 +19,6 @@ internal val VersionCatalog.pluginsKover: Provider<PluginDependency>?
 internal val VersionCatalog.composeBom: Provider<MinimalExternalModuleDependency>
     get() = findLibraryOrThrow("compose.bom")
 
-internal val VersionCatalog.unitTestJupiterEngine: Provider<MinimalExternalModuleDependency>
-    get() = findLibraryOrThrow("unitTest.jupiter.engine")
-
 internal val VersionCatalog.hiltAndroidCompiler: Provider<MinimalExternalModuleDependency>
     get() = findLibraryOrThrow("hilt.android.compiler")
 

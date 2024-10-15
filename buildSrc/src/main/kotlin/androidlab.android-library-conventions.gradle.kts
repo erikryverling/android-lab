@@ -14,7 +14,6 @@ dependencies {
     implementation(libsx.timber)
 
     testImplementation(libsx.bundleUnitTest)
-    testRuntimeOnly(libsx.unitTestJupiterEngine)
     testImplementation(project(":test:utils"))
 }
 
