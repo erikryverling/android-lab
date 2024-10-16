@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AiModule {
+class DataAiModule {
     @Provides
     @Singleton
     internal fun provideAiRepository(@ApplicationContext context: Context)

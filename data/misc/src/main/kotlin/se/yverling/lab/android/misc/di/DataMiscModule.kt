@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class MiscModule {
+class DataMiscModule {
     @Provides
     @Singleton
     internal fun provideMiscRepository(@ApplicationContext context: Context)
