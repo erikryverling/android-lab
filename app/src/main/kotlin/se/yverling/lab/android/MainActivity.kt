@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -94,7 +95,7 @@ class MainActivity : ComponentActivity() {
                             BottomNavigation(navController = navController, items = items)
                         }
                     },
-                ) { innerPadding ->
+                ) { padding ->
                     Row {
                         if (isTabletLandscape) {
                             SideNavigation(navController = navController, items = items)
@@ -103,7 +104,9 @@ class MainActivity : ComponentActivity() {
                         NavHost(
                             navController,
                             startDestination = NavigationItem.Coffees.route,
-                            Modifier.padding(innerPadding)
+                            Modifier
+                                .padding(padding)
+                                .consumeWindowInsets(padding)
                         ) {
                             composable(NavigationItem.Coffees.route) {
                                 AdaptiveCoffeesScreen()
