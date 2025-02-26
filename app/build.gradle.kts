@@ -52,6 +52,7 @@ dependencies {
 android {
     namespace = "se.yverling.lab.android"
 
+    compileSdkPreview = Versions.compileSdkPreview
     compileSdk = Versions.compileSdk
 
     compileOptions {
