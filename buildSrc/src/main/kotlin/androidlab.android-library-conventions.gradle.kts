@@ -15,6 +15,7 @@ dependencies {
 
     testImplementation(libsx.bundleUnitTest)
     testImplementation(project(":test:utils"))
+    testRuntimeOnly(libsx.junitPlatform)
 }
 
 android {

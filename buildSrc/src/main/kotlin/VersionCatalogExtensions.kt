@@ -28,6 +28,9 @@ internal val VersionCatalog.hiltAndroid: Provider<MinimalExternalModuleDependenc
 internal val VersionCatalog.timber: Provider<MinimalExternalModuleDependency>
     get() = findLibraryOrThrow("timber")
 
+internal val VersionCatalog.junitPlatform: Provider<MinimalExternalModuleDependency>
+    get() = findLibraryOrThrow("unitTest-junit-platform")
+
 
 // [Bundle]
 internal val VersionCatalog.bundleCompose: Provider<ExternalModuleDependencyBundle>
