@@ -14,7 +14,6 @@ dependencies {
 }
 
 android {
-    compileSdkPreview = Versions.compileSdkPreview
     compileSdk = Versions.compileSdk
 
     defaultConfig {

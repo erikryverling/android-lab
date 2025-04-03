@@ -21,11 +21,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.launch
 import se.yverling.lab.android.coffees.CoffeesUiState
 import se.yverling.lab.android.coffees.CoffeesViewModel
 import se.yverling.lab.android.common.model.Coffee
@@ -40,10 +42,13 @@ const val CoffeesRoute = "coffees"
 fun AdaptiveCoffeesScreen(
     viewModel: CoffeesViewModel = hiltViewModel(),
 ) {
+    val scope = rememberCoroutineScope()
     val navigator = rememberListDetailPaneScaffoldNavigator<Coffee>()
 
     BackHandler(navigator.canNavigateBack()) {
-        navigator.navigateBack()
+        scope.launch {
+            navigator.navigateBack()
+        }
     }
 
     val uiState by viewModel.uiState.collectAsState(CoffeesUiState.Loading)
@@ -77,7 +82,9 @@ fun AdaptiveCoffeesScreen(
                                         )
                                     },
                                     onClick = {
-                                        navigator.navigateTo(ListDetailPaneScaffoldRole.List)
+                                        scope.launch {
+                                            navigator.navigateTo(ListDetailPaneScaffoldRole.List)
+                                        }
                                     }
                                 )
                         }
@@ -101,7 +108,9 @@ fun AdaptiveCoffeesScreen(
                                 isUppercase = isUppercase,
                                 showHeading = false,
                                 onCoffeeClicked = { coffee ->
-                                    navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, coffee)
+                                    scope.launch {
+                                        navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, coffee)
+                                    }
                                 },
                             )
                         }
@@ -109,7 +118,7 @@ fun AdaptiveCoffeesScreen(
 
                     detailPane = {
                         AnimatedPane(Modifier) {
-                            navigator.currentDestination?.content?.let {
+                            navigator.currentDestination?.contentKey?.let {
                                 CoffeeDetails(coffee = it, isExpanded = true)
                             }
                         }

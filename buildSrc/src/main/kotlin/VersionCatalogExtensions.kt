@@ -29,8 +29,7 @@ internal val VersionCatalog.timber: Provider<MinimalExternalModuleDependency>
     get() = findLibraryOrThrow("timber")
 
 internal val VersionCatalog.junitPlatform: Provider<MinimalExternalModuleDependency>
-    get() = findLibraryOrThrow("unitTest-junit-platform")
-
+    get() = findLibraryOrThrow("unitTest-junit-platformLauncher")
 
 // [Bundle]
 internal val VersionCatalog.bundleCompose: Provider<ExternalModuleDependencyBundle>

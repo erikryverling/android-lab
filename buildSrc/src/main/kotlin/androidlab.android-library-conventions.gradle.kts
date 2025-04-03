@@ -14,12 +14,11 @@ dependencies {
     implementation(libsx.timber)
 
     testImplementation(libsx.bundleUnitTest)
-    testImplementation(project(":test:utils"))
     testRuntimeOnly(libsx.junitPlatform)
+    testImplementation(project(":test:utils"))
 }
 
 android {
-    compileSdkPreview = Versions.compileSdkPreview
     compileSdk = Versions.compileSdk
 
     defaultConfig {
