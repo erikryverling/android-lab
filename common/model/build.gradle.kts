@@ -1,6 +1,6 @@
 plugins {
-    id("androidlab.compose-library-conventions")
-    id("org.jetbrains.kotlin.plugin.parcelize")
+    alias(libs.plugins.convention.compose)
+    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.serialization)
 }
 

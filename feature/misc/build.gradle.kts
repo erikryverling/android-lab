@@ -1,12 +1,12 @@
 plugins {
-    id("androidlab.compose-library-conventions")
-    id("androidlab.hilt-library-conventions")
+    alias(libs.plugins.convention.compose)
+    alias(libs.plugins.convention.hilt)
 }
 
 dependencies {
-    implementation(project(":common:design-system"))
-    implementation(project(":common:ui"))
-    implementation(project(":data:misc"))
+    implementation(projects.common.designSystem)
+    implementation(projects.common.ui)
+    implementation(projects.data.misc)
 
     implementation(libs.hilt.navigation)
 
@@ -16,6 +16,3 @@ dependencies {
 android {
     namespace = "se.yverling.lab.android.feature.misc"
 }
-
-// Just as en example
-tasks.register<GreetTask>("greet")

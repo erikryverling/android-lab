@@ -1,25 +1,16 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.convention.application)
     alias(libs.plugins.paparazzi)
-    id("org.jetbrains.kotlinx.kover")
-    id("org.jetbrains.kotlin.plugin.compose")
-}
-
-repositories {
-    google()
-    mavenCentral()
+    alias(libs.plugins.kover)
 }
 
 dependencies {
-    implementation(project(":common:design-system"))
-    implementation(project(":common:model"))
-    implementation(project(":feature:coffees"))
-    implementation(project(":feature:weather"))
-    implementation(project(":feature:ai"))
-    implementation(project(":feature:misc"))
+    implementation(projects.common.designSystem)
+    implementation(projects.common.model)
+    implementation(projects.feature.coffees)
+    implementation(projects.feature.weather)
+    implementation(projects.feature.ai)
+    implementation(projects.feature.misc)
 
     implementation(libs.appCompat)
 
@@ -40,7 +31,7 @@ dependencies {
     implementation(libs.material3.windowSizeClassAndroid)
 
     testImplementation(libs.unitTest.junit4)
-    testImplementation(project(":data:coffees"))
+    testImplementation(projects.data.coffees)
 
     androidTestImplementation(libs.androidTest.runner)
     androidTestImplementation(libs.androidTest.hilt)
@@ -51,18 +42,6 @@ dependencies {
 
 android {
     namespace = "se.yverling.lab.android"
-
-    compileSdk = Versions.compileSdk
-
-    compileOptions {
-        // KSP only supports Java 17
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = Versions.jvmTarget
-    }
 
     defaultConfig {
         minSdk = Versions.minSdk
@@ -77,7 +56,6 @@ android {
 
     buildFeatures {
         compose = true
-        buildConfig = true
     }
 
     buildTypes {
@@ -91,13 +69,14 @@ android {
     lint {
         // This will generate a single report for all modules
         checkDependencies = true
+        warningsAsErrors = true
         xmlReport = false
         htmlReport = true
         htmlOutput = file("${project.rootDir}/build/reports/android-lint.html")
     }
 }
 
-plugins.withId("app.cash.paparazzi") {
+plugins.withId(libs.plugins.paparazzi.get().pluginId) {
     // Defer until afterEvaluate so that testImplementation is created by Android plugin.
     afterEvaluate {
         dependencies.constraints {
@@ -119,12 +98,12 @@ plugins.withId("app.cash.paparazzi") {
 
 // Use for creating an aggregated Kover report
 dependencies {
-    kover(project(":feature:coffees"))
-    kover(project(":feature:weather"))
-    kover(project(":feature:misc"))
-    kover(project(":data:coffees"))
-    kover(project(":data:weather"))
-    kover(project(":data:misc"))
+    kover(projects.feature.coffees)
+    kover(projects.feature.weather)
+    kover(projects.feature.misc)
+    kover(projects.data.coffees)
+    kover(projects.data.weather)
+    kover(projects.data.misc)
 }
 
 kover {

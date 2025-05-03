@@ -1,7 +1,7 @@
-import java.util.*
+import java.util.Properties
 
 plugins {
-    id("androidlab.hilt-library-conventions")
+    alias(libs.plugins.convention.hilt)
     alias(libs.plugins.protobuf)
     alias(libs.plugins.serialization)
 }
@@ -29,10 +29,6 @@ android {
 
         // Set to either Ktor or Retrofit
         buildConfigField("String", "API_CLIENT", "\"Ktor\"")
-    }
-
-    buildFeatures {
-        buildConfig = true
     }
 }
 

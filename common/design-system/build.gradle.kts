@@ -1,5 +1,5 @@
 plugins {
-    id("androidlab.compose-library-conventions")
+    alias(libs.plugins.convention.compose)
 }
 
 android {

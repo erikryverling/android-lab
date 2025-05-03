@@ -1,13 +1,13 @@
 plugins {
-    id("androidlab.hilt-library-conventions")
-    id("androidlab.compose-library-conventions")
+    alias(libs.plugins.convention.hilt)
+    alias(libs.plugins.convention.compose)
     alias(libs.plugins.screenshot)
 }
 
 dependencies {
-    implementation(project(":common:design-system"))
-    implementation(project(":common:ui"))
-    implementation(project(":data:weather"))
+    implementation(projects.common.designSystem)
+    implementation(projects.common.ui)
+    implementation(projects.data.weather)
 
     implementation(libs.hilt.navigation)
 
@@ -24,5 +24,6 @@ android {
         kotlinCompilerExtensionVersion = "1.5.4"
     }
 
+    @Suppress("UnstableApiUsage")
     experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }

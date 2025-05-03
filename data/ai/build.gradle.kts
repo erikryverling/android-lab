@@ -1,11 +1,11 @@
-import java.util.*
+import java.util.Properties
 
 plugins {
-    id("androidlab.hilt-library-conventions")
+    alias(libs.plugins.convention.hilt)
 }
 
 dependencies {
-    implementation(project(":common:model"))
+    implementation(projects.common.model)
 
     implementation(libs.generativeai)
     implementation(libs.kotlinx.serialization)
@@ -20,9 +20,5 @@ android {
         val apiKey = properties.getProperty("geminiApiKey")
 
         buildConfigField("String", "API_KEY", apiKey)
-    }
-
-    buildFeatures {
-        buildConfig = true
     }
 }

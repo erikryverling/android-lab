@@ -1,6 +1,6 @@
 plugins {
-    id("androidlab.compose-library-conventions")
-    id("org.jetbrains.kotlin.plugin.parcelize")
+    alias(libs.plugins.convention.compose)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -8,6 +8,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":common:design-system"))
-    implementation(project(":common:model"))
+    implementation(projects.common.designSystem)
+    implementation(projects.common.model)
 }

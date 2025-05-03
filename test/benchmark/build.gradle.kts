@@ -1,6 +1,6 @@
 plugins {
-    id("org.jetbrains.kotlin.android")
-    id("com.android.test")
+    alias(libs.plugins.android.test)
+    alias(libs.plugins.kotlin.android)
 }
 
 repositories {
@@ -14,10 +14,12 @@ dependencies {
 }
 
 android {
+    namespace = "se.yverling.lab.android.benchmark"
+
     compileSdk = Versions.compileSdk
 
     defaultConfig {
-        minSdk = Versions.minSdk
+        minSdk =  Versions.minSdk
     }
 
     compileOptions {
@@ -29,8 +31,6 @@ android {
     kotlinOptions {
         jvmTarget = Versions.jvmTarget
     }
-
-    namespace = "se.yverling.lab.android.benchmark"
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -45,11 +45,13 @@ android {
     }
 
     targetProjectPath = ":app"
+    @Suppress("UnstableApiUsage")
     experimentalProperties["android.experimental.self-instrumenting"] = true
 }
 
 androidComponents {
     beforeVariants(selector().all()) {
+        @Suppress("DEPRECATION")
         it.enabled = it.buildType == "benchmark"
     }
 }

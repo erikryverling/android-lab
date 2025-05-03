@@ -1,13 +1,13 @@
 plugins {
-    id("androidlab.compose-library-conventions")
-    id("androidlab.hilt-library-conventions")
+    alias(libs.plugins.convention.compose)
+    alias(libs.plugins.convention.hilt)
 }
 
 dependencies {
-    implementation(project(":common:design-system"))
-    implementation(project(":common:ui"))
-    implementation(project(":common:model"))
-    implementation(project(":data:coffees"))
+    implementation(projects.common.designSystem)
+    implementation(projects.common.ui)
+    implementation(projects.common.model)
+    implementation(projects.data.coffees)
 
     implementation(libs.hilt.navigation)
 
@@ -17,7 +17,7 @@ dependencies {
 
     kspAndroidTest(libs.androidTest.hilt.compiler)
     androidTestImplementation(libs.bundles.androidTest)
-    androidTestImplementation(project(":test:utils"))
+    androidTestImplementation(projects.test.utils)
 
     debugImplementation(libs.androidTest.compose.manifest)
 }

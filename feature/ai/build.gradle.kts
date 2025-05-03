@@ -1,13 +1,13 @@
 plugins {
-    id("androidlab.hilt-library-conventions")
-    id("androidlab.compose-library-conventions")
+    alias(libs.plugins.convention.hilt)
+    alias(libs.plugins.convention.compose)
 }
 
 dependencies {
-    implementation(project(":common:design-system"))
-    implementation(project(":common:ui"))
-    implementation(project(":common:model"))
-    implementation(project(":data:ai"))
+    implementation(projects.common.designSystem)
+    implementation(projects.common.ui)
+    implementation(projects.common.model)
+    implementation(projects.data.ai)
 
     implementation(libs.hilt.navigation)
 }

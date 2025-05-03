@@ -1,5 +1,5 @@
 plugins {
-    id("androidlab.hilt-library-conventions")
+    alias(libs.plugins.convention.hilt)
 }
 
 android {

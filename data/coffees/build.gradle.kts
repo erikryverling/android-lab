@@ -1,11 +1,11 @@
 plugins {
-    id("androidlab.hilt-library-conventions")
+    alias(libs.plugins.convention.hilt)
     alias(libs.plugins.serialization)
-    id("org.jetbrains.kotlin.plugin.parcelize")
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 dependencies {
-    implementation(project(":common:model"))
+    implementation(projects.common.model)
 
     ksp(libs.room.compiler)
     implementation(libs.room.ktx)
