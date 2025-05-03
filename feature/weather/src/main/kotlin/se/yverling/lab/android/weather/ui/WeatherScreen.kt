@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 import se.yverling.lab.android.data.weather.model.CurrentWeather
-import se.yverling.lab.android.data.weather.model.Wind
+import se.yverling.lab.android.data.weather.model.CurrentWeather.Wind
 import se.yverling.lab.android.design.theme.AndroidLabTheme
 import se.yverling.lab.android.design.theme.DefaultSpace
 import se.yverling.lab.android.design.theme.LargeSpace

@@ -18,7 +18,7 @@ data class CurrentWeatherDto(val main: Main, val wind: Wind, val name: String) {
 fun CurrentWeatherDto.toCurrentWeather(): CurrentWeather {
     return CurrentWeather(
         temperature = this.main.temp.roundToInt(),
-        wind = se.yverling.lab.android.data.weather.model.Wind(
+        wind = CurrentWeather.Wind(
             speed = this.wind.speed.roundToInt(),
             degree = this.wind.deg
         ),

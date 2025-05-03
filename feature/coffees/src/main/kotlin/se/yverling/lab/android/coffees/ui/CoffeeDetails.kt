@@ -18,8 +18,8 @@ import se.yverling.lab.android.ui.CoffeeCard
 @Composable
 internal fun CoffeeDetails(
     coffee: Coffee?,
+    modifier: Modifier = Modifier,
     isExpanded: Boolean = false,
-    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),

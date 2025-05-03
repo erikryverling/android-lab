@@ -6,7 +6,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import se.yverling.lab.android.data.weather.model.CurrentWeather
-import se.yverling.lab.android.data.weather.model.Wind
+import se.yverling.lab.android.data.weather.model.CurrentWeather.*
 import se.yverling.lab.android.design.theme.AndroidLabTheme
 import se.yverling.lab.android.weather.WeatherUiState
 

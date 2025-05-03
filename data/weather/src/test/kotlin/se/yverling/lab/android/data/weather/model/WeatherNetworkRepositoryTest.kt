@@ -20,8 +20,8 @@ import se.yverling.lab.android.data.weather.RETROFIT
 import se.yverling.lab.android.data.weather.UNITS
 import se.yverling.lab.android.data.weather.WeatherNetworkRepository
 import se.yverling.lab.android.data.weather.network.CurrentWeatherDto
+import se.yverling.lab.android.data.weather.network.CurrentWeatherDto.*
 import se.yverling.lab.android.data.weather.network.KtorWeather
-import se.yverling.lab.android.data.weather.network.Main
 import se.yverling.lab.android.data.weather.network.WeatherService
 
 @ExtendWith(MockKExtension::class)
@@ -91,12 +91,12 @@ class WeatherNetworkRepositoryTest {
 
 private val dto = CurrentWeatherDto(
     main = Main(temp = 20f),
-    wind = se.yverling.lab.android.data.weather.network.Wind(speed = 5f, deg = 90),
+    wind = Wind(speed = 5f, deg = 90),
     name = "Årstaberg"
 )
 
 private val model = CurrentWeather(
     temperature = 20,
-    wind = Wind(speed = 5, degree = 90),
+    wind = CurrentWeather.Wind(speed = 5, degree = 90),
     locationName = "Årstaberg"
 )

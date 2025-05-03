@@ -1,5 +1,6 @@
 package se.yverling.lab.android.feature.misc
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.sp
 private const val DEFAULT_DURATION_IN_MILLIS = 400
 private const val DEFAULT_DELAY_IN_MILLIS = 300
 
+@SuppressLint("UseOfNonLambdaOffsetOverload")
 @Composable
 internal fun AnimationContent(modifier: Modifier = Modifier) {
     var started by remember { mutableStateOf(false) }

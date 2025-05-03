@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import se.yverling.lab.android.data.weather.WeatherDataStoreRepository
 import se.yverling.lab.android.data.weather.currentWeatherDataStore
+import se.yverling.lab.android.data.weather.model.CurrentWeather.Wind
 
 @ExtendWith(MockKExtension::class)
 class WeatherDataStoreRepositoryTest {

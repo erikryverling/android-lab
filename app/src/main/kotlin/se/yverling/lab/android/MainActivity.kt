@@ -50,6 +50,7 @@ import se.yverling.lab.android.weather.ui.WeatherScreenDeepLinkUri
 import se.yverling.lab.android.weather.ui.WeatherScreenDestination
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
+import androidx.core.net.toUri
 
 @ExperimentalMaterial3Api
 @ExperimentalMaterial3AdaptiveApi
@@ -151,7 +152,7 @@ class MainActivity : ComponentActivity() {
                             ) {
                                 MiscScreen(
                                     onDeepLinkButtonClick = {
-                                        navController.navigate(Uri.parse("$WeatherScreenDeepLinkUri?sectionOptional=test"))
+                                        navController.navigate("$WeatherScreenDeepLinkUri?sectionOptional=test".toUri())
                                     }
                                 )
                             }

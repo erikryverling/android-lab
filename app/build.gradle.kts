@@ -70,6 +70,7 @@ android {
         // This will generate a single report for all modules
         checkDependencies = true
         warningsAsErrors = true
+        disable += listOf("IconLocation")
         xmlReport = false
         htmlReport = true
         htmlOutput = file("${project.rootDir}/build/reports/android-lint.html")

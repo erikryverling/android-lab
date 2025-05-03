@@ -43,6 +43,7 @@ coil = "2.7.0"
 work = "2.10.1"
 
 # This needs to be insync with generativeai
+#noinspection GradleDependency
 ktor = "2.3.12"
 
 coroutinesTest = "1.10.1"

@@ -15,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import se.yverling.lab.android.data.weather.GetAndCacheWeatherUseCase
 import se.yverling.lab.android.data.weather.WeatherDataStoreRepository
 import se.yverling.lab.android.data.weather.WeatherNetworkRepository
+import se.yverling.lab.android.data.weather.model.CurrentWeather.Wind
 
 @ExtendWith(MockKExtension::class)
 class GetAndCacheWeatherUseCaseTest {
