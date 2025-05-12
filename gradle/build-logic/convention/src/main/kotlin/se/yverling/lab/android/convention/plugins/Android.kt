@@ -28,10 +28,6 @@ internal fun Project.configureAndroidBase() {
             }
         }
 
-        packagingOptions {
-            resources.excludes += listOf("META-INF/**")
-        }
-
         tasks.withType<KotlinCompile>().configureEach {
             @Suppress("DEPRECATION")
             kotlinOptions {
