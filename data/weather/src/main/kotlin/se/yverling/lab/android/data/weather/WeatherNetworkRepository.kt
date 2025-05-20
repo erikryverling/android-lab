@@ -1,6 +1,7 @@
 package se.yverling.lab.android.data.weather
 
 import io.ktor.client.call.body
+import io.ktor.http.isSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import se.yverling.lab.android.data.weather.model.CurrentWeather
@@ -43,7 +44,7 @@ class WeatherNetworkRepository(
                     languageCode = Locale.getDefault().language
                 )
 
-                if (response.status.value in success()) {
+                if (response.status.isSuccess()) {
                     emit(response.body<CurrentWeatherDto>().toCurrentWeather())
                 } else {
                     throw java.lang.IllegalStateException("Could not parse weather response with Ktor")
@@ -69,6 +70,4 @@ class WeatherNetworkRepository(
             else -> throw java.lang.IllegalStateException("Could not parse API_CLIENT")
         }
     }
-
-    private fun success() = 200..299
 }
