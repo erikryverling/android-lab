@@ -3,11 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 
-repositories {
-    google()
-    mavenCentral()
-}
-
 dependencies {
     implementation(libs.unitTest.junit4)
     implementation(libs.benchmark.macro.junit4)
