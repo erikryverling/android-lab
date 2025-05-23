@@ -1,16 +1,16 @@
 [versions]
 
 # Global
-kotlin = "2.1.20"
-hilt = "2.56.1"
+kotlin = "2.1.21"
+hilt = "2.56.2"
 
 # Plugins
 # This needs to be in sync with the Gradle version
 kotlin-dsl-plugin = "5.2.0"
-ksp-plugin = "2.1.20-1.0.32"
+ksp-plugin = "2.1.21-2.0.1"
 android-plugin = "8.10.0"
 kover-plugin = "0.9.1"
-protobuf-plugin = "0.9.4"
+protobuf-plugin = "0.9.5"
 paparazzi-plugin = "1.3.5"
 screenshot-plugin = "0.0.1-alpha09"
 
@@ -18,26 +18,26 @@ screenshot-plugin = "0.0.1-alpha09"
 kotlinx-datetime = "0.6.2"
 kotlinx-serialization = "1.8.1"
 
-compose-bom = "2025.05.00"
+compose-bom = "2025.05.01"
 compose-activity = "1.10.1"
 compose-lifecycle = "2.9.0"
 compose-constraintLayout = "1.1.1"
 compose-adaptive = "1.1.0"
 
-protobuf = "4.30.2"
+protobuf = "4.31.0"
 # This needs to be synced with protobuf
 protobufCompilerArtifact = "com.google.protobuf:protoc:4.30.2:osx-x86_64"
 
 retrofit = "2.11.0"
 
-junit = "5.12.1"
+junit = "5.12.2"
 junit4 = "4.13.2"
 
 appCompat = "1.7.0"
 navigation = "2.9.0"
 hilt-navigation-compose = "1.2.0"
 room = "2.7.1"
-datastore = "1.1.6"
+datastore = "1.1.7"
 timber = "5.0.1"
 coil = "2.7.0"
 work = "2.10.1"
@@ -46,8 +46,8 @@ work = "2.10.1"
 #noinspection GradleDependency
 ktor = "2.3.12"
 
-coroutinesTest = "1.10.1"
-mockk = "1.14.0"
+coroutinesTest = "1.10.2"
+mockk = "1.14.2"
 kotest-assertions = "5.9.1"
 turbine = "1.2.0"
 androidTestRunner = "1.6.2"

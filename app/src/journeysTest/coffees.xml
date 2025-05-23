@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?><!-- @formatter:off -->
-<journey name="Coffees">
-    <description>A Journey that takes the user from the list to a details screen</description>
-    <actions>
-        <action>Click on the third item on the coffees list</action><action>Verify that the third item's origin is "Yemen"</action>
-    </actions>
-</journey>
