@@ -11,6 +11,7 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -37,7 +38,7 @@ class DataWeatherModule {
     fun providesKotlinSerializationJsonConverterFactory(
         @Named("kotlinSerializationJson") json: Json,
     ): Converter.Factory {
-        val contentType = MediaType.get("application/json")
+        val contentType = "application/json".toMediaType()
         return json.asConverterFactory(contentType)
     }
 
