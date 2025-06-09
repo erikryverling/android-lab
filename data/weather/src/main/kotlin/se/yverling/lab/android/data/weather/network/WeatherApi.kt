@@ -5,7 +5,7 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import javax.inject.Inject
 
-class KtorWeather @Inject constructor(private val client: HttpClient) {
+class WeatherApi @Inject constructor(private val client: HttpClient) {
     suspend fun getCurrentWeather(
         apiKey: String,
         longitude: Float,

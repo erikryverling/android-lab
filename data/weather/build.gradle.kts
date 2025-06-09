@@ -7,7 +7,6 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.bundles.retrofit)
     implementation(libs.bundles.ktor)
 
     implementation(libs.datastore)
@@ -26,9 +25,6 @@ android {
         val apiKey = properties.getProperty("openWeatherMapApiKey")
 
         buildConfigField("String", "API_KEY", apiKey)
-
-        // Set to either Ktor or Retrofit
-        buildConfigField("String", "API_CLIENT", "\"Ktor\"")
     }
 }
 

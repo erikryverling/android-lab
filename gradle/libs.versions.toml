@@ -28,8 +28,6 @@ protobuf = "4.31.1"
 # This needs to be synced with protobuf
 protobufCompilerArtifact = "com.google.protobuf:protoc:4.31.1:osx-x86_64"
 
-retrofit = "3.0.0"
-
 junit = "5.13.1"
 junit4 = "4.13.2"
 
@@ -109,9 +107,6 @@ navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-kt
 navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 
-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-retrofit-kotlinx-serialization-converter = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
-
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 
@@ -173,10 +168,6 @@ navigation = [
     "navigation-fragment-ktx",
     "navigation-ui-ktx",
     "navigation-compose",
-]
-retrofit = [
-    "retrofit",
-    "retrofit-kotlinx-serialization-converter",
 ]
 ktor = [
     "ktor-client-core",

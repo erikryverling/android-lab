@@ -10,12 +10,6 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaType
-import retrofit2.Converter
-import retrofit2.Retrofit
-import retrofit2.converter.kotlinx.serialization.asConverterFactory
-import se.yverling.lab.android.data.weather.network.WeatherService
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -30,33 +24,6 @@ class DataWeatherModule {
     fun providesKotlinSerializationJson(): Json = Json {
         ignoreUnknownKeys = true
         prettyPrint = true
-    }
-
-    @Provides
-    @Singleton
-    @Named("kotlinSerialization")
-    fun providesKotlinSerializationJsonConverterFactory(
-        @Named("kotlinSerializationJson") json: Json,
-    ): Converter.Factory {
-        val contentType = "application/json".toMediaType()
-        return json.asConverterFactory(contentType)
-    }
-
-    @Singleton
-    @Provides
-    fun provideRetrofit(
-        @Named("kotlinSerialization") kotlinSerializationJsonConverterFactory: Converter.Factory
-    ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(kotlinSerializationJsonConverterFactory)
-            .build()
-    }
-
-    @Singleton
-    @Provides
-    fun provideWeatherService(retrofit: Retrofit): WeatherService {
-        return retrofit.create(WeatherService::class.java)
     }
 
     @Singleton

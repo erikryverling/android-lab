@@ -1,9 +1,11 @@
 package se.yverling.lab.android.data.weather.network
 
+import android.annotation.SuppressLint
 import kotlinx.serialization.Serializable
 import se.yverling.lab.android.data.weather.model.CurrentWeather
 import kotlin.math.roundToInt
 
+@SuppressLint("UnsafeOptInUsageError")
 @Serializable
 data class CurrentWeatherDto(val main: Main, val wind: Wind, val name: String) {
     @Serializable
@@ -13,7 +15,6 @@ data class CurrentWeatherDto(val main: Main, val wind: Wind, val name: String) {
     data class Wind(val speed: Float, val deg: Int)
 
 }
-
 
 fun CurrentWeatherDto.toCurrentWeather(): CurrentWeather {
     return CurrentWeather(

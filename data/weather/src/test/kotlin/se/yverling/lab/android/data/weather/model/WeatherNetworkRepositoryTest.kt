@@ -11,26 +11,19 @@ import io.mockk.junit5.MockKExtension
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import retrofit2.Response
 import se.yverling.lab.android.data.weather.BuildConfig
-import se.yverling.lab.android.data.weather.KTOR
 import se.yverling.lab.android.data.weather.LATITUDE
 import se.yverling.lab.android.data.weather.LONGITUDE
-import se.yverling.lab.android.data.weather.RETROFIT
 import se.yverling.lab.android.data.weather.UNITS
 import se.yverling.lab.android.data.weather.WeatherNetworkRepository
 import se.yverling.lab.android.data.weather.network.CurrentWeatherDto
 import se.yverling.lab.android.data.weather.network.CurrentWeatherDto.*
-import se.yverling.lab.android.data.weather.network.KtorWeather
-import se.yverling.lab.android.data.weather.network.WeatherService
+import se.yverling.lab.android.data.weather.network.WeatherApi
 
 @ExtendWith(MockKExtension::class)
 class WeatherNetworkRepositoryTest {
     @MockK
-    lateinit var serviceMock: WeatherService
-
-    @MockK
-    lateinit var ktorWeatherMock: KtorWeather
+    lateinit var weatherApiMock: WeatherApi
 
     @MockK
     lateinit var httpResponseMock: HttpResponse
@@ -41,31 +34,8 @@ class WeatherNetworkRepositoryTest {
     private lateinit var networkRepository: WeatherNetworkRepository
 
     @Test
-    fun `getCurrentWeather() should get current weather successfully with Retrofit`() {
-        networkRepository = WeatherNetworkRepository(serviceMock, ktorWeatherMock, RETROFIT)
-
-        val response = Response.success(dto)
-
-        runTest {
-            coEvery {
-                serviceMock.getCurrentWeather(
-                    apiKey = BuildConfig.API_KEY,
-                    longitude = LONGITUDE,
-                    latitude = LATITUDE,
-                    units = UNITS,
-                    languageCode = any()
-                )
-            } returns response
-
-            networkRepository.getCurrentWeather().collect {
-                it.shouldBe(model)
-            }
-        }
-    }
-
-    @Test
-    fun `getCurrentWeather() should get current weather successfully with Ktor`() {
-        networkRepository = WeatherNetworkRepository(serviceMock, ktorWeatherMock, KTOR)
+    fun `getCurrentWeather() should get current weather successfully`() {
+        networkRepository = WeatherNetworkRepository(weatherApiMock)
 
         every { httpResponseMock.status } returns HttpStatusCode(200, "Success")
         every { httpResponseMock.call } returns httpClientCallMock
@@ -73,7 +43,7 @@ class WeatherNetworkRepositoryTest {
 
         runTest {
             coEvery {
-                ktorWeatherMock.getCurrentWeather(
+                weatherApiMock.getCurrentWeather(
                     apiKey = BuildConfig.API_KEY,
                     longitude = LONGITUDE,
                     latitude = LATITUDE,
