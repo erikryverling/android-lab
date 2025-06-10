@@ -7,4 +7,5 @@ This is where I play around with the latest Android stuff
 ## Running
 You need to create a `local.properties` file with the following keys:
 * `openWeatherMapApiKey` that contains an API key for [Open Weather Map](https://openweathermap.org)
-* `geminiApiKey` that contains an API key for [Gemini](https://ai.google.dev/gemini-api/docs/api-key)
+
+You also need to add a `google-services.json` file with support for [Firebase AI](https://firebase.google.com/docs/ai-logic/get-started).

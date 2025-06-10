@@ -1,6 +1,7 @@
 package se.yverling.lab.android
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber.DebugTree
 import timber.log.Timber.Forest.plant
@@ -12,5 +13,7 @@ class AndroidLabApplication : Application() {
         if (BuildConfig.DEBUG) {
             plant(DebugTree())
         }
+
+        FirebaseApp.initializeApp(this)
     }
 }

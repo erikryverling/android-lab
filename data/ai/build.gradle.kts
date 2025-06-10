@@ -2,13 +2,16 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.convention.hilt)
+    alias(libs.plugins.google.services)
 }
 
 dependencies {
     implementation(projects.common.model)
 
-    implementation(libs.generativeai)
     implementation(libs.kotlinx.serialization)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.ai)
 }
 
 android {

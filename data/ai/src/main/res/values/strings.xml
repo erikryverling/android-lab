@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="prompt">Generate a JSON object with dummy data for the following properties describing a describing a specialty coffee: name, roaster, origin, region</string>
+    <string name="prompt">Generate a JSON object with dummy data for the following properties describing a describing a specialty coffee: name, roaster, origin, region.</string>
 </resources>

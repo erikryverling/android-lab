@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.convention.application)
     alias(libs.plugins.paparazzi)
     alias(libs.plugins.kover)
+    alias(libs.plugins.google.services)
 }
 
 dependencies {
@@ -29,6 +30,10 @@ dependencies {
     implementation(libs.work)
 
     implementation(libs.material3.windowSizeClassAndroid)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.common.ktx)
+
 
     testImplementation(libs.unitTest.junit4)
     testImplementation(projects.data.coffees)
