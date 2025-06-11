@@ -17,9 +17,10 @@
 
     <string name="custom_theme">Custom theme</string>
     <string name="dynamic_theme">Dynamic theme</string>
-    <string name="segmented_button_1_title">Button 1</string>
-    <string name="segmented_button_2_title">Button 2</string>
-    <string name="segmented_button_3_title">Button 3</string>
+
+    <string name="button_group_label_1">Work</string>
+    <string name="button_group_label_2">Restaurant</string>
+    <string name="button_group_label_3">Coffee</string>
 
     <string name="email_input_field_label">Email</string>
     <string name="password_input_field_label">Password</string>

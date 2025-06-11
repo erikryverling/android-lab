@@ -8,29 +8,39 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Coffee
+import androidx.compose.material.icons.filled.Restaurant
+import androidx.compose.material.icons.filled.Work
+import androidx.compose.material.icons.outlined.Coffee
+import androidx.compose.material.icons.outlined.Restaurant
+import androidx.compose.material.icons.outlined.Work
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonGroupDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.material3.carousel.HorizontalUncontainedCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -48,7 +58,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.ContentType
 import androidx.compose.ui.layout.ContentScale
@@ -91,7 +100,10 @@ private data class Person(val names: MutableList<String>)
 private data class Employer(var name: String)
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterial3ExpressiveApi::class
+)
 @Composable
 internal fun MiscScreenContent(
     modifier: Modifier = Modifier,
@@ -287,32 +299,7 @@ internal fun MiscScreenContent(
                         ContentType.Password
                     )
 
-                    val segmentedButtonsCheckedList = remember { mutableStateListOf<Int>() }
-                    val segmentedButtonsEntries = listOf(
-                        R.string.segmented_button_1_title,
-                        R.string.segmented_button_2_title,
-                        R.string.segmented_button_3_title
-                    )
-
-                    MultiChoiceSegmentedButtonRow(
-                        modifier = Modifier.padding(bottom = LargeSpace)
-                    ) {
-                        segmentedButtonsEntries.forEachIndexed { index, label ->
-                            SegmentedButton(
-                                shape = SegmentedButtonDefaults.itemShape(index = index, count = segmentedButtonsEntries.size),
-                                onCheckedChange = {
-                                    if (index in segmentedButtonsCheckedList) {
-                                        segmentedButtonsCheckedList.remove(index)
-                                    } else {
-                                        segmentedButtonsCheckedList.add(index)
-                                    }
-                                },
-                                checked = index in segmentedButtonsCheckedList
-                            ) {
-                                Text(stringResource(label))
-                            }
-                        }
-                    }
+                    ButtonGroup(modifier = Modifier.padding(bottom = LargeSpace))
 
                     val carouselItems = viewModel.carouselItems
 
@@ -340,6 +327,56 @@ internal fun MiscScreenContent(
                  Also note that the key to remember() could be of any type. */
                     val list by remember(evenCounter) { mutableStateOf(createHugeList()) }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+private fun ButtonGroup(modifier: Modifier = Modifier) {
+    val buttons = listOf(
+        stringResource(R.string.button_group_label_1),
+        stringResource(R.string.button_group_label_2),
+        stringResource(R.string.button_group_label_3),
+    )
+
+    val unCheckedIcons =
+        listOf(
+            Icons.Outlined.Work,
+            Icons.Outlined.Restaurant,
+            Icons.Outlined.Coffee
+        )
+
+    val checkedIcons = listOf(
+        Icons.Filled.Work,
+        Icons.Filled.Restaurant,
+        Icons.Filled.Coffee
+    )
+
+    val checked = remember { mutableStateListOf(false, false, false) }
+
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
+    ) {
+        buttons.forEachIndexed { index, label ->
+            ToggleButton(
+                checked = checked[index],
+                onCheckedChange = { checked[index] = it },
+                shapes =
+                    when (index) {
+                        0 -> ButtonGroupDefaults.connectedLeadingButtonShapes()
+                        buttons.lastIndex -> ButtonGroupDefaults.connectedTrailingButtonShapes()
+                        else -> ButtonGroupDefaults.connectedMiddleButtonShapes()
+                    }
+            ) {
+                Icon(
+                    if (checked[index]) checkedIcons[index] else unCheckedIcons[index],
+                    contentDescription = label
+                )
+                Spacer(Modifier.size(ToggleButtonDefaults.IconSpacing))
+                Text(label)
             }
         }
     }
@@ -435,6 +472,21 @@ fun logNumberOfManualRecompositions(counter: Int) {
 private fun MiscButtonPreview() {
     AndroidLabTheme {
         MiscButton(text = R.string.deep_link_button_title) {}
+    }
+}
+
+@Preview(name = "Light Mode")
+@Preview(
+    name = "Dark Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@Composable
+private fun ButtonGroupPreview() {
+    AndroidLabTheme {
+        Surface {
+            ButtonGroup()
+        }
     }
 }
 
