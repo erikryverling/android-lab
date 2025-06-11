@@ -30,6 +30,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.carousel.HorizontalUncontainedCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -49,16 +50,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.autofill.AutofillNode
-import androidx.compose.ui.autofill.AutofillType
-import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.autofill.ContentType
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.boundsInWindow
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalAutofill
-import androidx.compose.ui.platform.LocalAutofillTree
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentType
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -282,12 +279,12 @@ internal fun MiscScreenContent(
 
                     AutoFillTextField(
                         modifier = Modifier.padding(bottom = SmallSpace),
-                        InputType.EMAIL
+                        ContentType.EmailAddress
                     )
 
                     AutoFillTextField(
                         modifier = Modifier.padding(bottom = LargeSpace),
-                        InputType.PASSWORD
+                        ContentType.Password
                     )
 
                     val segmentedButtonsCheckedList = remember { mutableStateListOf<Int>() }
@@ -389,60 +386,39 @@ private fun SkippableComposable(modifier: Modifier = Modifier, person: Person, e
     )
 }
 
-/**
- * This does currently not work with 1Password, since it's not setting the correct
- * inputType. AutofillType.Password / KeyboardType.Password works as expected though.
- * Try this out every now and then do see if Google has added support for it in Compose.
- */
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun AutoFillTextField(modifier: Modifier = Modifier, inputType: InputType) {
+fun AutoFillTextField(modifier: Modifier = Modifier, contentType: ContentType) {
     var value by remember { mutableStateOf("") }
 
-    val autofillNode = AutofillNode(
-        autofillTypes =
-        if (inputType == InputType.EMAIL) {
-            listOf(AutofillType.EmailAddress)
-        } else {
-            listOf(AutofillType.Password)
-        },
-        onFill = { value = it }
-    )
-    val autofill = LocalAutofill.current
-
-    LocalAutofillTree.current += autofillNode
-
     OutlinedTextField(
-        modifier = modifier
-            .onGloballyPositioned {
-                autofillNode.boundingBox = it.boundsInWindow()
-            }
-            .onFocusChanged { focusState ->
-                autofill?.run {
-                    if (focusState.isFocused) {
-                        requestAutofillForNode(autofillNode)
-                    } else {
-                        cancelAutofillForNode(autofillNode)
-                    }
-                }
-            },
         value = value,
-        label = { Text(text = if (inputType == InputType.EMAIL) "Email" else "Password") },
-        keyboardOptions =
-        if (inputType == InputType.EMAIL) {
-            KeyboardOptions(keyboardType = KeyboardType.Email)
-        } else {
-            KeyboardOptions(keyboardType = KeyboardType.Password)
-        },
-        visualTransformation =
-        if (inputType == InputType.EMAIL) VisualTransformation.None else PasswordVisualTransformation(),
         onValueChange = { value = it },
-    )
-}
+        label = {
+            Text(
+                text = if (contentType == ContentType.EmailAddress) {
+                    stringResource(R.string.email_input_field_label)
+                } else {
+                    stringResource(R.string.password_input_field_label)
+                }
+            )
+        },
 
-enum class InputType {
-    EMAIL,
-    PASSWORD
+        keyboardOptions =
+            if (contentType == ContentType.EmailAddress) {
+                KeyboardOptions(keyboardType = KeyboardType.Email)
+            } else {
+                KeyboardOptions(keyboardType = KeyboardType.Password)
+            },
+
+        visualTransformation =
+            if (contentType == ContentType.EmailAddress) {
+                VisualTransformation.None
+            } else {
+                PasswordVisualTransformation()
+            },
+
+        modifier = modifier.semantics { this.contentType = contentType }
+    )
 }
 
 fun logNumberOfManualRecompositions(counter: Int) {
@@ -501,7 +477,7 @@ private fun SkippableComposablePreview() {
 private fun AutoFillTextFieldPreview() {
     AndroidLabTheme {
         Surface {
-            AutoFillTextField(inputType = InputType.EMAIL)
+            AutoFillTextField(contentType = ContentType.EmailAddress)
         }
     }
 }

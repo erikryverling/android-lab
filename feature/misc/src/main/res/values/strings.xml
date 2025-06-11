@@ -21,6 +21,9 @@
     <string name="segmented_button_2_title">Button 2</string>
     <string name="segmented_button_3_title">Button 3</string>
 
+    <string name="email_input_field_label">Email</string>
+    <string name="password_input_field_label">Password</string>
+
     <!-- Animation content -->
     <string name="image_content_description">Light bulb image</string>
     <string name="android_lab">Android Lab</string>
