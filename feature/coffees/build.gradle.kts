@@ -28,4 +28,9 @@ android {
     defaultConfig {
         testInstrumentationRunner = "se.yverling.lab.android.test.AndroidLabTestRunner"
     }
+
+    packaging {
+        resources.excludes.add("META-INF/LICENSE.md")
+        resources.excludes.add("META-INF/LICENSE-notice.md")
+    }
 }
