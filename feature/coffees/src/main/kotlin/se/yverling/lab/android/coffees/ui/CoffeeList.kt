@@ -1,23 +1,12 @@
 package se.yverling.lab.android.coffees.ui
 
 import android.content.res.Configuration
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.keyframes
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -41,10 +30,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,7 +38,6 @@ import se.yverling.lab.android.coffees.theme.CoffeeItemElevation
 import se.yverling.lab.android.common.model.Coffee
 import se.yverling.lab.android.design.theme.AndroidLabTheme
 import se.yverling.lab.android.design.theme.DefaultSpace
-import se.yverling.lab.android.design.theme.LargeSpace
 import se.yverling.lab.android.design.theme.SmallSpace
 import se.yverling.lab.android.feature.coffees.R
 
@@ -76,44 +61,12 @@ internal fun UppercaseFab(isUppercase: Boolean, onClicked: () -> Unit) {
 fun CoffeeList(
     coffees: List<Coffee>,
     isUppercase: Boolean,
-    showHeading: Boolean,
     modifier: Modifier = Modifier,
     onCoffeeClicked: (Coffee) -> Unit,
 ) {
     var selectedCoffeeIndex by remember { mutableIntStateOf(-1) }
 
     LazyColumn(modifier = Modifier.padding(DefaultSpace)) {
-        if (showHeading) {
-            item {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(bottom = LargeSpace),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-
-                ) {
-                    var shouldShowEasterEgg by remember { mutableStateOf(false) }
-                    val backgroundColor by animateColorAsState(
-                        if (shouldShowEasterEgg) {
-                            MaterialTheme.colorScheme.tertiary
-                        } else {
-                            MaterialTheme.colorScheme.onBackground
-                        }, label = "coffeeItemColor"
-                    )
-
-                    Text(
-                        text = stringResource(R.string.coffees_title),
-                        color = backgroundColor,
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.clickable { shouldShowEasterEgg = !shouldShowEasterEgg }
-                    )
-
-                    EasterEgg(shouldShowEasterEgg)
-                }
-            }
-        }
-
         itemsIndexed(coffees) { index, coffee ->
             CoffeeItem(
                 index = index,
@@ -131,49 +84,12 @@ fun CoffeeList(
 }
 
 @Composable
-fun EasterEgg(isVisible: Boolean) {
-    AnimatedVisibility(
-        visible = isVisible,
-        enter = fadeIn(),
-        exit = slideOutHorizontally()
-    ) {
-        Row {
-            Text(
-                text = stringResource(R.string.easter_egg),
-                style = MaterialTheme.typography.displayLarge
-            )
-
-            Spacer(modifier = Modifier.padding(SmallSpace))
-
-            val infiniteTransition = rememberInfiniteTransition()
-            val rotation by infiniteTransition.animateFloat(
-                initialValue = 0f,
-                targetValue = 360f,
-                animationSpec = infiniteRepeatable(
-                    animation = keyframes {
-                        durationMillis = 5000
-                        180f at 2500
-                    }
-                ), label = "easterEgg"
-            )
-
-            Image(
-                painter = painterResource(R.drawable.ic_baseline_wb_sunny_24),
-                modifier = Modifier.rotate(rotation),
-                contentDescription = stringResource(R.string.sun_icon_content_description),
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.tertiary)
-            )
-        }
-    }
-}
-
-@Composable
 fun CoffeeItem(
     index: Int,
     coffee: Coffee,
     isUppercase: Boolean,
     isSelected: Boolean,
-    onCoffeeClicked: (Int) -> Unit
+    onCoffeeClicked: (Int) -> Unit,
 ) {
     var iconIsTapped by rememberSaveable { mutableStateOf(false) }
 
@@ -274,14 +190,6 @@ private fun CoffeeItemPreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
-@Composable
-private fun EasterEggPreview() {
-    AndroidLabTheme {
-        Surface {
-            EasterEgg(isVisible = true)
-        }
-    }
-}
 
 @Preview(name = "Light Mode")
 @Preview(
@@ -310,10 +218,8 @@ private fun CoffeeListPreview() {
                         region = "Guji",
                     )
                 ),
-                isUppercase = false,
-                showHeading = true,
-                onCoffeeClicked = {}
-            )
+                isUppercase = false
+            ) {}
         }
     }
 }

@@ -106,7 +106,6 @@ fun AdaptiveCoffeesScreen(
                             CoffeeList(
                                 coffees = coffees,
                                 isUppercase = isUppercase,
-                                showHeading = false,
                                 onCoffeeClicked = { coffee ->
                                     scope.launch {
                                         navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, coffee)

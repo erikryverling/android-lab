@@ -28,7 +28,6 @@ class CoffeeListSnapshotTest {
                         region = "region"
                     )
                 ),
-                showHeading = true,
                 isUppercase = false,
                 onCoffeeClicked = {},
             )

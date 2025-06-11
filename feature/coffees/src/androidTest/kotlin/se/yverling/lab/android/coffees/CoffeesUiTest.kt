@@ -29,7 +29,6 @@ class CoffeesUiTest {
                 CoffeeList(
                     coffees = coffees,
                     isUppercase = false,
-                    showHeading = false
                 ) {
 
                 }
