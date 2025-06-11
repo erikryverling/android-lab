@@ -22,12 +22,6 @@ internal fun Project.configureAndroidBase() {
             targetCompatibility = JavaVersion.VERSION_17
         }
 
-        testOptions {
-            unitTests.all {
-                it.useJUnitPlatform()
-            }
-        }
-
         tasks.withType<KotlinCompile>().configureEach {
             @Suppress("DEPRECATION")
             kotlinOptions {
@@ -36,6 +30,16 @@ internal fun Project.configureAndroidBase() {
         }
 
         buildFeatures.buildConfig = true
+    }
+}
+
+internal fun Project.configureAndroidJunit5() {
+    android {
+        testOptions {
+            unitTests.all {
+                it.useJUnitPlatform()
+            }
+        }
     }
 }
 

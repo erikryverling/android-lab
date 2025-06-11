@@ -1,13 +1,8 @@
 package se.yverling.lab.android.convention.plugins
 
-import com.android.build.gradle.BaseExtension
-import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.gradle.kotlin.dsl.withType
 import se.yverling.lab.android.convention.implementation
 import se.yverling.lab.android.convention.libs
 import se.yverling.lab.android.convention.testImplementation
@@ -23,6 +18,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             }
 
             configureAndroidBase()
+            configureAndroidJunit5()
 
             dependencies {
                 implementation(libs.timber)
