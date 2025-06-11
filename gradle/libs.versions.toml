@@ -24,6 +24,7 @@ compose-activity = "1.10.1"
 compose-lifecycle = "2.9.1"
 compose-constraintLayout = "1.1.1"
 compose-adaptive = "1.1.0"
+compose-material = "1.4.0-alpha15"
 
 protobuf = "4.31.1"
 # This needs to be synced with protobuf
@@ -97,7 +98,7 @@ compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-
 compose-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-icons = { module = "androidx.compose.material:material-icons-extended" }
 compose-material2 = { module = "androidx.compose.material:material" }
-compose-material = { module = "androidx.compose.material3:material3" }
+compose-material = { module = "androidx.compose.material3:material3", version.ref = "compose-material" }
 
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity" }
 compose-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "compose-lifecycle" }
