@@ -11,7 +11,7 @@ import se.yverling.lab.android.common.model.Coffee
 import javax.inject.Inject
 
 internal class CoffeesRepositoryImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val db: AppDatabase,
 ) : CoffeesRepository {
     override fun getList(): Flow<List<Coffee>> {

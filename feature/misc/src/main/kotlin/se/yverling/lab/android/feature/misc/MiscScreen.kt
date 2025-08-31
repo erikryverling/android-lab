@@ -72,7 +72,7 @@ fun MiscScreen(
     }
 }
 
-enum class Tabs(@StringRes val title: Int) {
+enum class Tabs(@param:StringRes val title: Int) {
     Misc(
         title = R.string.misc_tab_title,
     ),

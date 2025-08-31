@@ -19,10 +19,10 @@ import se.yverling.lab.android.weather.ui.WeatherScreenRoute
 
 sealed class NavigationItem(
     val route: String,
-    @StringRes val label: Int,
+    @param:StringRes val label: Int,
     val icon: ImageVector,
     val selectedIcon: ImageVector,
-    @StringRes val iconContentDescription: Int
+    @param:StringRes val iconContentDescription: Int
 ) {
     data object Coffees : NavigationItem(
         route = CoffeesRoute,

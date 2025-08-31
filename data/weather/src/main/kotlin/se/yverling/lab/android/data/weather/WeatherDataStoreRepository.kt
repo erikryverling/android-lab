@@ -12,7 +12,7 @@ import se.yverling.lab.android.data.weather.model.CurrentWeather
 import se.yverling.lab.android.data.weather.model.CurrentWeather.*
 import javax.inject.Inject
 
-class WeatherDataStoreRepository @Inject constructor(@ApplicationContext private val context: Context) {
+class WeatherDataStoreRepository @Inject constructor(@param:ApplicationContext private val context: Context) {
     suspend fun persistCurrentWeather(currentWeather: CurrentWeather, createdAt: Long) {
         context.currentWeatherDataStore.updateData {
             it.toBuilder()

@@ -13,7 +13,7 @@ import se.yverling.lab.android.common.model.Coffee
 import se.yverling.lab.android.data.ai.R
 import javax.inject.Inject
 
-internal class AiRepositoryImpl @Inject constructor(@ApplicationContext private val context: Context) : AiRepository {
+internal class AiRepositoryImpl @Inject constructor(@param:ApplicationContext private val context: Context) : AiRepository {
     private val model = Firebase
         .ai(backend = GenerativeBackend.googleAI())
         .generativeModel(

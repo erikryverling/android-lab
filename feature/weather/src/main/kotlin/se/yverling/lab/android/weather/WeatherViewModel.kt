@@ -54,7 +54,7 @@ class WeatherViewModel @Inject constructor(
 
 internal sealed class WeatherUiState(val data: Any? = null) {
     data object Loading : WeatherUiState()
-    data class Error(@StringRes val message: Int) : WeatherUiState(message)
+    data class Error(@param:StringRes val message: Int) : WeatherUiState(message)
     data class Success(val currentWeather: CurrentWeather) : WeatherUiState(currentWeather)
 }
 

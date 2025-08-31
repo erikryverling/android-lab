@@ -1,11 +1,13 @@
 package se.yverling.lab.android.convention.plugins
 
+import Versions
 import com.android.build.gradle.BaseExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 
 internal fun Project.configureAndroidBase() {
@@ -22,10 +24,9 @@ internal fun Project.configureAndroidBase() {
             targetCompatibility = JavaVersion.VERSION_17
         }
 
-        tasks.withType<KotlinCompile>().configureEach {
-            @Suppress("DEPRECATION")
-            kotlinOptions {
-                jvmTarget = Versions.jvmTarget
+        tasks.withType<KotlinJvmCompile>().configureEach {
+            compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_17)
             }
         }
 

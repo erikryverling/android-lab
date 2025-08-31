@@ -5,10 +5,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onEach
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import se.yverling.lab.android.data.weather.model.CurrentWeather
 import javax.inject.Inject
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 /*
     Preferably we should not use a UseCase here, but merge WeatherNetworkRepository and
@@ -17,6 +18,7 @@ import javax.inject.Inject
     UseCases are more for combining different kinds of data (Repositories). Maybe we can
     add an example of that as well moving forward?
  */
+@OptIn(ExperimentalTime::class)
 class GetAndCacheWeatherUseCase @Inject constructor(
     private val networkRepository: WeatherNetworkRepository,
     private val dataStoreRepository: WeatherDataStoreRepository

@@ -11,14 +11,16 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.mockkStatic
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Clock
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import se.yverling.lab.android.data.weather.WeatherDataStoreRepository
 import se.yverling.lab.android.data.weather.currentWeatherDataStore
 import se.yverling.lab.android.data.weather.model.CurrentWeather.Wind
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 @ExtendWith(MockKExtension::class)
 class WeatherDataStoreRepositoryTest {
     @MockK
