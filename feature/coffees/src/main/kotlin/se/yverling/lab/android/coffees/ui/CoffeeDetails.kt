@@ -41,6 +41,10 @@ internal fun CoffeeDetails(
 }
 
 
+@Preview(
+    name = "Pixel 9 Pro",
+    device = "id:pixel_9_pro"
+)
 @Preview(name = "Light Mode")
 @Preview(
     name = "Dark Mode",
