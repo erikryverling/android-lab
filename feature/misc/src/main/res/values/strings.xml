@@ -25,6 +25,8 @@
     <string name="email_input_field_label">Email</string>
     <string name="password_input_field_label">Password</string>
 
+    <string name="drop_shadow_box_label">Drop Shadow</string>
+
     <!-- Animation content -->
     <string name="image_content_description">Light bulb image</string>
     <string name="android_lab">Android Lab</string>

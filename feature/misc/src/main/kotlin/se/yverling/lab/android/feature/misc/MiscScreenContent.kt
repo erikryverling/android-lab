@@ -3,6 +3,7 @@ package se.yverling.lab.android.feature.misc
 import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -60,6 +62,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.ContentType
+import androidx.compose.ui.draw.dropShadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -70,6 +75,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpOffset
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import kotlinx.coroutines.CoroutineScope
@@ -80,6 +86,11 @@ import se.yverling.lab.android.design.theme.LargeSpace
 import se.yverling.lab.android.design.theme.MediumSpace
 import se.yverling.lab.android.design.theme.SmallSpace
 import se.yverling.lab.android.feature.misc.theme.CarouselItemSize
+import se.yverling.lab.android.feature.misc.theme.DropShadowBoxShadowOffset
+import se.yverling.lab.android.feature.misc.theme.DropShadowBoxShadowRadius
+import se.yverling.lab.android.feature.misc.theme.DropShadowBoxShadowSize
+import se.yverling.lab.android.feature.misc.theme.DropShadowBoxShadowSpread
+import se.yverling.lab.android.feature.misc.theme.DropShadowBoxSize
 import timber.log.Timber
 
 private const val REMOTE_IMAGE_URL = "https://erik.r.yverling.com/twinkle-logo.png"
@@ -273,9 +284,9 @@ internal fun MiscScreenContent(
                     )
 
                     SkippableComposable(
-                        modifier = Modifier.padding(bottom = LargeSpace),
                         person = Person(mutableListOf("Immut", "Able")),
-                        employer = Employer("Stable Inc.")
+                        employer = Employer("Stable Inc."),
+                        modifier = Modifier.padding(bottom = LargeSpace)
                     )
 
                     AsyncImage(
@@ -290,13 +301,13 @@ internal fun MiscScreenContent(
                     )
 
                     AutoFillTextField(
-                        modifier = Modifier.padding(bottom = SmallSpace),
-                        ContentType.EmailAddress
+                        contentType = ContentType.EmailAddress,
+                        modifier = Modifier.padding(bottom = SmallSpace)
                     )
 
                     AutoFillTextField(
-                        modifier = Modifier.padding(bottom = LargeSpace),
-                        ContentType.Password
+                        contentType = ContentType.Password,
+                        modifier = Modifier.padding(bottom = LargeSpace)
                     )
 
                     ButtonGroup(modifier = Modifier.padding(bottom = LargeSpace))
@@ -319,6 +330,8 @@ internal fun MiscScreenContent(
                         )
                     }
 
+                    DropShadowBox()
+
                     // This would run on each recomposition.
                     // val list = createHugeList()
 
@@ -332,6 +345,12 @@ internal fun MiscScreenContent(
     }
 }
 
+@Preview(name = "Light Mode")
+@Preview(
+    name = "Dark Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true
+)
 @Composable
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 private fun ButtonGroup(modifier: Modifier = Modifier) {
@@ -414,7 +433,7 @@ fun RecomposeButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
 
 // This Composable should be skipped during recomposition
 @Composable
-private fun SkippableComposable(modifier: Modifier = Modifier, person: Person, employer: Employer) {
+private fun SkippableComposable(person: Person, employer: Employer, modifier: Modifier = Modifier) {
     Text(
         modifier = modifier,
         text = "Name: ${person.names[0]} ${person.names[1]}, Employer: ${employer.name}",
@@ -424,7 +443,7 @@ private fun SkippableComposable(modifier: Modifier = Modifier, person: Person, e
 }
 
 @Composable
-fun AutoFillTextField(modifier: Modifier = Modifier, contentType: ContentType) {
+fun AutoFillTextField(contentType: ContentType, modifier: Modifier = Modifier) {
     var value by remember { mutableStateOf("") }
 
     OutlinedTextField(
@@ -462,16 +481,49 @@ fun logNumberOfManualRecompositions(counter: Int) {
     Timber.d("Number of manual recompositions: $counter")
 }
 
-@Preview(name = "Light Mode")
+@Preview(
+    name = "Light Mode",
+    widthDp = 200,
+    heightDp = 200,
+)
 @Preview(
     name = "Dark Mode",
+    widthDp = 200,
+    heightDp = 200,
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
 @Composable
-private fun MiscButtonPreview() {
-    AndroidLabTheme {
-        MiscButton(text = R.string.deep_link_button_title) {}
+fun DropShadowBox() {
+    Box(Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .padding(vertical = LargeSpace)
+                .size(DropShadowBoxSize)
+                .dropShadow(
+                    shape = RoundedCornerShape(DropShadowBoxShadowSize),
+                    shadow = Shadow(
+                        radius = DropShadowBoxShadowRadius,
+                        spread = DropShadowBoxShadowSpread,
+                        color = Color.LightGray,
+                        offset = DpOffset(
+                            x = DropShadowBoxShadowOffset,
+                            y = DropShadowBoxShadowOffset
+                        )
+                    )
+                )
+                .align(Alignment.Center)
+                .background(
+                    color = Color.White,
+                    shape = RoundedCornerShape(DropShadowBoxShadowSize)
+                )
+        ) {
+            Text(
+                text = stringResource(R.string.drop_shadow_box_label),
+                modifier = Modifier.align(Alignment.Center),
+                style = MaterialTheme.typography.titleSmall,
+            )
+        }
     }
 }
 
@@ -482,11 +534,9 @@ private fun MiscButtonPreview() {
     showBackground = true
 )
 @Composable
-private fun ButtonGroupPreview() {
+private fun MiscButtonPreview() {
     AndroidLabTheme {
-        Surface {
-            ButtonGroup()
-        }
+        MiscButton(text = R.string.deep_link_button_title) {}
     }
 }
 
@@ -512,10 +562,12 @@ private fun RecomposeButtonPreview() {
 @Composable
 private fun SkippableComposablePreview() {
     AndroidLabTheme {
-        SkippableComposable(
-            person = Person(mutableListOf("Cloud", "Strife")),
-            employer = Employer("Shinra")
-        )
+        Surface {
+            SkippableComposable(
+                person = Person(mutableListOf("Cloud", "Strife")),
+                employer = Employer("Shinra")
+            )
+        }
     }
 }
 
