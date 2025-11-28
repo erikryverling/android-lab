@@ -1,14 +1,13 @@
 [versions]
 
-# Global
+# Common
 kotlin = "2.2.21"
 hilt = "2.57.2"
 
 # Plugins
 # This needs to be in sync with the Gradle version
-kotlin-dsl-plugin = "6.4.0"
-# This breaks protobuf for some reason...
-ksp-plugin = "2.2.10-2.0.2"
+kotlin-dsl-plugin = "6.4.2"
+ksp-plugin = "2.3.3"
 android-plugin = "8.13.1"
 kover-plugin = "0.9.3"
 protobuf-plugin = "0.9.5"
