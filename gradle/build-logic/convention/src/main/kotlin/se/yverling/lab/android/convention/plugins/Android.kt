@@ -10,7 +10,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 
-internal fun Project.configureAndroidBase() {
+internal fun Project.android() {
     android {
         compileSdkVersion(Versions.compileSdk)
 
@@ -34,7 +34,7 @@ internal fun Project.configureAndroidBase() {
     }
 }
 
-internal fun Project.configureAndroidJunit5() {
+internal fun Project.androidJunit5() {
     android {
         testOptions {
             unitTests.all {
