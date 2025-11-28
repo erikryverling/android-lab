@@ -22,9 +22,9 @@ pluginManagement {
     includeBuild("gradle/build-logic")
 
     repositories {
-        gradlePluginPortal()
         google()
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 
