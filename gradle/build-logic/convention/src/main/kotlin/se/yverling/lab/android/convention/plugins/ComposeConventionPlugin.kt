@@ -8,6 +8,7 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 import se.yverling.lab.android.convention.alias
+import se.yverling.lab.android.convention.android
 import se.yverling.lab.android.convention.implementation
 import se.yverling.lab.android.convention.libs
 

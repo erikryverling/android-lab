@@ -57,6 +57,11 @@ firebase-bom = "34.6.0"
 firebase-common-ktx = "21.0.0"
 
 [plugins]
+convention-android-library = { id = "se.yverling.lab.android.convention.android.library" }
+convention-hilt = { id = "se.yverling.lab.android.convention.hilt" }
+convention-compose = { id = "se.yverling.lab.android.convention.compose" }
+convention-application = { id = "se.yverling.lab.android.convention.application" }
+
 android-application = { id = "com.android.application", version.ref = "android-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-plugin" }
 android-test = { id = "com.android.test", version.ref = "android-plugin" }
@@ -66,11 +71,6 @@ hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover-plugin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
-
-convention-android-library = { id = "se.yverling.lab.android.convention.android.library" }
-convention-hilt = { id = "se.yverling.lab.android.convention.hilt" }
-convention-compose = { id = "se.yverling.lab.android.convention.compose" }
-convention-application = { id = "se.yverling.lab.android.convention.application" }
 
 protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

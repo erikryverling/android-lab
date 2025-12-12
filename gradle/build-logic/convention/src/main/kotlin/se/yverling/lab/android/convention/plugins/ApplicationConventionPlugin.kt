@@ -3,6 +3,7 @@ package se.yverling.lab.android.convention.plugins
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import se.yverling.lab.android.convention.alias
+import se.yverling.lab.android.convention.commonAndroidConfig
 import se.yverling.lab.android.convention.libs
 
 class ApplicationConventionPlugin : Plugin<Project> {
@@ -16,7 +17,7 @@ class ApplicationConventionPlugin : Plugin<Project> {
                 alias(libs.plugins.kotlin.compose)
             }
 
-            android()
+            commonAndroidConfig()
         }
     }
 }

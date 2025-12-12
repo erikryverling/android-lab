@@ -1,4 +1,4 @@
-package se.yverling.lab.android.convention.plugins
+package se.yverling.lab.android.convention
 
 import Versions
 import com.android.build.gradle.BaseExtension
@@ -10,7 +10,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 
-internal fun Project.android() {
+internal fun Project.commonAndroidConfig() {
     android {
         compileSdkVersion(Versions.compileSdk)
 
@@ -34,7 +34,7 @@ internal fun Project.android() {
     }
 }
 
-internal fun Project.androidJunit5() {
+internal fun Project.commonAndroidJunit5() {
     android {
         testOptions {
             unitTests.all {

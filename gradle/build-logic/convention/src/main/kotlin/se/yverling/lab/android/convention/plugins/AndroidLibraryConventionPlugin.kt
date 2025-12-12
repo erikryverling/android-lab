@@ -4,6 +4,8 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 import se.yverling.lab.android.convention.alias
+import se.yverling.lab.android.convention.commonAndroidConfig
+import se.yverling.lab.android.convention.commonAndroidJunit5
 import se.yverling.lab.android.convention.implementation
 import se.yverling.lab.android.convention.libs
 import se.yverling.lab.android.convention.testImplementation
@@ -18,8 +20,8 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 alias(libs.plugins.kover)
             }
 
-            android()
-            androidJunit5()
+            commonAndroidConfig()
+            commonAndroidJunit5()
 
             dependencies {
                 implementation(libs.timber)
