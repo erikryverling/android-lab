@@ -1,2 +1,2 @@
 #!/bin/sh
-./gradlew dependencyUpdates
+claude "/upgrade-dependencies"
