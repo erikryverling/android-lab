@@ -4,12 +4,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import se.yverling.lab.android.AiViewModel.AiUiState.Error
 import se.yverling.lab.android.AiViewModel.AiUiState.Loading
 import se.yverling.lab.android.AiViewModel.AiUiState.Success
@@ -26,7 +26,7 @@ fun AiScreen(
     modifier: Modifier = Modifier,
     viewModel: AiViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState(Loading)
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle(Loading)
 
     when (uiState) {
         is Loading -> LoadingScreen()

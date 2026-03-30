@@ -18,7 +18,6 @@ import androidx.compose.material3.adaptive.layout.PaneAdaptedValue.Companion.Exp
 import androidx.compose.material3.adaptive.layout.PaneAdaptedValue.Companion.Hidden
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -27,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import se.yverling.lab.android.coffees.CoffeesUiState
 import se.yverling.lab.android.coffees.CoffeesViewModel
@@ -51,7 +51,7 @@ fun AdaptiveCoffeesScreen(
         }
     }
 
-    val uiState by viewModel.uiState.collectAsState(CoffeesUiState.Loading)
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle(CoffeesUiState.Loading)
 
     when (uiState) {
         CoffeesUiState.Loading -> {
