@@ -17,7 +17,7 @@ internal class AiRepositoryImpl @Inject constructor(@param:ApplicationContext pr
     private val model = Firebase
         .ai(backend = GenerativeBackend.googleAI())
         .generativeModel(
-            modelName = "gemini-2.0-flash",
+            modelName = "gemini-2.5-flash",
             generationConfig = generationConfig {
                 responseMimeType = "application/json"
             }
