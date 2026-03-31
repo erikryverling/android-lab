@@ -2,7 +2,6 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.convention.hilt)
-    alias(libs.plugins.google.services)
 }
 
 dependencies {
