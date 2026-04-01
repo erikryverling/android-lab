@@ -15,7 +15,6 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             plugins.run {
-                alias(libs.plugins.kotlin.android)
                 alias(libs.plugins.android.library)
                 alias(libs.plugins.kover)
             }

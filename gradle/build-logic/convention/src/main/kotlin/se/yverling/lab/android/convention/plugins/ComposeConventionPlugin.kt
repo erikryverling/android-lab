@@ -1,15 +1,15 @@
 package se.yverling.lab.android.convention.plugins
 
-import com.android.build.gradle.BaseExtension
+import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 import se.yverling.lab.android.convention.alias
 import se.yverling.lab.android.convention.android
 import se.yverling.lab.android.convention.implementation
+import se.yverling.lab.android.convention.kotlin
 import se.yverling.lab.android.convention.libs
 
 class ComposeConventionPlugin : Plugin<Project> {
@@ -21,20 +21,19 @@ class ComposeConventionPlugin : Plugin<Project> {
             }
 
             compose {
-                buildFeatures.compose = true
+                when (this) {
+                    is ApplicationExtension -> buildFeatures { compose = true }
+                    is LibraryExtension -> buildFeatures { compose = true }
+                }
             }
 
-            android {
-                // Run with ./gradlew assembleDebug -PandroidLab.enableComposeCompilerReports=true
-                // See: https://chrisbanes.me/posts/composable-metrics for more information
-                tasks.withType<KotlinJvmCompile>().configureEach {
-                    compilerOptions {
-                        if (project.findProperty("androidLab.enableComposeCompilerReports") == "true") {
-                            val reports = "-P plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${layout.buildDirectory.get()}/compose_metrics"
-                            val metric = "-P plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${layout.buildDirectory.get()}/compose_metrics"
+            kotlin {
+                compilerOptions {
+                    if (project.findProperty("androidLab.enableComposeCompilerReports") == "true") {
+                        val reports = "-P plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${layout.buildDirectory.get()}/compose_metrics"
+                        val metric = "-P plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${layout.buildDirectory.get()}/compose_metrics"
 
-                            freeCompilerArgs.addAll(metric, reports)
-                        }
+                        freeCompilerArgs.addAll(metric, reports)
                     }
                 }
             }
@@ -47,4 +46,4 @@ class ComposeConventionPlugin : Plugin<Project> {
     }
 }
 
-private fun Project.compose(action: BaseExtension.() -> Unit) = extensions.configure<BaseExtension>(action)
+private fun Project.compose(action: CommonExtension.() -> Unit) = android(action)

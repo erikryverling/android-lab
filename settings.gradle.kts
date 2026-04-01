@@ -9,6 +9,7 @@ include(
     ":data:coffees",
     ":data:misc",
     ":data:weather",
+    ":data:weather:proto",
     ":data:ai",
     ":feature:coffees",
     ":feature:misc",

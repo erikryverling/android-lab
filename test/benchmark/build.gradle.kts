@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.test)
-    alias(libs.plugins.kotlin.android)
 }
 
 dependencies {
@@ -18,14 +17,13 @@ android {
     }
 
     compileOptions {
-        // KSP only supports Java 17
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     kotlin {
         compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
         }
     }
 
@@ -48,7 +46,6 @@ android {
 
 androidComponents {
     beforeVariants(selector().all()) {
-        @Suppress("DEPRECATION")
-        it.enabled = it.buildType == "benchmark"
+        it.enable = it.buildType == "benchmark"
     }
 }

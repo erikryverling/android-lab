@@ -11,6 +11,7 @@ dependencies {
     implementation(libs.hilt.navigation)
 
     implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 }
 
 android {

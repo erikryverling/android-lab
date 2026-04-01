@@ -1,47 +1,59 @@
 package se.yverling.lab.android.convention
 
 import Versions
-import com.android.build.gradle.BaseExtension
+import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 
 internal fun Project.commonAndroidConfig() {
     android {
-        compileSdkVersion(Versions.compileSdk)
+        compileSdk = Versions.compileSdk
 
-        defaultConfig {
-            minSdk = Versions.minSdk
-        }
-
-        compileOptions {
-            // KSP only supports Java 17
-            sourceCompatibility = JavaVersion.VERSION_17
-            targetCompatibility = JavaVersion.VERSION_17
-        }
-
-        tasks.withType<KotlinJvmCompile>().configureEach {
-            compilerOptions {
-                jvmTarget.set(JvmTarget.JVM_17)
+        when (this) {
+            is ApplicationExtension -> {
+                defaultConfig { minSdk = Versions.minSdk }
+                compileOptions {
+                    sourceCompatibility = JavaVersion.VERSION_21
+                    targetCompatibility = JavaVersion.VERSION_21
+                }
+                buildFeatures { buildConfig = true }
+            }
+            is LibraryExtension -> {
+                defaultConfig { minSdk = Versions.minSdk }
+                compileOptions {
+                    sourceCompatibility = JavaVersion.VERSION_21
+                    targetCompatibility = JavaVersion.VERSION_21
+                }
+                buildFeatures { buildConfig = true }
             }
         }
+    }
 
-        buildFeatures.buildConfig = true
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_21)
+        }
     }
 }
 
 internal fun Project.commonAndroidJunit5() {
     android {
-        testOptions {
-            unitTests.all {
-                it.useJUnitPlatform()
-            }
+        when (this) {
+            is ApplicationExtension -> testOptions { unitTests.all { it.useJUnitPlatform() } }
+            is LibraryExtension -> testOptions { unitTests.all { it.useJUnitPlatform() } }
         }
     }
 }
 
-internal fun Project.android(action: BaseExtension.() -> Unit) = extensions.configure<BaseExtension>(action)
+internal fun Project.android(action: CommonExtension.() -> Unit) {
+    extensions.configure(CommonExtension::class.java, action)
+}
+
+internal fun Project.kotlin(action: KotlinAndroidProjectExtension.() -> Unit) {
+    extensions.configure(KotlinAndroidProjectExtension::class.java, action)
+}
