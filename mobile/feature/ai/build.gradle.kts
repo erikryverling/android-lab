@@ -4,10 +4,10 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.common.designSystem)
-    implementation(projects.common.ui)
-    implementation(projects.common.model)
-    implementation(projects.data.ai)
+    implementation(projects.mobile.common.designSystem)
+    implementation(projects.mobile.common.ui)
+    implementation(projects.mobile.common.model)
+    implementation(projects.mobile.data.ai)
 
     implementation(libs.hilt.navigation)
 }

@@ -4,9 +4,9 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.common.designSystem)
-    implementation(projects.common.ui)
-    implementation(projects.data.misc)
+    implementation(projects.mobile.common.designSystem)
+    implementation(projects.mobile.common.ui)
+    implementation(projects.mobile.data.misc)
 
     implementation(libs.hilt.navigation)
 

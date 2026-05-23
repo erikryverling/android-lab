@@ -5,9 +5,9 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.common.designSystem)
-    implementation(projects.common.ui)
-    implementation(projects.data.weather)
+    implementation(projects.mobile.common.designSystem)
+    implementation(projects.mobile.common.ui)
+    implementation(projects.mobile.data.weather)
 
     implementation(libs.hilt.navigation)
 

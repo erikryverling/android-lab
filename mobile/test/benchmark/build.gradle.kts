@@ -39,7 +39,7 @@ android {
         }
     }
 
-    targetProjectPath = ":app"
+    targetProjectPath = ":mobile:app"
     @Suppress("UnstableApiUsage")
     experimentalProperties["android.experimental.self-instrumenting"] = true
 }

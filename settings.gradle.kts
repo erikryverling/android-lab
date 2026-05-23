@@ -2,21 +2,21 @@ rootProject.name = "android-lab"
 rootProject.buildFileName = "build.gradle.kts"
 
 include(
-    ":app",
-    ":common:design-system",
-    ":common:ui",
-    ":common:model",
-    ":data:coffees",
-    ":data:misc",
-    ":data:weather",
-    ":data:weather:proto",
-    ":data:ai",
-    ":feature:coffees",
-    ":feature:misc",
-    ":feature:weather",
-    ":feature:ai",
-    ":test:benchmark",
-    ":test:utils",
+    ":mobile:app",
+    ":mobile:common:design-system",
+    ":mobile:common:ui",
+    ":mobile:common:model",
+    ":mobile:data:coffees",
+    ":mobile:data:misc",
+    ":mobile:data:weather",
+    ":mobile:data:weather:proto",
+    ":mobile:data:ai",
+    ":mobile:feature:coffees",
+    ":mobile:feature:misc",
+    ":mobile:feature:weather",
+    ":mobile:feature:ai",
+    ":mobile:test:benchmark",
+    ":mobile:test:utils",
 )
 
 pluginManagement {

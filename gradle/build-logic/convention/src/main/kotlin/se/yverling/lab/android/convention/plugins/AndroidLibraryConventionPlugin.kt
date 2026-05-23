@@ -26,8 +26,8 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 implementation(libs.timber)
 
                 testImplementation(libs.bundles.unitTest)
-                // TODO Can't use projects.test.utils
-                testImplementation(project(":test:utils"))
+                // TODO Can't use projects.mobile.test.utils
+                testImplementation(project(":mobile:test:utils"))
                 testRuntimeOnly(libs.unitTest.junit.platformLauncher)
             }
         }

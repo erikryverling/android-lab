@@ -8,6 +8,6 @@ android {
 }
 
 dependencies {
-    implementation(projects.common.designSystem)
-    implementation(projects.common.model)
+    implementation(projects.mobile.common.designSystem)
+    implementation(projects.mobile.common.model)
 }

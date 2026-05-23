@@ -4,10 +4,10 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.common.designSystem)
-    implementation(projects.common.ui)
-    implementation(projects.common.model)
-    implementation(projects.data.coffees)
+    implementation(projects.mobile.common.designSystem)
+    implementation(projects.mobile.common.ui)
+    implementation(projects.mobile.common.model)
+    implementation(projects.mobile.data.coffees)
 
     implementation(libs.hilt.navigation)
 
@@ -17,7 +17,7 @@ dependencies {
 
     kspAndroidTest(libs.androidTest.hilt.compiler)
     androidTestImplementation(libs.bundles.androidTest)
-    androidTestImplementation(projects.test.utils)
+    androidTestImplementation(projects.mobile.test.utils)
 
     debugImplementation(libs.androidTest.compose.manifest)
 }

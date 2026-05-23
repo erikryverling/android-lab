@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.common.model)
+    implementation(projects.mobile.common.model)
 
     implementation(libs.kotlinx.serialization)
 

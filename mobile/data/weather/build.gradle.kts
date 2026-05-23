@@ -6,7 +6,7 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.data.weather.proto)
+    implementation(projects.mobile.data.weather.proto)
 
     implementation(libs.bundles.ktor)
 

@@ -6,12 +6,12 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.common.designSystem)
-    implementation(projects.common.model)
-    implementation(projects.feature.coffees)
-    implementation(projects.feature.weather)
-    implementation(projects.feature.ai)
-    implementation(projects.feature.misc)
+    implementation(projects.mobile.common.designSystem)
+    implementation(projects.mobile.common.model)
+    implementation(projects.mobile.feature.coffees)
+    implementation(projects.mobile.feature.weather)
+    implementation(projects.mobile.feature.ai)
+    implementation(projects.mobile.feature.misc)
 
     implementation(libs.appCompat)
 
@@ -36,7 +36,7 @@ dependencies {
 
 
     testImplementation(libs.unitTest.junit4)
-    testImplementation(projects.data.coffees)
+    testImplementation(projects.mobile.data.coffees)
 
     androidTestImplementation(libs.androidTest.runner)
     androidTestImplementation(libs.androidTest.hilt)
@@ -104,12 +104,12 @@ plugins.withId(libs.plugins.paparazzi.get().pluginId) {
 
 // Use for creating an aggregated Kover report
 dependencies {
-    kover(projects.feature.coffees)
-    kover(projects.feature.weather)
-    kover(projects.feature.misc)
-    kover(projects.data.coffees)
-    kover(projects.data.weather)
-    kover(projects.data.misc)
+    kover(projects.mobile.feature.coffees)
+    kover(projects.mobile.feature.weather)
+    kover(projects.mobile.feature.misc)
+    kover(projects.mobile.data.coffees)
+    kover(projects.mobile.data.weather)
+    kover(projects.mobile.data.misc)
 }
 
 kover {
