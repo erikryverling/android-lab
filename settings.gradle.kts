@@ -17,6 +17,7 @@ include(
     ":mobile:feature:ai",
     ":mobile:test:benchmark",
     ":mobile:test:utils",
+    ":wear:app",
 )
 
 pluginManagement {
