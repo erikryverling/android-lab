@@ -51,6 +51,8 @@ wear-tooling-preview = "1.0.0"
 wear-compose = "1.6.1"
 horologist-compose = "0.7.15"
 
+tv-compose = "1.0.0"
+
 coroutinesTest = "1.10.2"
 mockk = "1.14.9"
 kotest-assertions = "6.1.10"
@@ -151,6 +153,9 @@ wear-tooling-preview = { module = "androidx.wear:wear-tooling-preview", version.
 horologist-compose-layout = { module = "com.google.android.horologist:horologist-compose-layout", version.ref = "horologist-compose" }
 horologist-compose-material = { module = "com.google.android.horologist:horologist-compose-material", version.ref = "horologist-compose" }
 
+tv-compose-material = { module = "androidx.tv:tv-material", version.ref = "tv-compose" }
+tv-compose-foundation = { module = "androidx.tv:tv-foundation", version.ref = "tv-compose" }
+
 unitTest-junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 unitTest-junit-platformLauncher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit" }
 unitTest-junit4 = { module = "junit:junit", version.ref = "junit4" }
@@ -192,6 +197,11 @@ compose-wear = [
     "wear-tooling-preview",
     "horologist-compose-layout",
     "horologist-compose-material",
+]
+
+compose-tv = [
+    "tv-compose-material",
+    "tv-compose-foundation",
 ]
 
 navigation = [

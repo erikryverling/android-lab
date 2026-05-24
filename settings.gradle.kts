@@ -18,6 +18,7 @@ include(
     ":mobile:test:benchmark",
     ":mobile:test:utils",
     ":wear:app",
+    ":tv:app",
 )
 
 pluginManagement {
