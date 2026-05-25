@@ -4,9 +4,11 @@ plugins {
 
 dependencies {
     implementation(platform(libs.compose.bom))
+    implementation(libs.bundles.compose.tv)
+    implementation(libs.navigation.compose)
     implementation(libs.compose.activity)
     implementation(libs.compose.tooling)
-    implementation(libs.bundles.compose.tv)
+    implementation(libs.compose.material)
 
     implementation(libs.timber)
 
