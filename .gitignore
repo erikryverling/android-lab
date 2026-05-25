@@ -39,3 +39,6 @@ captures/
 
 # Google services
 google-services.json
+
+# Agents
+.antigravitycli
