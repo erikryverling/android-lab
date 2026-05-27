@@ -4,10 +4,9 @@ description: Updates the project dependencies
 ---
 
 # Research new updates
-1. Use https://gradle.org to search for Gradle updates, including Gradle plugins
-2. Use https://mvnrepository.com to search for dependency updates
-3. Analyze libs.versions.toml and gradle-wrapper.properties
-4. Read the comment in libs.versions.toml and gradle-wrapper.properties and honor the notes taken do
+1. Use `android studio version-lookup` to search for dependency, including Gradle updates # NOTE! Requires AS Quail 1+
+2. Analyze libs.versions.toml and gradle-wrapper.properties
+3. Read the comment in libs.versions.toml and gradle-wrapper.properties and honor the notes taken do
    decide if a dependency should be upgraded to the latest version or remain on a certain version due to compability reasons
 
 # Update dependencies
