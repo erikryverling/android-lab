@@ -5,8 +5,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -18,8 +22,14 @@ import androidx.tv.material3.Text
 
 @Composable
 fun SettingsScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -39,7 +49,9 @@ fun SettingsScreen(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
                 contentColor = MaterialTheme.colorScheme.onSurfaceVariant
             ),
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier
+                .focusRequester(focusRequester)
+                .padding(16.dp)
         ) {
             Text(
                 text = "Settings Screen",
