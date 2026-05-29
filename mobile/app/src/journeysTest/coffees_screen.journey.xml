@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<journey name="Coffees Screen Journey">
+    <description xml:space="preserve">A simple test of the Coffees Screen</description>
+    <actions xml:space="preserve">
+        <action>Scroll to the bottom of the Coffees list</action>
+        <action>Tap the last item</action>
+        <action>Verify that the details screen is showing corresponding to the item tapped</action>
+    </actions>
+</journey>

@@ -54,6 +54,8 @@ horologist-compose = "0.7.15"
 tv-compose-material = "1.1.0"
 tv-compose-foundation = "1.0.0"
 
+material3WindowSizeClassAndroid = "1.4.0"
+
 coroutinesTest = "1.11.0"
 mockk = "1.14.9"
 kotest-assertions = "6.1.11"
@@ -61,7 +63,8 @@ turbine = "1.2.1"
 androidTestRunner = "1.7.0"
 benchmark-macro-junit4 = "1.4.1"
 profileinstaller = "1.4.1"
-material3WindowSizeClassAndroid = "1.4.0"
+junitPlatformEngine = "1.13.4" # TODO Can we bump this?
+journeysJunitEngine = "0.3.0"
 
 [plugins]
 java-library = { id = "java-library" }
@@ -172,6 +175,9 @@ androidTest-hilt = { module = "com.google.dagger:hilt-android-testing", version.
 androidTest-compose = { module = "androidx.compose.ui:ui-test-junit4" }
 androidTest-compose-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 androidTest-work = { module = "androidx.work:work-testing", version.ref = "work" }
+
+junit-platform-engine = { group = "org.junit.platform", name = "junit-platform-engine", version.ref = "junitPlatformEngine" }
+journeys-junit-engine = { group = "com.android.tools.journeys", name = "journeys-junit-engine", version.ref = "journeysJunitEngine" }
 
 benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmark-macro-junit4" }
 profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstaller" }

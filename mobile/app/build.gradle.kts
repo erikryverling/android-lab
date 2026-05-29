@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.AgpTestSuiteInputParameters
+
 plugins {
     alias(libs.plugins.convention.application)
     alias(libs.plugins.paparazzi)
@@ -79,6 +81,25 @@ android {
         xmlReport = false
         htmlReport = true
         htmlOutput = file("${project.rootDir}/build/reports/android-lint.html")
+    }
+
+    testOptions {
+        suites {
+            create("journeysTest") {
+                targets {
+                    create("default") {
+                    }
+                }
+                useJunitEngine {
+                    inputs += listOf(AgpTestSuiteInputParameters.TESTED_APKS)
+                    includeEngines += listOf("journeys-test-engine")
+                    enginesDependencies(libs.unitTest.junit.platformLauncher)
+                    enginesDependencies(libs.junit.platform.engine)
+                    enginesDependencies(libs.journeys.junit.engine)
+                }
+                targetVariants += listOf("debug")
+            }
+        }
     }
 }
 
