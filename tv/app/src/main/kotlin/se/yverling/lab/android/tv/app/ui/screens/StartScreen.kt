@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +18,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.ThumbUp
@@ -36,6 +34,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Devices.TV_1080p
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.Card
 import androidx.tv.material3.CardDefaults
@@ -68,31 +68,29 @@ fun StartScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 96.dp, end = 48.dp)
+                .padding(start = 16.dp, end = 16.dp)
         ) {
             Text(
-                text = "Tonight's Picks",
-                style = MaterialTheme.typography.headlineLarge,
+                text = "Recommended",
+                style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
-            )
-            Text(
-                text = "Fresh stories, odd journeys, and comfort rewatches",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.78f),
-                modifier = Modifier.padding(top = 8.dp)
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
             LazyRow(
-                contentPadding = PaddingValues(end = 48.dp),
+                contentPadding = PaddingValues(
+                    start = 16.dp,
+                    end = 16.dp
+                ),
             ) {
-                itemsIndexed(streamingItems) { index, item ->
+                itemsIndexed(titleItems) { index, item ->
                     StreamingItemCard(
                         item = item,
                         modifier = Modifier
                             .then(
+                                // Give focus to first item
                                 if (index == 0) {
                                     Modifier.focusRequester(focusRequester)
                                 } else {
@@ -101,7 +99,42 @@ fun StartScreen(
                             )
                     )
 
-                    Spacer(modifier = Modifier.width(24.dp))
+                    Spacer(modifier = Modifier.width(32.dp))
+                }
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Text(
+                text = "My favorites",
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary,
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            LazyRow(
+                contentPadding = PaddingValues(
+                    start = 16.dp,
+                    end = 16.dp
+                ),
+            ) {
+                itemsIndexed(titleItems.takeLast(3)) { index, item ->
+                    StreamingItemCard(
+                        item = item,
+                        modifier = Modifier
+                            .then(
+                                // Give focus to first item
+                                if (index == 0) {
+                                    Modifier.focusRequester(focusRequester)
+                                } else {
+                                    Modifier
+                                }
+                            )
+                    )
+
+                    Spacer(modifier = Modifier.width(32.dp))
                 }
             }
         }
@@ -110,7 +143,7 @@ fun StartScreen(
 
 @Composable
 private fun StreamingItemCard(
-    item: StreamingItem,
+    item: TitleItem,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -141,8 +174,8 @@ private fun StreamingItemCard(
                 Icon(
                     imageVector = item.icon,
                     contentDescription = null,
-                    tint = Color.White.copy(alpha = 0.9f),
-                    modifier = Modifier.size(56.dp)
+                    tint = Color.White,
+                    modifier = Modifier.size(64.dp)
                 )
             }
 
@@ -154,87 +187,69 @@ private fun StreamingItemCard(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Text(
-                    text = item.detail,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.76f),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(top = 4.dp)
-                )
-
-                Spacer(modifier = Modifier.height(14.dp))
-
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        imageVector = Icons.Default.PlayArrow,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.size(18.dp)
-                    )
-                    Text(
-                        text = item.tagline,
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.82f),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.padding(start = 6.dp)
-                    )
-                }
             }
         }
     }
 }
 
-private data class StreamingItem(
+private data class TitleItem(
     val title: String,
-    val detail: String,
-    val tagline: String,
     val icon: ImageVector,
     val accentColor: Color,
 )
 
-private val streamingItems = listOf(
-    StreamingItem(
+private val titleItems = listOf(
+    TitleItem(
         title = "Moon Harbor",
-        detail = "Sci-fi mystery - 8 episodes",
-        tagline = "Continue",
         icon = Icons.Default.Search,
         accentColor = Color(0xFF0EA5A3),
     ),
-    StreamingItem(
+    TitleItem(
         title = "The Last Lighthouse",
-        detail = "Nordic drama - New season",
-        tagline = "New",
         icon = Icons.Default.Star,
         accentColor = Color(0xFFD97706),
     ),
-    StreamingItem(
+    TitleItem(
         title = "Kitchen Knights",
-        detail = "Feel-good competition",
-        tagline = "Top 10",
         icon = Icons.Default.ThumbUp,
         accentColor = Color(0xFF7C3AED),
     ),
-    StreamingItem(
+    TitleItem(
         title = "Signal Valley",
-        detail = "Tech thriller - 2026",
-        tagline = "Trending",
         icon = Icons.Default.Info,
         accentColor = Color(0xFF2563EB),
     ),
-    StreamingItem(
+    TitleItem(
         title = "Sunday Orbit",
-        detail = "Cozy anthology",
-        tagline = "Relax",
         icon = Icons.Default.Favorite,
         accentColor = Color(0xFFE11D48),
     ),
-    StreamingItem(
+    TitleItem(
         title = "Agent Pancake",
-        detail = "Family adventure",
-        tagline = "Premiere",
         icon = Icons.Default.Person,
         accentColor = Color(0xFF16A34A),
     ),
 )
+
+@Preview
+@Composable
+private fun StreamingItemCardPreview() {
+    // TODO Add AndroidLabTheme as preview
+    MaterialTheme {
+        Box(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
+                .padding(24.dp)
+        ) {
+            StreamingItemCard(item = titleItems.first())
+        }
+    }
+}
+
+@Preview(device = TV_1080p)
+@Composable
+private fun StartScreenPreview() {
+    MaterialTheme {
+        StartScreen()
+    }
+}

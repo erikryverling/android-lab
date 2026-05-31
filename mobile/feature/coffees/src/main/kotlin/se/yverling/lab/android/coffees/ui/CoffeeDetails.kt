@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import se.yverling.lab.android.common.model.Coffee
 import se.yverling.lab.android.design.theme.AndroidLabTheme
@@ -43,7 +44,7 @@ internal fun CoffeeDetails(
 
 @Preview(
     name = "Pixel 9 Pro",
-    device = "id:pixel_9_pro"
+    device = Devices.PIXEL_9_PRO
 )
 @Preview(name = "Light Mode")
 @Preview(
