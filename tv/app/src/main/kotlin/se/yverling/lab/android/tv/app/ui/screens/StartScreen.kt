@@ -22,12 +22,15 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.Icon
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -36,15 +39,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Devices.TV_1080p
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.Card
 import androidx.tv.material3.CardDefaults
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
+import se.yverling.lab.android.tv.app.ui.theme.AndroidLabThemeWrapper
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun StartScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val focusRequester = remember { FocusRequester() }
 
@@ -80,6 +86,14 @@ fun StartScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             LazyRow(
+                modifier = Modifier.focusProperties {
+                    onExit = {
+                        when (requestedFocusDirection) {
+                            // Prevents focus to jump to the main menu
+                            FocusDirection.Right -> cancelFocusChange()
+                        }
+                    }
+                },
                 contentPadding = PaddingValues(
                     start = 16.dp,
                     end = 16.dp
@@ -115,24 +129,21 @@ fun StartScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             LazyRow(
+                modifier = Modifier.focusProperties {
+                    onExit = {
+                        when (requestedFocusDirection) {
+                            // Prevents focus to jump to the main menu
+                            FocusDirection.Next -> cancelFocusChange()
+                        }
+                    }
+                },
                 contentPadding = PaddingValues(
                     start = 16.dp,
                     end = 16.dp
                 ),
             ) {
                 itemsIndexed(titleItems.takeLast(3)) { index, item ->
-                    StreamingItemCard(
-                        item = item,
-                        modifier = Modifier
-                            .then(
-                                // Give focus to first item
-                                if (index == 0) {
-                                    Modifier.focusRequester(focusRequester)
-                                } else {
-                                    Modifier
-                                }
-                            )
-                    )
+                    StreamingItemCard(item = item)
 
                     Spacer(modifier = Modifier.width(32.dp))
                 }
@@ -232,24 +243,21 @@ private val titleItems = listOf(
 )
 
 @Preview
+@PreviewWrapper(AndroidLabThemeWrapper::class)
 @Composable
 private fun StreamingItemCardPreview() {
-    // TODO Add AndroidLabTheme as preview
-    MaterialTheme {
-        Box(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
-                .padding(24.dp)
-        ) {
-            StreamingItemCard(item = titleItems.first())
-        }
+    Box(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .padding(24.dp)
+    ) {
+        StreamingItemCard(item = titleItems.first())
     }
 }
 
 @Preview(device = TV_1080p)
+@PreviewWrapper(AndroidLabThemeWrapper::class)
 @Composable
 private fun StartScreenPreview() {
-    MaterialTheme {
-        StartScreen()
-    }
+    StartScreen()
 }
