@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Android Lab</string>
-    <string name="hello_world">Hello, World!</string>
+
+    <!-- Main menu -->
+    <string name="start_menu_item_title">Start</string>
+    <string name="settings_menu_item_title">Settings</string>
+
+    <!-- Start -->
+    <string name="recommended_list_title">Recommended</string>
+    <string name="my_favorites_list_title">My favorites</string>
+
+    <!-- Settings -->
+    <string name="settings_screen_card_title">Settings Screen</string>
 </resources>

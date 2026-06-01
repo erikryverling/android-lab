@@ -4,21 +4,23 @@ rootProject.buildFileName = "build.gradle.kts"
 include(
     ":mobile:app",
     ":mobile:common:design-system",
-    ":mobile:common:ui",
     ":mobile:common:model",
+    ":mobile:common:ui",
+    ":mobile:data:ai",
     ":mobile:data:coffees",
     ":mobile:data:misc",
     ":mobile:data:weather",
     ":mobile:data:weather:proto",
-    ":mobile:data:ai",
+    ":mobile:feature:ai",
     ":mobile:feature:coffees",
     ":mobile:feature:misc",
     ":mobile:feature:weather",
-    ":mobile:feature:ai",
     ":mobile:test:benchmark",
     ":mobile:test:utils",
-    ":wear:app",
     ":tv:app",
+    ":tv:design-system",
+    ":tv:ui",
+    ":wear:app"
 )
 
 pluginManagement {

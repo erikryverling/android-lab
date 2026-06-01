@@ -1,7 +1,9 @@
 package se.yverling.lab.android.design.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -78,7 +80,7 @@ private val darkColorScheme = darkColorScheme(
 fun AndroidLabTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = false,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val colorScheme = when {
         dynamicColor -> {
@@ -97,11 +99,13 @@ fun AndroidLabTheme(
     )
 }
 
-class AndroidLabThemeWrapper: PreviewWrapperProvider {
+class AndroidLabThemeWrapper : PreviewWrapperProvider {
     @Composable
     override fun Wrap(content: @Composable (() -> Unit)) {
-       AndroidLabTheme {
-            content()
+        AndroidLabTheme {
+            Surface {
+                content()
+            }
         }
     }
 }

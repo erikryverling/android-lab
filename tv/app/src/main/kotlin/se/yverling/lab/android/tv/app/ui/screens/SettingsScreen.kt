@@ -11,19 +11,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Devices.TV_1080p
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.tv.material3.Card
 import androidx.tv.material3.CardDefaults
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
+import se.yverling.lab.android.tv.app.R
+import se.yverling.lab.android.tv.app.ui.theme.AndroidLabThemeWrapper
+import se.yverling.lab.android.tv.app.ui.theme.DefaultSpace
+import se.yverling.lab.android.tv.app.ui.theme.LargeSpace
+import se.yverling.lab.android.tv.ui.backgroundBrush
 
 @Composable
-fun SettingsScreen(
-    modifier: Modifier = Modifier,
-) {
+internal fun SettingsScreen(modifier: Modifier = Modifier) {
     val focusRequester = remember { FocusRequester() }
 
     LaunchedEffect(Unit) {
@@ -33,34 +38,45 @@ fun SettingsScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    colors = listOf(
-                        MaterialTheme.colorScheme.background,
-                        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f)
-                    )
-                )
-            ),
+            .background(backgroundBrush),
         contentAlignment = Alignment.Center
     ) {
-        Card(
-            onClick = {},
-            colors = CardDefaults.colors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
-                contentColor = MaterialTheme.colorScheme.onSurfaceVariant
-            ),
-            modifier = Modifier
-                .focusRequester(focusRequester)
-                .padding(16.dp)
-        ) {
-            Text(
-                text = "Settings Screen",
-                style = MaterialTheme.typography.headlineLarge,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(24.dp)
-            )
-        }
+        SettingsCard(Modifier.focusRequester(focusRequester))
     }
+}
+
+@Composable
+private fun SettingsCard(modifier: Modifier = Modifier) {
+    Card(
+        onClick = {},
+        colors = CardDefaults.colors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+        ),
+        modifier = modifier
+            .padding(DefaultSpace)
+    ) {
+        Text(
+            text = stringResource(R.string.settings_screen_card_title),
+            style = MaterialTheme.typography.headlineLarge,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(LargeSpace)
+        )
+    }
+}
+
+@Preview(device = TV_1080p)
+@PreviewWrapper(AndroidLabThemeWrapper::class)
+@Composable
+private fun SettingsScreenPreview() {
+    SettingsScreen()
+}
+
+@PreviewWrapper(AndroidLabThemeWrapper::class)
+@Preview
+@Composable
+private fun SettingsCardPreview() {
+    SettingsCard()
 }

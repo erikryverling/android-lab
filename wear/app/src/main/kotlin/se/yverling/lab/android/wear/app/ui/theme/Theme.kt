@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.wear.compose.material3.ColorScheme
 import androidx.wear.compose.material3.MaterialTheme
 
-private val wearColorPalette = ColorScheme(
+private val colorScheme = ColorScheme(
     primary = md_theme_dark_primary,
     primaryContainer = md_theme_dark_primaryContainer,
     onPrimary = md_theme_dark_onPrimary,
@@ -26,7 +26,7 @@ fun WearAppTheme(
     content: @Composable () -> Unit,
 ) {
     MaterialTheme(
-        colorScheme = wearColorPalette,
+        colorScheme = colorScheme,
         content = content,
     )
 }

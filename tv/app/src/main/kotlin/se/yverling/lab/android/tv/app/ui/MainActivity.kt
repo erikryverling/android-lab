@@ -23,8 +23,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -39,9 +41,13 @@ import androidx.tv.material3.NavigationDrawerScope
 import androidx.tv.material3.Text
 import androidx.tv.material3.rememberDrawerState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.Serializable
+import se.yverling.lab.android.tv.app.R
 import se.yverling.lab.android.tv.app.ui.screens.SettingsScreen
 import se.yverling.lab.android.tv.app.ui.screens.StartScreen
 import se.yverling.lab.android.tv.app.ui.theme.AndroidLabTheme
+import se.yverling.lab.android.tv.app.ui.theme.DefaultSpace
+import se.yverling.lab.android.tv.app.ui.theme.MediumSpace
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -67,7 +73,7 @@ class MainActivity : ComponentActivity() {
 fun Navigation(navController: NavController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route ?: "start"
+    val currentRoute = navBackStackEntry?.destination?.mainMenuItem ?: MainMenuItem.Start
 
     NavigationDrawer(
         drawerState = drawerState,
@@ -81,17 +87,33 @@ fun Navigation(navController: NavController) {
     ) {
         NavHost(
             navController = navController as NavHostController,
-            startDestination = "start", // TODO Use types destinations
+            startDestination = MainMenuItem.Start,
         ) {
-            composable("start") { StartScreen() }
-            composable("settings") { SettingsScreen() }
+            composable<MainMenuItem.Start> { StartScreen() }
+            composable<MainMenuItem.Settings> { SettingsScreen() }
         }
     }
 }
 
+@Serializable
+private sealed interface MainMenuItem {
+    @Serializable
+    data object Start : MainMenuItem
+
+    @Serializable
+    data object Settings : MainMenuItem
+}
+
+private val NavDestination.mainMenuItem: MainMenuItem?
+    get() = when {
+        hasRoute<MainMenuItem.Start>() -> MainMenuItem.Start
+        hasRoute<MainMenuItem.Settings>() -> MainMenuItem.Settings
+        else -> null
+    }
+
 @Composable
 private fun NavigationDrawerScope.DrawerContent(
-    currentRoute: String,
+    currentRoute: MainMenuItem,
     isDrawerOpen: Boolean,
     navController: NavController
 ) {
@@ -112,8 +134,8 @@ private fun NavigationDrawerScope.DrawerContent(
     LaunchedEffect(isDrawerOpen, currentRoute) {
         if (isDrawerOpen) {
             when (currentRoute) {
-                "start" -> startFocusRequester.requestFocus()
-                "settings" -> settingsFocusRequester.requestFocus()
+                MainMenuItem.Start -> startFocusRequester.requestFocus()
+                MainMenuItem.Settings -> settingsFocusRequester.requestFocus()
             }
         }
     }
@@ -121,18 +143,18 @@ private fun NavigationDrawerScope.DrawerContent(
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .padding(16.dp), // TODO Extract spaces
+            .padding(DefaultSpace),
         horizontalAlignment = Alignment.Start
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(DefaultSpace))
 
         // Start
         NavigationDrawerItem(
-            selected = currentRoute == "start",
+            selected = currentRoute == MainMenuItem.Start,
             modifier = Modifier.focusRequester(startFocusRequester),
             onClick = {
-                if (currentRoute != "start") {
-                    navController.navigate("start") {
+                if (currentRoute != MainMenuItem.Start) {
+                    navController.navigate(MainMenuItem.Start) {
                         popUpTo(navController.graph.startDestinationId) {
                             saveState = true
                         }
@@ -144,28 +166,28 @@ private fun NavigationDrawerScope.DrawerContent(
             leadingContent = {
                 Icon(
                     imageVector = Icons.Default.PlayArrow,
-                    contentDescription = "Start",
+                    contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             },
             colors = drawerItemColors,
         ) {
             Text(
-                text = "Start",
+                text = stringResource(R.string.start_menu_item_title),
                 style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(start = 8.dp)
+                modifier = Modifier.padding(start = MediumSpace)
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(DefaultSpace))
 
         // Settings
         NavigationDrawerItem(
-            selected = currentRoute == "settings",
+            selected = currentRoute == MainMenuItem.Settings,
             modifier = Modifier.focusRequester(settingsFocusRequester),
             onClick = {
-                if (currentRoute != "settings") {
-                    navController.navigate("settings") {
+                if (currentRoute != MainMenuItem.Settings) {
+                    navController.navigate(MainMenuItem.Settings) {
                         popUpTo(navController.graph.startDestinationId) {
                             saveState = true
                         }
@@ -177,16 +199,16 @@ private fun NavigationDrawerScope.DrawerContent(
             leadingContent = {
                 Icon(
                     imageVector = Icons.Default.Settings,
-                    contentDescription = "Settings",
+                    contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             },
             colors = drawerItemColors,
         ) {
             Text(
-                text = "Settings",
+                text = stringResource(R.string.settings_menu_item_title),
                 style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(start = 8.dp)
+                modifier = Modifier.padding(start = MediumSpace)
             )
         }
     }
