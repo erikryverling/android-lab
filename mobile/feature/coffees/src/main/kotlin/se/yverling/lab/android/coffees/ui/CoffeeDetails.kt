@@ -11,8 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import se.yverling.lab.android.common.model.Coffee
-import se.yverling.lab.android.design.theme.AndroidLabTheme
+import se.yverling.lab.android.design.theme.AndroidLabThemeWrapper
 import se.yverling.lab.android.feature.coffees.R
 import se.yverling.lab.android.ui.CoffeeCard
 
@@ -27,7 +28,7 @@ internal fun CoffeeDetails(
         contentAlignment = Alignment.Center
     ) {
 
-        if(coffee == null) {
+        if (coffee == null) {
             Text(
                 text = stringResource(R.string.no_coffee_selected),
                 style = MaterialTheme.typography.bodyMedium
@@ -52,17 +53,16 @@ internal fun CoffeeDetails(
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
+@PreviewWrapper(AndroidLabThemeWrapper::class)
 @Composable
 private fun CoffeeDetailsPreview() {
-    AndroidLabTheme {
-        CoffeeDetails(
-            Coffee(
-                id = 0,
-                name = "Odo Carbonic",
-                roaster = "Gringo Nordic",
-                origin = "Ethiopia",
-                region = "Guji"
-            ),
-        )
-    }
+    CoffeeDetails(
+        Coffee(
+            id = 0,
+            name = "Odo Carbonic",
+            roaster = "Gringo Nordic",
+            origin = "Ethiopia",
+            region = "Guji"
+        ),
+    )
 }

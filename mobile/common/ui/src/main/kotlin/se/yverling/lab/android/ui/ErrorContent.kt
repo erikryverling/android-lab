@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,7 +11,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import se.yverling.lab.android.design.theme.AndroidLabTheme
+import androidx.compose.ui.tooling.preview.PreviewWrapper
+import se.yverling.lab.android.design.theme.AndroidLabThemeWrapper
 import se.yverling.lab.android.design.theme.DefaultSpace
 
 @Composable
@@ -41,13 +41,10 @@ fun RetryButton(onRetryButtonClicked: () -> Unit) {
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
+@PreviewWrapper(AndroidLabThemeWrapper::class)
 @Composable
 private fun ErrorContentPreview() {
-    AndroidLabTheme {
-        Surface {
-            ErrorContent("Something went wrong")
-        }
-    }
+    ErrorContent("Something went wrong")
 }
 
 @Preview(name = "Light Mode")
@@ -56,9 +53,8 @@ private fun ErrorContentPreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
+@PreviewWrapper(AndroidLabThemeWrapper::class)
 @Composable
 private fun RetryButtonPreview() {
-    AndroidLabTheme {
-        RetryButton {}
-    }
+    RetryButton {}
 }

@@ -8,6 +8,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.PreviewWrapperProvider
 
 private val lightColorScheme = lightColorScheme(
     primary = md_theme_light_primary,
@@ -94,4 +95,13 @@ fun AndroidLabTheme(
         typography = Typography,
         content = content
     )
+}
+
+class AndroidLabThemeWrapper: PreviewWrapperProvider {
+    @Composable
+    override fun Wrap(content: @Composable (() -> Unit)) {
+       AndroidLabTheme {
+            content()
+        }
+    }
 }

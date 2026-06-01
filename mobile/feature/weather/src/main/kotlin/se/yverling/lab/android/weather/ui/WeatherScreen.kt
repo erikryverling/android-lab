@@ -14,7 +14,6 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,12 +26,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import se.yverling.lab.android.data.weather.model.CurrentWeather
 import se.yverling.lab.android.data.weather.model.CurrentWeather.Wind
-import se.yverling.lab.android.design.theme.AndroidLabTheme
+import se.yverling.lab.android.design.theme.AndroidLabThemeWrapper
 import se.yverling.lab.android.design.theme.DefaultSpace
 import se.yverling.lab.android.design.theme.LargeSpace
 import se.yverling.lab.android.feature.weather.R
@@ -165,23 +165,20 @@ fun WeatherContent(currentWeather: CurrentWeather) {
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
+@PreviewWrapper(AndroidLabThemeWrapper::class)
 @Composable
 private fun WeatherContentPreview() {
-    AndroidLabTheme {
-        Surface {
-            DataScreen(
-                uiState = WeatherUiState.Success(
-                    CurrentWeather(
-                        temperature = 20,
-                        wind = Wind(
-                            speed = 10,
-                            degree = 180
-                        ),
-                        locationName = "Location"
-                    )
+    DataScreen(
+        uiState = WeatherUiState.Success(
+            CurrentWeather(
+                temperature = 20,
+                wind = Wind(
+                    speed = 10,
+                    degree = 180
                 ),
-                onRefresh = {}
+                locationName = "Location"
             )
-        }
-    }
+        ),
+        onRefresh = {}
+    )
 }

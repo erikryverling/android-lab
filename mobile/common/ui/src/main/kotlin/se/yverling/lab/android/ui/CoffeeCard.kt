@@ -20,10 +20,11 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
-import se.yverling.lab.android.design.theme.DefaultSpace
 import se.yverling.lab.android.common.model.Coffee
-import se.yverling.lab.android.design.theme.AndroidLabTheme
+import se.yverling.lab.android.design.theme.AndroidLabThemeWrapper
+import se.yverling.lab.android.design.theme.DefaultSpace
 import se.yverling.lab.android.theme.CoffeeCardElevation
 import se.yverling.lab.android.theme.CoffeeCardWith
 
@@ -85,17 +86,16 @@ private fun InlineTitleText(title: String, body: String) {
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
+@PreviewWrapper(AndroidLabThemeWrapper::class)
 @Composable
 private fun CoffeeCardPreview() {
-    AndroidLabTheme {
-        CoffeeCard(
-            Coffee(
-                id = 0,
-                name = "Odo Carbonic",
-                roaster = "Gringo Nordic",
-                origin = "Ethiopia",
-                region = "Guji"
-            )
+    CoffeeCard(
+        Coffee(
+            id = 0,
+            name = "Odo Carbonic",
+            roaster = "Gringo Nordic",
+            origin = "Ethiopia",
+            region = "Guji"
         )
-    }
+    )
 }

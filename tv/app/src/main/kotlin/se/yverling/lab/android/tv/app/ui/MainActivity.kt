@@ -1,6 +1,5 @@
 package se.yverling.lab.android.tv.app.ui
 
-import android.graphics.Color.alpha
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,7 +23,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -43,14 +41,14 @@ import androidx.tv.material3.rememberDrawerState
 import dagger.hilt.android.AndroidEntryPoint
 import se.yverling.lab.android.tv.app.ui.screens.SettingsScreen
 import se.yverling.lab.android.tv.app.ui.screens.StartScreen
-import se.yverling.lab.android.tv.app.ui.theme.TvAppTheme
+import se.yverling.lab.android.tv.app.ui.theme.AndroidLabTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            TvAppTheme {
+            AndroidLabTheme {
                 val navController = rememberNavController()
 
                 Box(

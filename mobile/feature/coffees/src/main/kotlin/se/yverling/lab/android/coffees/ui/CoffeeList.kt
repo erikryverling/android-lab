@@ -34,9 +34,10 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import se.yverling.lab.android.coffees.theme.CoffeeItemElevation
 import se.yverling.lab.android.common.model.Coffee
-import se.yverling.lab.android.design.theme.AndroidLabTheme
+import se.yverling.lab.android.design.theme.AndroidLabThemeWrapper
 import se.yverling.lab.android.design.theme.DefaultSpace
 import se.yverling.lab.android.design.theme.SmallSpace
 import se.yverling.lab.android.feature.coffees.R
@@ -151,11 +152,10 @@ fun CoffeeItem(
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
+@PreviewWrapper(AndroidLabThemeWrapper::class)
 @Composable
 private fun UppercaseFabPreview() {
-    AndroidLabTheme {
-        UppercaseFab(false) {}
-    }
+    UppercaseFab(false) {}
 }
 
 @Preview(name = "Light Mode")
@@ -164,24 +164,21 @@ private fun UppercaseFabPreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
+@PreviewWrapper(AndroidLabThemeWrapper::class)
 @Composable
 private fun CoffeeItemPreview() {
-    AndroidLabTheme {
-        Surface {
-            CoffeeItem(
-                1,
-                coffee = Coffee(
-                    id = 1,
-                    name = "Odo Carbonic",
-                    roaster = "Gringo Nordic",
-                    origin = "Ethiopia",
-                    region = "Guji",
-                ),
-                isUppercase = false,
-                isSelected = false
-            ) {}
-        }
-    }
+    CoffeeItem(
+        1,
+        coffee = Coffee(
+            id = 1,
+            name = "Odo Carbonic",
+            roaster = "Gringo Nordic",
+            origin = "Ethiopia",
+            region = "Guji",
+        ),
+        isUppercase = false,
+        isSelected = false
+    ) {}
 }
 
 @Preview(name = "Light Mode")
@@ -197,29 +194,26 @@ private fun CoffeeItemPreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
+@PreviewWrapper(AndroidLabThemeWrapper::class)
 @Composable
 private fun CoffeeListPreview() {
-    AndroidLabTheme {
-        Surface {
-            CoffeeList(
-                coffees = listOf(
-                    Coffee(
-                        id = 1,
-                        name = "Odo Carbonic",
-                        roaster = "Gringo Nordic",
-                        origin = "Ethiopia",
-                        region = "Guji",
-                    ),
-                    Coffee(
-                        id = 1,
-                        name = "Uraga Carbonic",
-                        roaster = "Gringo Nordic",
-                        origin = "Ethiopia",
-                        region = "Guji",
-                    )
-                ),
-                isUppercase = false
-            ) {}
-        }
-    }
+    CoffeeList(
+        coffees = listOf(
+            Coffee(
+                id = 1,
+                name = "Odo Carbonic",
+                roaster = "Gringo Nordic",
+                origin = "Ethiopia",
+                region = "Guji",
+            ),
+            Coffee(
+                id = 1,
+                name = "Uraga Carbonic",
+                roaster = "Gringo Nordic",
+                origin = "Ethiopia",
+                region = "Guji",
+            )
+        ),
+        isUppercase = false
+    ) {}
 }

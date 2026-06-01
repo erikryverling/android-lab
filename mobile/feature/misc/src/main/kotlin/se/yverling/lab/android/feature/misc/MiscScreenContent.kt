@@ -39,7 +39,6 @@ import androidx.compose.material3.SheetValue
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.ToggleButton
 import androidx.compose.material3.ToggleButtonDefaults
@@ -75,12 +74,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.DpOffset
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import se.yverling.lab.android.design.theme.AndroidLabTheme
+import se.yverling.lab.android.design.theme.AndroidLabThemeWrapper
 import se.yverling.lab.android.design.theme.DefaultSpace
 import se.yverling.lab.android.design.theme.LargeSpace
 import se.yverling.lab.android.design.theme.MediumSpace
@@ -351,6 +352,7 @@ internal fun MiscScreenContent(
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
+@PreviewWrapper(AndroidLabThemeWrapper::class)
 @Composable
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 private fun ButtonGroup(modifier: Modifier = Modifier) {
@@ -493,6 +495,7 @@ fun logNumberOfManualRecompositions(counter: Int) {
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
+@PreviewWrapper(AndroidLabThemeWrapper::class)
 @Composable
 fun DropShadowBox() {
     Box(Modifier.fillMaxSize()) {
@@ -533,11 +536,10 @@ fun DropShadowBox() {
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
+@PreviewWrapper(AndroidLabThemeWrapper::class)
 @Composable
 private fun MiscButtonPreview() {
-    AndroidLabTheme {
-        MiscButton(text = R.string.deep_link_button_title) {}
-    }
+    MiscButton(text = R.string.deep_link_button_title) {}
 }
 
 @Preview(name = "Light Mode")
@@ -546,11 +548,10 @@ private fun MiscButtonPreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
+@PreviewWrapper(AndroidLabThemeWrapper::class)
 @Composable
 private fun RecomposeButtonPreview() {
-    AndroidLabTheme {
-        RecomposeButton {}
-    }
+    RecomposeButton {}
 }
 
 @Preview(name = "Light Mode")
@@ -559,16 +560,13 @@ private fun RecomposeButtonPreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
+@PreviewWrapper(AndroidLabThemeWrapper::class)
 @Composable
 private fun SkippableComposablePreview() {
-    AndroidLabTheme {
-        Surface {
-            SkippableComposable(
-                person = Person(mutableListOf("Cloud", "Strife")),
-                employer = Employer("Shinra")
-            )
-        }
-    }
+    SkippableComposable(
+        person = Person(mutableListOf("Cloud", "Strife")),
+        employer = Employer("Shinra")
+    )
 }
 
 @Preview(name = "Light Mode")
@@ -577,11 +575,8 @@ private fun SkippableComposablePreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true
 )
+@PreviewWrapper(AndroidLabThemeWrapper::class)
 @Composable
 private fun AutoFillTextFieldPreview() {
-    AndroidLabTheme {
-        Surface {
-            AutoFillTextField(contentType = ContentType.EmailAddress)
-        }
-    }
+    AutoFillTextField(contentType = ContentType.EmailAddress)
 }
