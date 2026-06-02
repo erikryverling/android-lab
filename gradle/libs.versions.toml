@@ -6,12 +6,12 @@ hilt = "2.59.2"
 
 # Plugins
 # This needs to be in sync with the Gradle version
-kotlin-dsl-plugin = "6.4.1" # Not upgrading to 6.5.x: Paparazzi 2.0.0-alpha04 uses removed internal Gradle 9.3+ APIs
+kotlin-dsl-plugin = "6.4.1"
 ksp-plugin = "2.3.9" # Must match Kotlin version
-android-plugin = "9.0.1" # Not upgrading to 9.1.x: Requires Gradle 9.3.1 which breaks Paparazzi
+android-plugin = "9.2.1"
 kover-plugin = "0.9.8"
 protobuf-plugin = "0.10.0"
-paparazzi-plugin = "2.0.0-alpha04" # Not upgrading to alpha05: Requires AGP 9.1.0+ which breaks Paparazzi on Gradle 9.x
+paparazzi-plugin = "2.0.0-alpha04"
 screenshot-plugin = "0.0.1-alpha15"
 google-services = "4.4.4"
 
@@ -24,7 +24,7 @@ compose-activity = "1.13.0"
 compose-lifecycle = "2.10.0"
 compose-constraintLayout = "1.1.1"
 compose-adaptive = "1.2.0"
-compose-material = "1.5.0-alpha16" # Not upgrading to alpha20: Requires AGP 9.1.0+ and Android API 37
+compose-material = "1.5.0-alpha16"
 
 protobuf = "4.35.0"
 # This needs to be synced with protobuf

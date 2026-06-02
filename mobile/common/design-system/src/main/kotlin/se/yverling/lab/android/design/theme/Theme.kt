@@ -1,14 +1,18 @@
 package se.yverling.lab.android.design.theme
 
+import androidx.compose.foundation.ComposeFoundationFlags
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewWrapperProvider
 
@@ -76,6 +80,11 @@ private val darkColorScheme = darkColorScheme(
     scrim = md_theme_dark_scrim
 )
 
+val LocalAndroidLabColors = staticCompositionLocalOf { lightColorScheme }
+val LocalAndroidLabTypography = staticCompositionLocalOf { Typography }
+val LocalAndroidLabShapes = staticCompositionLocalOf { Shapes() }
+
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AndroidLabTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -92,11 +101,18 @@ fun AndroidLabTheme(
         else -> lightColorScheme
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    ComposeFoundationFlags.isInheritedTextStyleEnabled = true
+
+    androidx.compose.runtime.CompositionLocalProvider(
+        LocalAndroidLabColors provides colorScheme,
+        LocalAndroidLabTypography provides Typography,
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            content = content
+        )
+    }
 }
 
 class AndroidLabThemeWrapper : PreviewWrapperProvider {

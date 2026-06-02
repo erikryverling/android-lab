@@ -1,6 +1,12 @@
 package se.yverling.lab.android.feature.misc
 
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.styleable
+import androidx.compose.foundation.style.rememberUpdatedStyleState
+import se.yverling.lab.android.design.theme.AndroidLabStyles
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -414,11 +420,31 @@ private fun createHugeList(): List<Int> {
 
 
 @Composable
-fun MiscButton(@StringRes text: Int, modifier: Modifier = Modifier, onClick: () -> Unit) {
-    Button(modifier = modifier, onClick = onClick) {
+fun MiscButton(
+    @StringRes text: Int,
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    enabled: Boolean = true,
+    onClick: () -> Unit
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val styleState = rememberUpdatedStyleState(interactionSource) {
+        it.isEnabled = enabled
+    }
+    Row(
+        modifier = modifier
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                enabled = enabled,
+                onClick = onClick
+            )
+            .styleable(styleState, AndroidLabStyles.miscButtonStyle, style),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Text(
-            stringResource(text),
-            color = MaterialTheme.colorScheme.onPrimary
+            text = stringResource(text)
         )
     }
 }
