@@ -29,6 +29,7 @@ class ComposeConventionPlugin : Plugin<Project> {
 
             kotlin {
                 compilerOptions {
+                    freeCompilerArgs.add("-opt-in=androidx.compose.foundation.style.ExperimentalFoundationStyleApi")
                     if (project.findProperty("androidLab.enableComposeCompilerReports") == "true") {
                         val reports = "-P plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${layout.buildDirectory.get()}/compose_metrics"
                         val metric = "-P plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${layout.buildDirectory.get()}/compose_metrics"

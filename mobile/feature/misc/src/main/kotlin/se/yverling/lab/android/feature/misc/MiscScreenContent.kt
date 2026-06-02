@@ -1,6 +1,12 @@
 package se.yverling.lab.android.feature.misc
 
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.styleable
+import androidx.compose.foundation.style.rememberUpdatedStyleState
+import se.yverling.lab.android.design.theme.AndroidLabStyles
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,6 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -414,11 +421,35 @@ private fun createHugeList(): List<Int> {
 
 
 @Composable
-fun MiscButton(@StringRes text: Int, modifier: Modifier = Modifier, onClick: () -> Unit) {
-    Button(modifier = modifier, onClick = onClick) {
-        Text(
-            stringResource(text),
-            color = MaterialTheme.colorScheme.onPrimary
+fun MiscButton(
+    @StringRes text: Int,
+    modifier: Modifier = Modifier,
+    style: Style = Style,
+    enabled: Boolean = true,
+    onClick: () -> Unit
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val styleState = rememberUpdatedStyleState(interactionSource) {
+        it.isEnabled = enabled
+    }
+    Row(
+        modifier = modifier
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                enabled = enabled,
+                onClick = onClick
+            )
+            .styleable(styleState, AndroidLabStyles.miscButtonStyle, style),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        // Use BasicText instead of Material3 Text so that color and typography
+        // can be inherited from Modifier.styleable (AndroidLabStyles.miscButtonStyle).
+        // Material3 Text resolves LocalContentColor at composition time, which
+        // overrides the style's contentColor and interaction state animations.
+        BasicText(
+            text = stringResource(text)
         )
     }
 }
