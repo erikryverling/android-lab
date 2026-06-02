@@ -44,7 +44,7 @@ work = "2.11.2"
 
 ktor = "3.5.0"
 
-firebase-bom = "34.13.0"
+firebase-bom = "34.14.0"
 firebase-common-ktx = "21.0.0"
 
 wear-tooling-preview = "1.0.0"
@@ -57,7 +57,7 @@ tv-compose-foundation = "1.0.0"
 material3WindowSizeClassAndroid = "1.4.0"
 
 coroutinesTest = "1.11.0"
-mockk = "1.14.9"
+mockk = "1.14.11"
 kotest-assertions = "6.1.11"
 turbine = "1.2.1"
 androidTestRunner = "1.7.0"
