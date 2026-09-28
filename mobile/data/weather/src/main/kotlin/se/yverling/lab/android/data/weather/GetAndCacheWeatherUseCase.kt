@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.onEach
 import se.yverling.lab.android.data.weather.model.CurrentWeather
 import javax.inject.Inject
 import kotlin.time.Clock
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
@@ -42,8 +43,8 @@ class GetAndCacheWeatherUseCase @Inject constructor(
     }
 
     private fun lessThanOneMinuteAgo(timeStamp: Long): Boolean {
-        return timeStamp != -1L && (
-                (Instant.fromEpochMilliseconds(timeStamp) - Clock.System.now()).inWholeSeconds > -60
-                )
+        if (timeStamp == -1L) return false
+        val elapsed = Clock.System.now() - Instant.fromEpochMilliseconds(timeStamp)
+        return elapsed in 0.seconds..<60.seconds
     }
 }
