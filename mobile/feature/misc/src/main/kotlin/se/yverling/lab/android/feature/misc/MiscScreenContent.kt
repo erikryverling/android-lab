@@ -138,7 +138,7 @@ internal fun MiscScreenContent(
     val snackbarHostState = remember { SnackbarHostState() }
     val dynamicTheme = remember { mutableStateOf(false) }
 
-    var evenCounter = 0
+    var evenCounter by remember { mutableIntStateOf(0) }
 
 
     AndroidLabTheme(dynamicColor = dynamicTheme.value) {
@@ -341,7 +341,7 @@ internal fun MiscScreenContent(
                     /* It's better to wrap it in a remember() and only update it when it makes sense.
                  In this case whenever evenCounter is changed.
                  Also note that the key to remember() could be of any type. */
-                    val list by remember(evenCounter) { mutableStateOf(createHugeList()) }
+                    val list = remember(evenCounter) { createHugeList() }
                 }
             }
         }
