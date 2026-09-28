@@ -9,7 +9,7 @@
     <string name="recompose_button_title">Recompose</string>
 
     <string name="bottom_sheet_button_title">Show bottom sheet</string>
-    <string name="bottom_sheet_button_toogle_fullscreen_button_title">Fullscreen</string>
+    <string name="bottom_sheet_button_toggle_fullscreen_button_title">Fullscreen</string>
     <string name="bottom_sheet_button_toogle_half_expanded_button_title">Half expanded</string>
     <string name="bottom_sheet_button_hide_button_title">Hide</string>
 

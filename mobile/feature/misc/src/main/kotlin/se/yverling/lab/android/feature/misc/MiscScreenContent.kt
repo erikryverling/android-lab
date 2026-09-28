@@ -177,7 +177,7 @@ internal fun MiscScreenContent(
                                 val text =
                                     if (modalSheetState.currentValue == SheetValue.PartiallyExpanded) {
                                         stringResource(
-                                            R.string.bottom_sheet_button_toogle_fullscreen_button_title
+                                            R.string.bottom_sheet_button_toggle_fullscreen_button_title
                                         )
                                     } else {
                                         stringResource(
