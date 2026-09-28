@@ -12,11 +12,13 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 
 const val MiscScreenDestination = "miscScreen"
@@ -30,6 +32,7 @@ fun MiscScreen(
     viewModel: MiscViewModel = hiltViewModel(),
 ) {
     val scope = rememberCoroutineScope()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val pagerState = rememberPagerState(pageCount = { Tabs.entries.size })
     val selectedTabIndex = remember { derivedStateOf { pagerState.currentPage } }
@@ -56,8 +59,9 @@ fun MiscScreen(
             when (pagerState.currentPage) {
                 0 -> {
                     MiscScreenContent(
-                        scope = scope,
-                        viewModel = viewModel,
+                        uiState = uiState,
+                        carouselItems = viewModel.carouselItems,
+                        modifier = modifier,
                         onDeepLinkButtonClick = onDeepLinkButtonClick,
                     )
                 }

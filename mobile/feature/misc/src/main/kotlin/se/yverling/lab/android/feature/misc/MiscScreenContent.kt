@@ -83,9 +83,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.DpOffset
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import se.yverling.lab.android.design.theme.AndroidLabTheme
 import se.yverling.lab.android.design.theme.AndroidLabThemeWrapper
@@ -93,12 +91,14 @@ import se.yverling.lab.android.design.theme.DefaultSpace
 import se.yverling.lab.android.design.theme.LargeSpace
 import se.yverling.lab.android.design.theme.MediumSpace
 import se.yverling.lab.android.design.theme.SmallSpace
+import se.yverling.lab.android.feature.misc.MiscViewModel.MiscUiState
 import se.yverling.lab.android.feature.misc.theme.CarouselItemSize
 import se.yverling.lab.android.feature.misc.theme.DropShadowBoxShadowOffset
 import se.yverling.lab.android.feature.misc.theme.DropShadowBoxShadowRadius
 import se.yverling.lab.android.feature.misc.theme.DropShadowBoxShadowSize
 import se.yverling.lab.android.feature.misc.theme.DropShadowBoxShadowSpread
 import se.yverling.lab.android.feature.misc.theme.DropShadowBoxSize
+import se.yverling.lab.android.misc.model.CarouselItem
 import timber.log.Timber
 
 private const val REMOTE_IMAGE_URL = "https://erik.r.yverling.com/twinkle-logo.png"
@@ -125,10 +125,10 @@ private data class Employer(var name: String)
 )
 @Composable
 internal fun MiscScreenContent(
+    uiState: MiscUiState,
+    carouselItems: List<CarouselItem>,
     modifier: Modifier = Modifier,
-    scope: CoroutineScope,
-    onDeepLinkButtonClick: (() -> Unit)?,
-    viewModel: MiscViewModel,
+    onDeepLinkButtonClick: (() -> Unit)? = null,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val modalSheetState = rememberModalBottomSheetState()
@@ -242,15 +242,13 @@ internal fun MiscScreenContent(
                         )
 
                         LaunchedEffect(manualRecomposeCount) {
-                            scope.launch {
-                                currentNumberOfManualRecompositions(manualRecomposeCount)
-                                snackbarHostState.currentSnackbarData?.dismiss()
+                            currentNumberOfManualRecompositions(manualRecomposeCount)
+                            snackbarHostState.currentSnackbarData?.dismiss()
 
-                                snackbarHostState.showSnackbar(
-                                    message = "Number of manual recompositions: $manualRecomposeCount",
-                                    duration = SnackbarDuration.Short
-                                )
-                            }
+                            snackbarHostState.showSnackbar(
+                                message = "Number of manual recompositions: $manualRecomposeCount",
+                                duration = SnackbarDuration.Short
+                            )
                         }
                     }
 
@@ -283,10 +281,9 @@ internal fun MiscScreenContent(
                         showBottomSheet = true
                     }
 
-                    val state by viewModel.uiState.collectAsStateWithLifecycle()
                     Text(
                         modifier = Modifier.padding(bottom = LargeSpace),
-                        text = "Collecting: ${state.name}",
+                        text = "Collecting: ${uiState.name}",
                         style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center
                     )
@@ -319,8 +316,6 @@ internal fun MiscScreenContent(
                     )
 
                     ButtonGroup(modifier = Modifier.padding(bottom = LargeSpace))
-
-                    val carouselItems = viewModel.carouselItems
 
                     HorizontalUncontainedCarousel(
                         modifier = Modifier.height(CarouselItemSize),
@@ -610,4 +605,19 @@ private fun SkippableComposablePreview() {
 @Composable
 private fun AutoFillTextFieldPreview() {
     AutoFillTextField(contentType = ContentType.EmailAddress)
+}
+
+@Preview(name = "Light Mode")
+@Preview(
+    name = "Dark Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true
+)
+@PreviewWrapper(AndroidLabThemeWrapper::class)
+@Composable
+private fun MiscScreenContentPreview() {
+    MiscScreenContent(
+        uiState = MiscUiState.State1,
+        carouselItems = emptyList(),
+    )
 }
