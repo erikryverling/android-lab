@@ -106,14 +106,17 @@ internal fun DataScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (uiState !is WeatherUiState.Success) {
-                item {
-                    val errorMessage: String = stringResource(uiState.data as Int)
-                    ErrorContent(errorMessage)
+            when (uiState) {
+                is WeatherUiState.Error -> {
+                    item {
+                        val errorMessage: String = stringResource(uiState.message)
+                        ErrorContent(errorMessage)
+                    }
                 }
-            } else {
-                val currentWeather: CurrentWeather = uiState.data as CurrentWeather
-                item { WeatherContent(currentWeather) }
+                is WeatherUiState.Success -> {
+                    item { WeatherContent(uiState.currentWeather) }
+                }
+                WeatherUiState.Loading -> Unit
             }
 
             onRetryButtonClicked?.let { item { RetryButton(it) } }
