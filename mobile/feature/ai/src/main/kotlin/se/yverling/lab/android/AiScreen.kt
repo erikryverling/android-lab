@@ -31,13 +31,14 @@ fun AiScreen(
     when (uiState) {
         is Loading -> LoadingScreen()
 
-        Error -> {
+        is Error -> {
+            val errorMessage = (uiState as Error).message ?: stringResource(R.string.unknown_error)
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    ErrorContent(stringResource(R.string.unknown_error))
+                    ErrorContent(errorMessage)
                     RetryButton {
                         viewModel.reload()
                     }
