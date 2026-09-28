@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import se.yverling.lab.android.common.model.Coffee
@@ -14,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AiViewModel @Inject constructor(private val repository: AiRepository) : ViewModel() {
     private val mutableUiState: MutableStateFlow<AiUiState> = MutableStateFlow(AiUiState.Loading)
-    internal var uiState: StateFlow<AiUiState> = mutableUiState
+    internal val uiState: StateFlow<AiUiState> = mutableUiState.asStateFlow()
 
     init {
         load()

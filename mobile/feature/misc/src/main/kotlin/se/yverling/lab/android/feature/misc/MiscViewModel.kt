@@ -12,21 +12,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MiscViewModel @Inject constructor(repository: MiscRepository) : ViewModel() {
-    internal var uiState: StateFlow<MiscUiState>
+    internal val uiState: StateFlow<MiscUiState> = repository.longRunningFlow().map {
+        println("In map got: $it")
+        if (it % 2 == 0) MiscUiState.State1 else MiscUiState.State2
+        // This is an alternative to using MutableStateFlow
+    }.stateIn(
+        scope = viewModelScope,
+        initialValue = MiscUiState.State1,
+        started = SharingStarted.WhileSubscribed(3000)
+    )
 
     val carouselItems = repository.carouselItems
-
-    init {
-        uiState = repository.longRunningFlow().map {
-            println("In map got: $it")
-            if (it % 2 == 0) MiscUiState.State1 else MiscUiState.State2
-            // This is an alternative to using MutableStateFlow
-        }.stateIn(
-            scope = viewModelScope,
-            initialValue = MiscUiState.State1,
-            started = SharingStarted.WhileSubscribed(3000)
-        )
-    }
 
     internal sealed class MiscUiState(val name: String) {
         data object State1 : MiscUiState("State 1")

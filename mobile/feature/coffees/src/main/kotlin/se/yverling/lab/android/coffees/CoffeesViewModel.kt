@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.retry
 import kotlinx.coroutines.launch
@@ -18,7 +19,7 @@ class CoffeesViewModel @Inject constructor(
     private val mutableUiState: MutableStateFlow<CoffeesUiState> =
         MutableStateFlow(CoffeesUiState.Loading)
 
-    internal var uiState: StateFlow<CoffeesUiState> = mutableUiState
+    internal val uiState: StateFlow<CoffeesUiState> = mutableUiState.asStateFlow()
 
     init {
         mutableUiState.value = CoffeesUiState.Loading

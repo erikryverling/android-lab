@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import se.yverling.lab.android.data.weather.GetAndCacheWeatherUseCase
@@ -22,7 +23,7 @@ class WeatherViewModel @Inject constructor(
     private val mutableUiState: MutableStateFlow<WeatherUiState> =
         MutableStateFlow(WeatherUiState.Loading)
 
-    internal var uiState: StateFlow<WeatherUiState> = mutableUiState
+    internal val uiState: StateFlow<WeatherUiState> = mutableUiState.asStateFlow()
 
     init {
         load()
