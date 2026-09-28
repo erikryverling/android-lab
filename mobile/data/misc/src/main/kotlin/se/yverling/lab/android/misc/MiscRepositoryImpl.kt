@@ -29,7 +29,7 @@ class MiscRepositoryImpl(private val dispatcher: CoroutineDispatcher): MiscRepos
         }
     }.flowOn(dispatcher)
 
-    val carouselItems =
+    override val carouselItems =
         listOf(
             CarouselItem(0, R.drawable.carousel_image_1, R.string.carousel_image_1_description),
             CarouselItem(1, R.drawable.carousel_image_2, R.string.carousel_image_2_description),

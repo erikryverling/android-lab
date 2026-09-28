@@ -7,11 +7,11 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import se.yverling.lab.android.misc.MiscRepositoryImpl
+import se.yverling.lab.android.misc.MiscRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class MiscViewModel @Inject constructor(repository: MiscRepositoryImpl) : ViewModel() {
+class MiscViewModel @Inject constructor(repository: MiscRepository) : ViewModel() {
     internal var uiState: StateFlow<MiscUiState>
 
     val carouselItems = repository.carouselItems
