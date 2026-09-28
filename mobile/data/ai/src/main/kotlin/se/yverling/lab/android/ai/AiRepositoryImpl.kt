@@ -25,7 +25,8 @@ internal class AiRepositoryImpl @Inject constructor(@param:ApplicationContext pr
 
     override fun promptFlow(): Flow<Coffee> = flow {
         val response = model.generateContent(context.getString(R.string.prompt))
-        val coffee = Json.decodeFromString<Coffee>(response.text!!)
+        val text = response.text?.takeIf { it.isNotBlank() } ?: throw EmptyAiResponseException()
+        val coffee = Json.decodeFromString<Coffee>(text)
         emit(coffee)
     }
 }
