@@ -1,10 +1,8 @@
 package se.yverling.lab.android.misc.di
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import se.yverling.lab.android.misc.MiscRepositoryImpl
 import javax.inject.Singleton
@@ -14,6 +12,5 @@ import javax.inject.Singleton
 class DataMiscModule {
     @Provides
     @Singleton
-    internal fun provideMiscRepository(@ApplicationContext context: Context)
-            : MiscRepositoryImpl = MiscRepositoryImpl()
+    internal fun provideMiscRepository(): MiscRepositoryImpl = MiscRepositoryImpl()
 }
