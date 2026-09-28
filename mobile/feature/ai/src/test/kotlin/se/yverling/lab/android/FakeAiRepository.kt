@@ -1,21 +1,18 @@
 package se.yverling.lab.android
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import se.yverling.lab.android.ai.AiRepository
 import se.yverling.lab.android.common.model.Coffee
 
 class FakeAiRepository(
-    private var flow: Flow<Coffee> = flowOf()
+    private var result: Result<Coffee> = Result.failure(IllegalStateException("Not initialized"))
 ) : AiRepository {
     fun emitCoffee(coffee: Coffee) {
-        flow = flowOf(coffee)
+        result = Result.success(coffee)
     }
 
     fun emitError(throwable: Throwable) {
-        flow = flow { throw throwable }
+        result = Result.failure(throwable)
     }
 
-    override fun promptFlow(): Flow<Coffee> = flow
+    override suspend fun prompt(): Result<Coffee> = result
 }

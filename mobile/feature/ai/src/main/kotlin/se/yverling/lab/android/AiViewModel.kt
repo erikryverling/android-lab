@@ -6,7 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import se.yverling.lab.android.ai.AiRepository
 import se.yverling.lab.android.common.model.Coffee
@@ -30,13 +29,13 @@ class AiViewModel @Inject constructor(private val repository: AiRepository) : Vi
         mutableUiState.value = AiUiState.Loading
 
         viewModelScope.launch {
-            repository.promptFlow()
-                .catch { exception ->
+            repository.prompt()
+                .onSuccess { coffee ->
+                    mutableUiState.value = AiUiState.Success(coffee)
+                }
+                .onFailure { exception ->
                     Timber.e(exception, "Failed to load AI prompt")
                     mutableUiState.value = AiUiState.Error(exception.localizedMessage)
-                }
-                .collect { coffee ->
-                    mutableUiState.value = AiUiState.Success(coffee)
                 }
         }
     }

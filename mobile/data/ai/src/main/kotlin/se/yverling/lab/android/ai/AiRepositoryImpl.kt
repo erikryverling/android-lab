@@ -6,8 +6,6 @@ import com.google.firebase.ai.ai
 import com.google.firebase.ai.type.GenerativeBackend
 import com.google.firebase.ai.type.generationConfig
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.Json
 import se.yverling.lab.android.common.model.Coffee
 import se.yverling.lab.android.data.ai.R
@@ -23,10 +21,9 @@ internal class AiRepositoryImpl @Inject constructor(@param:ApplicationContext pr
             }
         )
 
-    override fun promptFlow(): Flow<Coffee> = flow {
+    override suspend fun prompt(): Result<Coffee> = runCatching {
         val response = model.generateContent(context.getString(R.string.prompt))
         val text = response.text?.takeIf { it.isNotBlank() } ?: throw EmptyAiResponseException()
-        val coffee = Json.decodeFromString<Coffee>(text)
-        emit(coffee)
+        Json.decodeFromString<Coffee>(text)
     }
 }
