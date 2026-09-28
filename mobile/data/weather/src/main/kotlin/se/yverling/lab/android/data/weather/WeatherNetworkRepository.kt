@@ -8,15 +8,21 @@ import se.yverling.lab.android.data.weather.model.CurrentWeather
 import se.yverling.lab.android.data.weather.network.CurrentWeatherDto
 import se.yverling.lab.android.data.weather.network.WeatherApi
 import se.yverling.lab.android.data.weather.network.toCurrentWeather
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 internal const val LONGITUDE = 18.0273F
 internal const val LATITUDE = 59.303F
 internal const val UNITS = "metric"
 
-class WeatherNetworkRepository @Inject constructor(private val weatherApi: WeatherApi) {
-    fun getCurrentWeather(): Flow<CurrentWeather> = flow {
+fun interface WeatherNetworkRepository {
+    fun getCurrentWeather(): Flow<CurrentWeather>
+}
+
+class WeatherNetworkRepositoryImpl @Inject constructor(
+    private val weatherApi: WeatherApi
+) : WeatherNetworkRepository {
+    override fun getCurrentWeather(): Flow<CurrentWeather> = flow {
         val response = weatherApi.getCurrentWeather(
             apiKey = BuildConfig.API_KEY,
             longitude = LONGITUDE,

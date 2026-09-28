@@ -14,18 +14,22 @@ import kotlin.time.Instant
 
 /*
     Preferably we should not use a UseCase here, but merge WeatherNetworkRepository and
-    WeatherNetworkRepository into a WeatherRepository and to the below logic there.
+    WeatherNetworkRepository into a WeatherRepository and do the below logic there.
 
     UseCases are more for combining different kinds of data (Repositories). Maybe we can
     add an example of that as well moving forward?
  */
+fun interface GetAndCacheWeatherUseCase {
+    operator fun invoke(): Flow<CurrentWeather>
+}
+
 @OptIn(ExperimentalTime::class)
-class GetAndCacheWeatherUseCase @Inject constructor(
+class GetAndCacheWeatherUseCaseImpl @Inject constructor(
     private val networkRepository: WeatherNetworkRepository,
     private val dataStoreRepository: WeatherDataStoreRepository
-) {
+) : GetAndCacheWeatherUseCase {
     @OptIn(ExperimentalCoroutinesApi::class)
-    operator fun invoke(): Flow<CurrentWeather> {
+    override operator fun invoke(): Flow<CurrentWeather> {
         return dataStoreRepository.fetchCurrentWeather()
             .flatMapMerge { cachedCurrentWeather ->
                 if (lessThanOneMinuteAgo(cachedCurrentWeather.createdAt)) {

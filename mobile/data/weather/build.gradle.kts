@@ -14,6 +14,8 @@ dependencies {
     implementation(libs.protobuf)
 
     implementation(libs.kotlinx.datetime)
+
+    testImplementation(libs.ktor.client.mock)
 }
 
 

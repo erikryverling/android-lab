@@ -1,9 +1,6 @@
 package se.yverling.lab.android.feature.misc
 
 import io.kotest.matchers.types.shouldBeTypeOf
-import io.mockk.every
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit5.MockKExtension
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
@@ -12,10 +9,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.extension.RegisterExtension
-import se.yverling.lab.android.misc.MiscRepository
 import se.yverling.lab.android.test.MainDispatcherExtension
 
-@ExtendWith(MockKExtension::class)
 @ExtendWith(MainDispatcherExtension::class)
 @OptIn(ExperimentalCoroutinesApi::class)
 class MiscViewModelTest {
@@ -26,9 +21,6 @@ class MiscViewModelTest {
     @RegisterExtension
     val mainDispatcherExtension = MainDispatcherExtension(UnconfinedTestDispatcher())
 
-    @RelaxedMockK
-    lateinit var repositoryMock: MiscRepository
-
     private lateinit var viewModel: MiscViewModel
 
     /**
@@ -37,11 +29,9 @@ class MiscViewModelTest {
      */
     @Test
     fun `uiState should be set successfully`() = runTest {
-        val fakeRepository = FakeRepository()
+        val miscRepository = FakeMiscRepository()
 
-        every { repositoryMock.longRunningFlow() } returns fakeRepository.flow
-
-        viewModel = MiscViewModel(repositoryMock)
+        viewModel = MiscViewModel(miscRepository)
 
         val collectJob = launch(UnconfinedTestDispatcher(testScheduler)) {
             viewModel.uiState.collect {
@@ -50,24 +40,12 @@ class MiscViewModelTest {
         }
 
         viewModel.uiState.value.shouldBeTypeOf<MiscViewModel.MiscUiState.State1>()
-        fakeRepository.emit(0)
+        miscRepository.emit(0)
         viewModel.uiState.value.shouldBeTypeOf<MiscViewModel.MiscUiState.State1>()
-        fakeRepository.emit(1)
+        miscRepository.emit(1)
         viewModel.uiState.value.shouldBeTypeOf<MiscViewModel.MiscUiState.State2>()
-        fakeRepository.emit(2)
+        miscRepository.emit(2)
         viewModel.uiState.value.shouldBeTypeOf<MiscViewModel.MiscUiState.State1>()
         collectJob.cancel()
-    }
-
-    /**
-     * We are using this to be able to control the emits.
-     */
-    class FakeRepository {
-        val flow = MutableSharedFlow<Int>()
-
-        suspend fun emit(number: Int) {
-            println("Emitting: $number")
-            flow.emit(number)
-        }
     }
 }

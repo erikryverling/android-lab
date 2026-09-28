@@ -10,12 +10,21 @@ import se.yverling.lab.android.data.weather.datastore.CurrentWeatherSerializer
 import se.yverling.lab.android.data.weather.datastore.DATASTORE_FILE_NAME
 import se.yverling.lab.android.data.weather.model.CachedCurrentWeather
 import se.yverling.lab.android.data.weather.model.CurrentWeather
-import se.yverling.lab.android.data.weather.model.CurrentWeather.*
+import se.yverling.lab.android.data.weather.model.CurrentWeather.Wind
 import javax.inject.Inject
 
-class WeatherDataStoreRepository @Inject constructor(@param:ApplicationContext private val context: Context) {
-    suspend fun persistCurrentWeather(currentWeather: CurrentWeather, createdAt: Long) {
-        context.currentWeatherDataStore.updateData {
+interface WeatherDataStoreRepository {
+    suspend fun persistCurrentWeather(currentWeather: CurrentWeather, createdAt: Long)
+    fun fetchCurrentWeather(): Flow<CachedCurrentWeather>
+}
+
+class WeatherDataStoreRepositoryImpl @Inject constructor(
+    private val dataStore: DataStore<se.yverling.lab.android.CurrentWeather>
+) : WeatherDataStoreRepository {
+    constructor(@ApplicationContext context: Context) : this(context.currentWeatherDataStore)
+
+    override suspend fun persistCurrentWeather(currentWeather: CurrentWeather, createdAt: Long) {
+        dataStore.updateData {
             it.toBuilder()
                 .setTemp(currentWeather.temperature)
                 .setWind(
@@ -29,8 +38,8 @@ class WeatherDataStoreRepository @Inject constructor(@param:ApplicationContext p
         }
     }
 
-    fun fetchCurrentWeather(): Flow<CachedCurrentWeather> =
-        context.currentWeatherDataStore.data.map {
+    override fun fetchCurrentWeather(): Flow<CachedCurrentWeather> =
+        dataStore.data.map {
             CachedCurrentWeather(
                 currentWeather = CurrentWeather(it.temp, Wind(it.wind.speed, it.wind.degree), it.locationName),
                 createdAt = it.createdAt

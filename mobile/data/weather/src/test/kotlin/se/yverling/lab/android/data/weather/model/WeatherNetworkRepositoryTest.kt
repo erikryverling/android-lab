@@ -1,69 +1,83 @@
 package se.yverling.lab.android.data.weather.model
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
-import io.ktor.client.call.HttpClientCall
-import io.ktor.client.statement.HttpResponse
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.mock.MockEngine
+import io.ktor.client.engine.mock.respond
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
-import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.impl.annotations.MockK
-import io.mockk.junit5.MockKExtension
+import io.ktor.http.headersOf
+import io.ktor.serialization.kotlinx.json.json
+import io.ktor.utils.io.ByteReadChannel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import se.yverling.lab.android.data.weather.BuildConfig
-import se.yverling.lab.android.data.weather.LATITUDE
-import se.yverling.lab.android.data.weather.LONGITUDE
-import se.yverling.lab.android.data.weather.UNITS
-import se.yverling.lab.android.data.weather.WeatherNetworkRepository
-import se.yverling.lab.android.data.weather.network.CurrentWeatherDto
-import se.yverling.lab.android.data.weather.network.CurrentWeatherDto.*
+import se.yverling.lab.android.data.weather.WeatherNetworkRepositoryImpl
 import se.yverling.lab.android.data.weather.network.WeatherApi
 
-@ExtendWith(MockKExtension::class)
 class WeatherNetworkRepositoryTest {
-    @MockK
-    lateinit var weatherApiMock: WeatherApi
-
-    @MockK
-    lateinit var httpResponseMock: HttpResponse
-
-    @MockK
-    lateinit var httpClientCallMock: HttpClientCall
-
-    private lateinit var networkRepository: WeatherNetworkRepository
-
     @Test
-    fun `getCurrentWeather() should get current weather successfully`() {
-        networkRepository = WeatherNetworkRepository(weatherApiMock)
+    fun `getcurrentweather should get current weather successfully`() {
+        val json = """
+            {
+                "main": { "temp": 20.0 },
+                "wind": { "speed": 5.0, "deg": 90 },
+                "name": "Årstaberg"
+            }
+        """.trimIndent()
 
-        every { httpResponseMock.status } returns HttpStatusCode(200, "Success")
-        every { httpResponseMock.call } returns httpClientCallMock
-        coEvery { httpClientCallMock.bodyNullable(any()) } returns dto
+        val mockEngine = MockEngine {
+            respond(
+                content = ByteReadChannel(json),
+                status = HttpStatusCode.OK,
+                headers = headersOf(HttpHeaders.ContentType, "application/json")
+            )
+        }
+
+        val client = HttpClient(mockEngine) {
+            install(ContentNegotiation) {
+                json(Json { ignoreUnknownKeys = true })
+            }
+        }
+
+        val weatherApi = WeatherApi(client)
+        val networkRepository = WeatherNetworkRepositoryImpl(weatherApi)
 
         runTest {
-            coEvery {
-                weatherApiMock.getCurrentWeather(
-                    apiKey = BuildConfig.API_KEY,
-                    longitude = LONGITUDE,
-                    latitude = LATITUDE,
-                    units = UNITS,
-                    languageCode = any()
-                )
-            } returns httpResponseMock
-
             networkRepository.getCurrentWeather().collect {
                 it.shouldBe(model)
             }
         }
     }
-}
 
-private val dto = CurrentWeatherDto(
-    main = Main(temp = 20f),
-    wind = Wind(speed = 5f, deg = 90),
-    name = "Årstaberg"
-)
+    @Test
+    fun `getcurrentweather should throw on error response`() {
+        val mockEngine = MockEngine {
+            respond(
+                content = ByteReadChannel("Error"),
+                status = HttpStatusCode.InternalServerError
+            )
+        }
+
+        val client = HttpClient(mockEngine) {
+            install(ContentNegotiation) {
+                json(Json { ignoreUnknownKeys = true })
+            }
+        }
+
+        val weatherApi = WeatherApi(client)
+        val networkRepository = WeatherNetworkRepositoryImpl(weatherApi)
+
+        runTest {
+            shouldThrow<IllegalStateException> {
+                networkRepository.getCurrentWeather().collect()
+            }
+        }
+    }
+}
 
 private val model = CurrentWeather(
     temperature = 20,

@@ -1,36 +1,16 @@
 package se.yverling.lab.android.data.weather.model
 
-import android.content.Context
-import androidx.datastore.core.DataStore
 import io.kotest.matchers.shouldBe
-import io.mockk.coVerify
-import io.mockk.every
-import io.mockk.impl.annotations.MockK
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit5.MockKExtension
-import io.mockk.mockkStatic
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import se.yverling.lab.android.data.weather.WeatherDataStoreRepository
-import se.yverling.lab.android.data.weather.currentWeatherDataStore
+import se.yverling.lab.android.data.weather.WeatherDataStoreRepositoryImpl
 import se.yverling.lab.android.data.weather.model.CurrentWeather.Wind
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
-@ExtendWith(MockKExtension::class)
 class WeatherDataStoreRepositoryTest {
-    @MockK
-    lateinit var contextMock: Context
-
-    @RelaxedMockK
-    lateinit var dataStoreMock: DataStore<se.yverling.lab.android.CurrentWeather>
-
-    private lateinit var dataStoreRepository: WeatherDataStoreRepository
-
     private val createdAt = Clock.System.now().toEpochMilliseconds()
 
     private val currentWeatherData = se.yverling.lab.android.CurrentWeather.newBuilder()
@@ -50,35 +30,33 @@ class WeatherDataStoreRepositoryTest {
         locationName = "Location"
     )
 
-    @BeforeEach
-    fun setUp() {
-        dataStoreRepository = WeatherDataStoreRepository(contextMock)
-
-        mockkStatic(Context::currentWeatherDataStore)
-
-        every { contextMock.currentWeatherDataStore } returns dataStoreMock
-    }
-
     @Test
     fun `persistCurrentWeather() should persist successfully`() {
+        val initialData = se.yverling.lab.android.CurrentWeather.getDefaultInstance()
+        val fakeDataStore = FakeDataStore(initialData)
+        val dataStoreRepository = WeatherDataStoreRepositoryImpl(fakeDataStore)
+
         runTest {
             dataStoreRepository.persistCurrentWeather(currentWeather, createdAt)
 
-            /* TODO We should be verifying that currentWeather is being used when persisting the datastore
-             but that turned out to be very tricky. Let's save it for a rainy day :) */
-            coVerify { dataStoreMock.updateData(any()) }
+            val persisted = fakeDataStore.data.first()
+            persisted.temp.shouldBe(currentWeather.temperature)
+            persisted.wind.speed.shouldBe(currentWeather.wind.speed)
+            persisted.wind.degree.shouldBe(currentWeather.wind.degree)
+            persisted.locationName.shouldBe(currentWeather.locationName)
+            persisted.createdAt.shouldBe(createdAt)
         }
     }
 
     @Test
     fun `fetchCurrentWeather() should fetch successfully`() {
-        every { dataStoreMock.data } returns flowOf(currentWeatherData)
+        val dataStore = FakeDataStore(currentWeatherData)
+        val dataStoreRepository = WeatherDataStoreRepositoryImpl(dataStore)
 
         runTest {
-            dataStoreRepository.fetchCurrentWeather().collect {
-                it.currentWeather.shouldBe(currentWeather)
-                it.createdAt.shouldBe(createdAt)
-            }
+            val result = dataStoreRepository.fetchCurrentWeather().first()
+            result.currentWeather.shouldBe(currentWeather)
+            result.createdAt.shouldBe(createdAt)
         }
     }
 }

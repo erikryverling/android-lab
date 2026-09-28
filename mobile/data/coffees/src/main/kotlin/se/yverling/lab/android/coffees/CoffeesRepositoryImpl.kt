@@ -1,21 +1,27 @@
 package se.yverling.lab.android.coffees
 
 import android.content.Context
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import se.yverling.lab.android.coffees.db.AppDatabase
+import se.yverling.lab.android.coffees.db.CoffeesDao
 import se.yverling.lab.android.coffees.db.toCoffeeModel
 import se.yverling.lab.android.coffees.io.CoffeesSampleData
 import se.yverling.lab.android.common.model.Coffee
-import javax.inject.Inject
 
-internal class CoffeesRepositoryImpl @Inject constructor(
-    @param:ApplicationContext private val context: Context,
-    private val db: AppDatabase,
+internal class CoffeesRepositoryImpl(
+    private val dao: CoffeesDao,
+    private val sampleDataProvider: suspend () -> List<se.yverling.lab.android.coffees.db.Coffee> = { emptyList() },
 ) : CoffeesRepository {
+    constructor(
+        context: Context,
+        coffeesDao: CoffeesDao,
+    ) : this(
+        dao = coffeesDao,
+        sampleDataProvider = { CoffeesSampleData.get(context) }
+    )
+
     override fun getList(): Flow<List<Coffee>> {
-        return db.coffeeDao().getCoffees().map { coffees ->
+        return dao.getCoffees().map { coffees ->
             coffees.map { coffee ->
                 coffee.toCoffeeModel()
             }
@@ -23,6 +29,6 @@ internal class CoffeesRepositoryImpl @Inject constructor(
     }
 
     override suspend fun prePopulateList() {
-        db.coffeeDao().setCoffees(CoffeesSampleData.get(context))
+        dao.setCoffees(sampleDataProvider())
     }
 }

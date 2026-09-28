@@ -22,12 +22,15 @@ class DataCoffeesModule {
     }
 
     @Provides
+    fun provideCoffeesDao(db: AppDatabase): se.yverling.lab.android.coffees.db.CoffeesDao = db.coffeeDao()
+
+    @Provides
     @Singleton
     internal fun provideCoffeeRepository(
         @ApplicationContext context: Context,
-        db: AppDatabase,
+        coffeesDao: se.yverling.lab.android.coffees.db.CoffeesDao,
     ): CoffeesRepository = CoffeesRepositoryImpl(
         context = context,
-        db = db,
+        coffeesDao = coffeesDao,
     )
 }

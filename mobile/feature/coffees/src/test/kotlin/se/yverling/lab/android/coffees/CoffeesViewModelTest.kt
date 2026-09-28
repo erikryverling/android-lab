@@ -3,37 +3,28 @@ package se.yverling.lab.android.coffees
 import app.cash.turbine.test
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit5.MockKExtension
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import se.yverling.lab.android.common.model.Coffee
 import se.yverling.lab.android.test.MainDispatcherExtension
 
-@ExtendWith(MockKExtension::class)
 @ExtendWith(MainDispatcherExtension::class)
 class CoffeesViewModelTest {
-
-    @RelaxedMockK
-    lateinit var repositoryMock: CoffeesRepository
-
-    @BeforeEach
-    fun setup() {
-        viewModel = CoffeesViewModel(repositoryMock)
-    }
-
-    private lateinit var viewModel: CoffeesViewModel
+    private val coffees = listOf(
+        Coffee(
+            id = 0,
+            name = "Odo Carbonic",
+            roaster = "Gringo Nordic",
+            origin = "Ethiopia",
+            region = "Guji",
+        )
+    )
 
     @Test
     fun `uiState should emit coffees successfully`() {
-        every { repositoryMock.getList() } returns flowOf(coffees)
+        val repository = FakeCoffeesRepository(initialCoffees = coffees)
+        val viewModel = CoffeesViewModel(repository)
 
         runTest {
             viewModel.uiState.test {
@@ -48,19 +39,11 @@ class CoffeesViewModelTest {
 
     @Test
     fun `coffeesViewModel should prepopulate coffees successfully`() {
-        var isContainingSampleData = false
-
-        coEvery {
-            repositoryMock.prePopulateList()
-        } answers { isContainingSampleData = true }
-
-        every { repositoryMock.getList() } returns flow {
-            if (!isContainingSampleData) {
-                emit(listOf())
-            } else {
-                emit(coffees)
-            }
-        }
+        val fakeRepository = FakeCoffeesRepository(
+            initialCoffees = emptyList(),
+            sampleData = coffees
+        )
+        val viewModel = CoffeesViewModel(fakeRepository)
 
         runTest {
             viewModel.uiState.test {
@@ -71,17 +54,7 @@ class CoffeesViewModelTest {
                 cancelAndConsumeRemainingEvents()
             }
 
-            coVerify { repositoryMock.prePopulateList() }
+            fakeRepository.prePopulateCallCount.shouldBe(1)
         }
     }
-
-    private val coffees = listOf(
-        Coffee(
-            id = 0,
-            name = "Odo Carbonic",
-            roaster = "Gringo Nordic",
-            origin = "Ethiopia",
-            region = "Guji",
-        )
-    )
 }

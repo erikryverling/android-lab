@@ -3,24 +3,15 @@ package se.yverling.lab.android
 import app.cash.turbine.test
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
-import io.mockk.every
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit5.MockKExtension
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import se.yverling.lab.android.ai.AiRepository
 import se.yverling.lab.android.common.model.Coffee
 import se.yverling.lab.android.test.MainDispatcherExtension
 
-@ExtendWith(MockKExtension::class)
 @ExtendWith(MainDispatcherExtension::class)
 class AiViewModelTest {
-    @RelaxedMockK
-    lateinit var repositoryMock: AiRepository
-
+    private val repository = FakeAiRepository()
     private lateinit var viewModel: AiViewModel
 
     @Test
@@ -32,9 +23,9 @@ class AiViewModelTest {
             origin = "Ethiopia",
             region = "Yirgacheffe"
         )
-        every { repositoryMock.promptFlow() } returns flowOf(coffee)
+        repository.emitCoffee(coffee)
 
-        viewModel = AiViewModel(repositoryMock)
+        viewModel = AiViewModel(repository)
 
         runTest {
             viewModel.uiState.test {
@@ -50,9 +41,9 @@ class AiViewModelTest {
     @Test
     fun `uistate should emit error on exception`() {
         val errorMessage = "Network timeout"
-        every { repositoryMock.promptFlow() } returns flow { throw RuntimeException(errorMessage) }
+        repository.emitError(RuntimeException(errorMessage))
 
-        viewModel = AiViewModel(repositoryMock)
+        viewModel = AiViewModel(repository)
 
         runTest {
             viewModel.uiState.test {

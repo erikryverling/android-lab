@@ -1,71 +1,57 @@
 package se.yverling.lab.android.data.weather.model
 
 import io.kotest.matchers.shouldBe
-import io.mockk.coVerify
-import io.mockk.every
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.junit5.MockKExtension
-import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import se.yverling.lab.android.data.weather.GetAndCacheWeatherUseCase
-import se.yverling.lab.android.data.weather.WeatherDataStoreRepository
-import se.yverling.lab.android.data.weather.WeatherNetworkRepository
+import se.yverling.lab.android.data.weather.GetAndCacheWeatherUseCaseImpl
 import se.yverling.lab.android.data.weather.model.CurrentWeather.Wind
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
-@ExtendWith(MockKExtension::class)
 class GetAndCacheWeatherUseCaseTest {
-    @RelaxedMockK
-    lateinit var networkRepositoryMock: WeatherNetworkRepository
-
-    @RelaxedMockK
-    lateinit var dataStoreRepositoryMock: WeatherDataStoreRepository
-
-    private lateinit var getAndCacheWeatherUseCase: GetAndCacheWeatherUseCase
-
     private val currentWeather = CurrentWeather(
         temperature = 10,
         wind = Wind(speed = 10, degree = 10),
         locationName = "Location"
     )
 
-    @BeforeEach
-    fun setUp() {
-        getAndCacheWeatherUseCase = GetAndCacheWeatherUseCase(networkRepositoryMock, dataStoreRepositoryMock)
-    }
-
     @Test
     fun `getAndCacheWeatherUseCase should fetch current weather from network successfully`() {
-        every { dataStoreRepositoryMock.fetchCurrentWeather() } returns flowOf(CachedCurrentWeather(currentWeather, -1L))
-        every { networkRepositoryMock.getCurrentWeather() } returns flowOf(currentWeather)
+        val networkRepository = FakeWeatherNetworkRepository(flowOf(currentWeather))
+        val dataStoreRepository = FakeWeatherDataStoreRepository(
+            cachedCurrentWeather = CachedCurrentWeather(currentWeather, -1L)
+        )
+        val getAndCacheWeatherUseCase = GetAndCacheWeatherUseCaseImpl(networkRepository, dataStoreRepository)
 
         runTest {
             getAndCacheWeatherUseCase.invoke().collect {
                 it.shouldBe(currentWeather)
             }
 
-            coVerify { dataStoreRepositoryMock.persistCurrentWeather(currentWeather, any()) }
+            networkRepository.callCount.shouldBe(1)
+            dataStoreRepository.persistCallCount.shouldBe(1)
+            dataStoreRepository.persistedWeather.shouldBe(currentWeather)
         }
     }
 
     @Test
     fun `getAndCacheWeatherUseCase should fetch current weather from local datastore successfully`() {
         val timestamp = Clock.System.now().toEpochMilliseconds()
-
-        every { dataStoreRepositoryMock.fetchCurrentWeather() } returns flowOf(CachedCurrentWeather(currentWeather, timestamp))
+        val networkRepository = FakeWeatherNetworkRepository(flowOf(currentWeather))
+        val dataStoreRepository = FakeWeatherDataStoreRepository(
+            cachedCurrentWeather = CachedCurrentWeather(currentWeather, timestamp)
+        )
+        val getAndCacheWeatherUseCase = GetAndCacheWeatherUseCaseImpl(networkRepository, dataStoreRepository)
 
         runTest {
             getAndCacheWeatherUseCase.invoke().collect {
                 it.shouldBe(currentWeather)
             }
-        }
 
-        verify(atMost = 0, atLeast = 0) { networkRepositoryMock.getCurrentWeather() }
+            networkRepository.callCount.shouldBe(0)
+            dataStoreRepository.persistCallCount.shouldBe(0)
+        }
     }
 }
