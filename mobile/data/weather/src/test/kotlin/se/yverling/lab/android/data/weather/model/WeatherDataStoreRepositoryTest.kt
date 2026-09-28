@@ -76,8 +76,8 @@ class WeatherDataStoreRepositoryTest {
 
         runTest {
             dataStoreRepository.fetchCurrentWeather().collect {
-                it.first.shouldBe(currentWeather)
-                it.second.shouldBe(createdAt)
+                it.currentWeather.shouldBe(currentWeather)
+                it.createdAt.shouldBe(createdAt)
             }
         }
     }

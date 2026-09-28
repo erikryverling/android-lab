@@ -26,9 +26,9 @@ class GetAndCacheWeatherUseCase @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     operator fun invoke(): Flow<CurrentWeather> {
         return dataStoreRepository.fetchCurrentWeather()
-            .flatMapMerge { currentWeatherCreatedAt ->
-                if (lessThanOneMinuteAgo(currentWeatherCreatedAt.second)) {
-                    flowOf(currentWeatherCreatedAt.first)
+            .flatMapMerge { cachedCurrentWeather ->
+                if (lessThanOneMinuteAgo(cachedCurrentWeather.createdAt)) {
+                    flowOf(cachedCurrentWeather.currentWeather)
                 } else {
                     networkRepository.getCurrentWeather()
                         .onEach { currentWeather ->

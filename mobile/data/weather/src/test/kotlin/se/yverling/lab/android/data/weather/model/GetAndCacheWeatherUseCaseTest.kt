@@ -42,7 +42,7 @@ class GetAndCacheWeatherUseCaseTest {
 
     @Test
     fun `getAndCacheWeatherUseCase should fetch current weather from network successfully`() {
-        every { dataStoreRepositoryMock.fetchCurrentWeather() } returns flowOf(Pair(currentWeather, -1L))
+        every { dataStoreRepositoryMock.fetchCurrentWeather() } returns flowOf(CachedCurrentWeather(currentWeather, -1L))
         every { networkRepositoryMock.getCurrentWeather() } returns flowOf(currentWeather)
 
         runTest {
@@ -58,7 +58,7 @@ class GetAndCacheWeatherUseCaseTest {
     fun `getAndCacheWeatherUseCase should fetch current weather from local datastore successfully`() {
         val timestamp = Clock.System.now().toEpochMilliseconds()
 
-        every { dataStoreRepositoryMock.fetchCurrentWeather() } returns flowOf(Pair(currentWeather, timestamp))
+        every { dataStoreRepositoryMock.fetchCurrentWeather() } returns flowOf(CachedCurrentWeather(currentWeather, timestamp))
 
         runTest {
             getAndCacheWeatherUseCase.invoke().collect {

@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import se.yverling.lab.android.data.weather.datastore.CurrentWeatherSerializer
 import se.yverling.lab.android.data.weather.datastore.DATASTORE_FILE_NAME
+import se.yverling.lab.android.data.weather.model.CachedCurrentWeather
 import se.yverling.lab.android.data.weather.model.CurrentWeather
 import se.yverling.lab.android.data.weather.model.CurrentWeather.*
 import javax.inject.Inject
@@ -28,11 +29,11 @@ class WeatherDataStoreRepository @Inject constructor(@param:ApplicationContext p
         }
     }
 
-    fun fetchCurrentWeather(): Flow<Pair<CurrentWeather, Long>> =
+    fun fetchCurrentWeather(): Flow<CachedCurrentWeather> =
         context.currentWeatherDataStore.data.map {
-            Pair(
-                CurrentWeather(it.temp, Wind(it.wind.speed, it.wind.degree), it.locationName),
-                it.createdAt
+            CachedCurrentWeather(
+                currentWeather = CurrentWeather(it.temp, Wind(it.wind.speed, it.wind.degree), it.locationName),
+                createdAt = it.createdAt
             )
         }
 }
