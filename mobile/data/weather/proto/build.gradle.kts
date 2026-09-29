@@ -5,6 +5,12 @@ plugins {
     alias(libs.plugins.protobuf)
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(Versions.jvm)
+    }
+}
+
 dependencies {
     implementation(libs.protobuf)
 }

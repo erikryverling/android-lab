@@ -1,3 +1,5 @@
+import kotlin.text.toInt
+
 plugins {
     alias(libs.plugins.android.test)
 }
@@ -16,15 +18,8 @@ android {
         minSdk =  Versions.minSdk
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
-
     kotlin {
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
-        }
+        jvmToolchain(Versions.jvm.toInt())
     }
 
     defaultConfig {

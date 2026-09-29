@@ -4,9 +4,7 @@ import Versions
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
-import org.gradle.api.JavaVersion
 import org.gradle.api.Project
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 
@@ -17,27 +15,17 @@ internal fun Project.commonAndroidConfig() {
         when (this) {
             is ApplicationExtension -> {
                 defaultConfig { minSdk = Versions.minSdk }
-                compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_21
-                    targetCompatibility = JavaVersion.VERSION_21
-                }
                 buildFeatures { buildConfig = true }
             }
             is LibraryExtension -> {
                 defaultConfig { minSdk = Versions.minSdk }
-                compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_21
-                    targetCompatibility = JavaVersion.VERSION_21
-                }
                 buildFeatures { buildConfig = true }
             }
         }
     }
 
     kotlin {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
-        }
+        jvmToolchain(Versions.jvm.toInt())
     }
 }
 
