@@ -5,6 +5,18 @@ plugins {
 
 android {
     namespace = "se.yverling.lab.android.ui"
+
+    testOptions {
+        screenshotTests.create("screenshotTest") {
+            engineVersion = "0.0.1-alpha16"
+            targetVariants.add("debug")
+
+            dependencies {
+                implementation(libs.compose.tooling)
+                implementation(libs.screenshot.validation.api)
+            }
+        }
+    }
 }
 
 dependencies {
