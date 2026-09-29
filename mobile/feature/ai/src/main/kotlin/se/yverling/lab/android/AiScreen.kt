@@ -3,6 +3,7 @@ package se.yverling.lab.android
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -13,6 +14,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import se.yverling.lab.android.AiViewModel.AiUiState.Error
 import se.yverling.lab.android.AiViewModel.AiUiState.Loading
 import se.yverling.lab.android.AiViewModel.AiUiState.Success
+import se.yverling.lab.android.design.theme.DefaultSpace
 import se.yverling.lab.android.feature.ai.R
 import se.yverling.lab.android.ui.CoffeeCard
 import se.yverling.lab.android.ui.ErrorContent
@@ -34,7 +36,7 @@ fun AiScreen(
         is Error -> {
             val errorMessage = (uiState as Error).message ?: stringResource(R.string.unknown_error)
             Box(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize().padding(DefaultSpace),
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {

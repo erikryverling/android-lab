@@ -46,6 +46,8 @@ ktor = "3.6.0"
 
 firebase-bom = "34.19.0"
 firebase-common-ktx = "21.0.0"
+firebase-appcheck-ktx = "18.0.0"
+firebase-appcheck-debug = "19.4.1"
 
 wear-tooling-preview = "1.0.0"
 wear-compose = "1.7.0"
@@ -151,6 +153,8 @@ material3-windowSizeClassAndroid = { module = "androidx.compose.material3:materi
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-common-ktx = { module = "com.google.firebase:firebase-common-ktx", version.ref = "firebase-common-ktx" }
 firebase-ai = { module = "com.google.firebase:firebase-ai" }
+firebase-appcheck-ktx = { module = "com.google.firebase:firebase-appcheck-ktx", version.ref = "firebase-appcheck-ktx" }
+firebase-appcheck-debug = { module = "com.google.firebase:firebase-appcheck-debug", version.ref = "firebase-appcheck-debug" }
 
 wear-compose-navigation = { module = "androidx.wear.compose:compose-navigation", version.ref = "wear-compose" }
 wear-compose-material = { module = "androidx.wear.compose:compose-material3", version.ref = "wear-compose" }

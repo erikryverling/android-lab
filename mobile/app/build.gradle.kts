@@ -128,8 +128,11 @@ plugins.withId(libs.plugins.paparazzi.get().pluginId) {
     }
 }
 
-// Use for creating an aggregated Kover report
 dependencies {
+    implementation(libs.firebase.appcheck.debug)
+    implementation(libs.firebase.appcheck.ktx)
+
+    // Used for creating an aggregated Kover report
     kover(projects.mobile.feature.coffees)
     kover(projects.mobile.feature.weather)
     kover(projects.mobile.feature.misc)

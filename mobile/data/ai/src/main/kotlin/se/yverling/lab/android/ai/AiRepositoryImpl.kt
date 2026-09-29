@@ -13,9 +13,12 @@ import javax.inject.Inject
 
 internal class AiRepositoryImpl @Inject constructor(@param:ApplicationContext private val context: Context) : AiRepository {
     private val model = Firebase
-        .ai(backend = GenerativeBackend.googleAI())
+        .ai(
+            backend = GenerativeBackend.googleAI(),
+            useLimitedUseAppCheckTokens = true
+        )
         .generativeModel(
-            modelName = "gemini-3.8-flash",
+            modelName = "gemini-3.5-flash-lite",
             generationConfig = generationConfig {
                 responseMimeType = "application/json"
             }

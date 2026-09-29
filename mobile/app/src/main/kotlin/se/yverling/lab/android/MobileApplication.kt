@@ -1,7 +1,10 @@
 package se.yverling.lab.android
 
 import android.app.Application
+import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
+import com.google.firebase.appcheck.appCheck
+import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber.DebugTree
 import timber.log.Timber.Forest.plant
@@ -15,5 +18,9 @@ class MobileApplication : Application() {
         }
 
         FirebaseApp.initializeApp(this)
+        Firebase.appCheck.installAppCheckProviderFactory(
+                // Now using google-services.json and AppCheck debug token instead of geminiApiKey property
+            DebugAppCheckProviderFactory.getInstance(),
+        )
     }
 }
