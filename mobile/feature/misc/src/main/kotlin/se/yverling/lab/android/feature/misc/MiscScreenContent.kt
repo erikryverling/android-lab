@@ -53,8 +53,10 @@ import androidx.compose.material3.carousel.HorizontalUncontainedCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -83,7 +85,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.DpOffset
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import coil3.compose.AsyncImage
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import se.yverling.lab.android.design.theme.AndroidLabTheme
 import se.yverling.lab.android.design.theme.AndroidLabThemeWrapper
@@ -249,6 +254,46 @@ internal fun MiscScreenContent(
                                 message = "Number of manual recompositions: $manualRecomposeCount",
                                 duration = SnackbarDuration.Short
                             )
+                        }
+                    }
+
+                    /*
+                        LaunchedEffect runs suspend functions in a coroutine scoped to the composable lifecycle.
+                        Whenever its key changes (e.g. manualRecomposeCount), any running coroutine is
+                        automatically cancelled, and a new coroutine is launched. It is also cancelled when
+                        the composable leaves the composition.
+                     */
+                    LaunchedEffect(manualRecomposeCount) {
+                        Timber.d("LaunchedEffect started for manualRecomposeCount=$manualRecomposeCount")
+                        delay(1000L)
+                        Timber.d("LaunchedEffect completed after delay for manualRecomposeCount=$manualRecomposeCount")
+                    }
+
+                    /*
+                        SideEffect runs after every successful recomposition. It is useful for publishing
+                        Compose state to non-Compose code (e.g. logging or external analytics).
+                        Unlike code in the composable body, SideEffect is guaranteed to run ONLY after
+                        the composition succeeds (never on discarded compositions).
+                     */
+                    SideEffect {
+                        Timber.d("SideEffect executed after successful recomposition: manualRecomposeCount=$manualRecomposeCount")
+                    }
+
+                    /*
+                        DisposableEffect is for side-effects that require cleanup when keys change or
+                        when the composable leaves the composition. The onDispose block is mandatory.
+                        A common use case is registering and unregistering observers or listeners.
+                     */
+                    val lifecycleOwner = LocalLifecycleOwner.current
+                    DisposableEffect(lifecycleOwner) {
+                        val observer = LifecycleEventObserver { _, event ->
+                            Timber.d("DisposableEffect observed lifecycle event: $event")
+                        }
+                        lifecycleOwner.lifecycle.addObserver(observer)
+
+                        onDispose {
+                            lifecycleOwner.lifecycle.removeObserver(observer)
+                            Timber.d("DisposableEffect onDispose: Lifecycle observer removed")
                         }
                     }
 
