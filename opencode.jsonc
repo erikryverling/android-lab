@@ -7,6 +7,14 @@
       "settings": {
         "apiKey": "{env:GEMINI_PRIVATE_API_KEY}",
       },
+
+      "models": {
+
+        "gemini-3.8-flash": {
+          "name": "🏠 ⚡️ Gemini 3.8 Flash",
+        },
+
+      },
     },
   },
 
@@ -18,3 +26,4 @@
     },
   },
 }
+
